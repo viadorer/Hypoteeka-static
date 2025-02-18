@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hypoteeka.cz - Vaše cesta k vlastnímu bydlení</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .nav-link {
+            @apply text-base font-medium transition-colors duration-200;
+        }
+        .btn {
+            @apply inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors duration-200;
+        }
+        .btn-primary {
+            @apply bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500;
+        }
+        .btn-secondary {
+            @apply bg-white text-primary-600 border-primary-600 hover:bg-primary-50 focus:ring-primary-500;
+        }
+        .btn-icon {
+            @apply p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500;
+        }
+        [x-cloak] { display: none !important; }
+            /* Styly pro slider */
+        input[type='range'] {
+            -webkit-appearance: none;
+            height: 8px;
+            background: #E5E7EB;
+            border-radius: 9999px;
+            outline: none;
+        }
+        input[type='range']::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            background: #0F4C81;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        input[type='range']::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            background: #4F46E5;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+                /* Primary colors - Dark Blue */
+        .bg-primary-500 { background-color: #0F4C81; }
+        .bg-primary-600 { background-color: #0D3D66; }
+        .bg-primary-700 { background-color: #0B2F4D; }
+        .text-primary-500 { color: #0F4C81; }
+        .text-primary-600 { color: #0D3D66; }
+        .text-primary-100 { color: #E6F3FF; }
+        
+        /* Gradients */
+        .bg-gradient-to-br {
+            background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));
+        }
+        .from-primary-600 {
+            --tw-gradient-from: #0D3D66;
+            --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(67 56 202 / 0));
+        }
+        .to-primary-700 {
+            --tw-gradient-to: #0B2F4D;
+        }
+        
+        /* Opacity */
+        .bg-primary-500\/20 {
+            background-color: rgb(15 76 129 / 0.2);
+        }
+        
+        /* Backdrop blur */
+        .backdrop-blur-sm {
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <div x-data="{ mobileMenuOpen: false }">
+        <!-- Plovoucí navigace -->
+        <header class="fixed top-0 left-0 right-0 z-50">
+            <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8" aria-label="Top">
+                <div class="bg-white rounded-full shadow-lg">
+                    <div class="mx-auto max-w-7xl px-6 sm:px-8 lg:px-10">
+                        <div class="flex h-16 justify-between items-center">
+                            <!-- Logo -->
+                            <div class="flex-shrink-0 flex items-center space-x-3">
+                                <img src="images/logo.png" alt="Hypoteeka.cz" class="h-10 w-10 rounded-full">
+                                <a href="/" class="text-2xl font-bold text-primary-600">Hypoteeka.cz</a>
+                            </div>
+
+                            <!-- Hlavní navigace -->
+                            <div class="hidden md:flex md:space-x-8">
+                                <a href="/" class="nav-link text-gray-900 hover:text-primary-600">Domů</a>
+                                <a href="/kalkulacka" class="nav-link text-gray-900 hover:text-primary-600">Kalkulačka</a>
+                                <a href="/srovnani" class="nav-link text-gray-900 hover:text-primary-600">Nájem vs. hypotéka</a>
+                                <a href="/blog" class="nav-link text-gray-900 hover:text-primary-600">Blog</a>
+                                <a href="/kontakt" class="nav-link text-gray-900 hover:text-primary-600">Kontakt</a>
+                            </div>
+
+                            <!-- Přihlášení a registrace -->
+                            <div class="hidden md:flex md:items-center md:space-x-4">
+                                <button class="btn btn-secondary">Přihlásit se</button>
+                                <button class="btn btn-primary">Registrovat se</button>
+                            </div>
+
+                            <!-- Mobilní menu tlačítko -->
+                            <div class="md:hidden">
+                                <button 
+                                    type="button"
+                                    class="btn-icon bg-primary-50 text-primary-600 hover:bg-primary-100"
+                                    @click="mobileMenuOpen = !mobileMenuOpen"
+                                >
+                                    <i class="fas fa-bars" x-show="!mobileMenuOpen"></i>
+                                    <i class="fas fa-times" x-show="mobileMenuOpen" x-cloak></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobilní menu -->
+                <div 
+                    class="md:hidden"
+                    x-show="mobileMenuOpen"
+                    x-transition:enter="transition ease-out duration-100"
+                    x-transition:enter-start="transform opacity-0 scale-95"
+                    x-transition:enter-end="transform opacity-100 scale-100"
+                    x-transition:leave="transition ease-in duration-75"
+                    x-transition:leave-start="transform opacity-100 scale-100"
+                    x-transition:leave-end="transform opacity-0 scale-95"
+                    x-cloak
+                >
+                    <div class="px-2 pt-2 pb-3 space-y-1 bg-white rounded-lg shadow-lg mt-2">
+                        <a href="/" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-primary-600 hover:bg-gray-50">Domů</a>
+                        <a href="/kalkulacka" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-primary-600 hover:bg-gray-50">Kalkulačka</a>
+                        <a href="/srovnani" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-primary-600 hover:bg-gray-50">Nájem vs. hypotéka</a>
+                        <a href="/blog" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-primary-600 hover:bg-gray-50">Blog</a>
+                        <a href="/kontakt" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-primary-600 hover:bg-gray-50">Kontakt</a>
+                        <div class="mt-4 space-y-2">
+                            <button class="w-full btn btn-secondary">Přihlásit se</button>
+                            <button class="w-full btn btn-primary">Registrovat se</button>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Hero sekce -->
+        <div class="relative min-h-[600px] flex items-center pb-48">
+            <!-- Background image -->
+            <div class="absolute inset-0 z-0">
+                <img src="images/hero.png" alt="" class="w-full h-full object-cover">
+                <div class="absolute inset-0 backdrop-blur-sm bg-black/20"></div>
+            </div>
+
+            <!-- Hero content -->
+            <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-32">
+                <div class="inline-block px-8 py-6 rounded-3xl bg-black/40 backdrop-blur-md">
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-8">
+                        Zařiďte si nejvýhodnější hypotéku
+                    </h1>
+                    <p class="text-xl md:text-2xl text-white mb-12 max-w-3xl mx-auto">
+                        Zadejte poptávku, do 10 minut si zavoláme a za pár týdnů bydlíte.
+                    </p>
+                </div>
+                <a href="#calculator" class="inline-block bg-primary-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-primary-600 transition-colors duration-200">
+                    Spočítat hypotéku
+                </a>
+            </div>
+        </div>
+    </div>
+
+        <!-- Mortgage comparison -->
+        <div class="mx-auto max-w-3xl px-6 lg:px-8 bg-white rounded-3xl p-8 shadow-xl -mt-32 relative z-20">
+            <div class="mx-auto max-w-4xl text-center">
+                <h2 class="text-base font-semibold leading-7 text-primary-500">BYDLETE VE SVÉM</h2>
+                <p class="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">Proč využít Hypoteeku.cz?</p>
+                <p class="mt-6 text-2xl text-gray-700">Protože ušetříte. Za 30 let to může být až <span class="text-primary-600 font-bold">2 500 000 Kč</span></p>
+                <div class="mt-8 flex justify-center">
+                    <div class="animate-bounce">
+                        <svg class="w-8 h-8 text-primary-500" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                            <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-10">
+                <!-- Slider -->
+                <div class="relative mx-auto max-w-2xl">
+                    <div class="relative mt-4 mb-8">
+                        <div id="bubble" class="absolute -top-8 left-0 w-full pointer-events-none">
+                            <div id="amount-display" class="bg-gray-900 text-white px-4 py-1.5 rounded-full text-sm min-w-[140px] inline-block text-center absolute transform -translate-x-1/2">
+                                2 500 000 Kč
+                            </div>
+                        </div>
+                        <input 
+                            type="range" 
+                            id="mortgage-amount" 
+                            min="1000000" 
+                            max="15000000" 
+                            step="100000" 
+                            value="2500000"
+                            class="w-full h-2 bg-gray-200 rounded-full appearance-none cursor-pointer"
+                            oninput="updateMortgageAmount(this.value)">
+                        <div class="flex justify-between text-xs text-gray-500 mt-1">
+                            <span>1 000 000 Kč</span>
+                            <span>15 000 000 Kč</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comparison -->
+                <div class="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl mx-auto">
+                    <!-- Bank offer -->
+                    <div class="bg-gray-100 rounded-2xl p-6 text-center">
+                        <div class="text-2xl font-bold text-gray-900 mb-2">
+                            <span id="bankOffer">9 611 Kč</span>
+                        </div>
+                        <div class="text-gray-600">Nabídka od banky</div>
+                    </div>
+
+                    <!-- Hypoteeka offer -->
+                    <div class="bg-gradient-to-br from-primary-600 to-primary-700 rounded-2xl p-6 text-center relative overflow-hidden">
+                        <div class="absolute inset-0 bg-primary-500/20 backdrop-blur-sm"></div>
+                        <div class="relative">
+                            <div class="text-2xl font-bold text-white mb-2">
+                                <span id="mortgageOffer">9 241 Kč</span>
+                            </div>
+                            <div class="text-primary-100">Hypoteeka nabídka</div>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="text-sm text-gray-500 text-center mt-8 max-w-2xl mx-auto">
+                    Jedná se o příklad vypočítaný z koeficientu sazby, které dosahují naši poradci a toho, co získáte v nabídce od své banky.
+                </p>
+
+                <!-- Total savings -->
+                <div class="text-center mt-12">
+                    <p class="text-lg text-gray-600">Celková úspora za 30 let:</p>
+                    <p class="text-4xl font-bold text-primary-600 mt-2" id="totalSavings">133 200 Kč</p>
+
+                    <!-- CTA tlačítka -->
+                    <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4">
+                        <a href="/konzultace" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-white bg-primary-600 hover:bg-primary-700 transition-colors duration-200">
+                            Domluvit konzultaci
+                        </a>
+                        <a href="/kalkulacka" class="inline-flex items-center justify-center px-6 py-3 border border-primary-600 text-base font-medium rounded-full text-primary-600 hover:bg-primary-50 transition-colors duration-200">
+                            Nezávazně spočítat hypotéku
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Jak to funguje sekce -->
+        <div class="py-24 sm:py-32 bg-gray-50">
+            <div class="mx-auto max-w-7xl px-6 lg:px-8">
+                <div class="mx-auto max-w-4xl text-center">
+                    <h2 class="text-base font-semibold leading-7 text-primary-600">JAK TO FUNGUJE?</h2>
+                    <p class="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">Kdy je pro vás Hypoteeka správná volba?</p>
+                </div>
+
+                <div class="mx-auto mt-16 pt-24 grid max-w-2xl grid-cols-1 gap-8 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+                    <!-- Karta: Bydlíte u rodičů -->
+                    <div class="bg-white rounded-3xl shadow-lg overflow-hidden p-8 flex flex-col items-center text-center relative">
+                        <div class="w-64 h-64 -mt-32 rounded-full overflow-hidden shadow-lg border-8 border-white">
+                            <img src="images/parents.jpg" alt="Bydlení u rodičů" class="w-full h-full object-cover object-center">
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4 mt-4">Bydlíte u rodičů</h3>
+                        <p class="text-lg text-gray-600 mb-4">Bydlíte u rodičů a chcete se posunout</p>
+                        <p class="text-gray-600 mb-8">Už bylo dost otázek, kde jste zase včera byli a u koho jste vlastně spali? Vyplňte náš dotazník a my se vám do pár minut ozveme, abychom si vše podrobně prošli a pak už bude vašemu snu bránit jen příjemné posezení s námi doporučeným finančním poradcem.</p>
+                        <a href="/kalkulacka" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-primary-600 hover:bg-primary-700 transition-colors duration-200">Chci Hypoteeku</a>
+                    </div>
+
+                    <!-- Karta: Bydlíte ve vlastním -->
+                    <div class="bg-white rounded-3xl shadow-lg overflow-hidden p-8 flex flex-col items-center text-center relative">
+                        <div class="w-64 h-64 -mt-32 rounded-full overflow-hidden shadow-lg border-8 border-white">
+                            <img src="images/own.jpg" alt="Bydlení ve vlastním" class="w-full h-full object-cover object-center">
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4 mt-4">Bydlíte ve vlastním</h3>
+                        <p class="text-lg text-gray-600 mb-4">Bydlíte ve vlastním, ale chcete nové</p>
+                        <p class="text-gray-600 mb-8">Taky si už delší dobu říkáte, že to chce změnu? Stačí vyplnit dotazník a doplnit nám telefonicky některé údaje, abychom vás mohli spojit s nejvhodnějším finančním poradcem.</p>
+                        <a href="/kalkulacka" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-primary-600 hover:bg-primary-700 transition-colors duration-200">Chci Hypoteeku</a>
+                    </div>
+
+                    <!-- Karta: Bydlíte v nájmu -->
+                    <div class="bg-white rounded-3xl shadow-lg overflow-hidden p-8 flex flex-col items-center text-center relative">
+                        <div class="w-64 h-64 -mt-32 rounded-full overflow-hidden shadow-lg border-8 border-white">
+                            <img src="images/rent.jpg" alt="Bydlení v nájmu" class="w-full h-full object-cover object-center">
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4 mt-4">Bydlíte v nájmu</h3>
+                        <p class="text-lg text-gray-600 mb-4">Bydlíte v nájmu</p>
+                        <p class="text-gray-600 mb-8">Chcete, aby váš domov říkal pane pouze vám? Zadejte poptávku a my se vám do 10 minut ozveme, upřesníme detaily, spojíme s poradcem a do pár týdnů si můžete tento sen splnit.</p>
+                        <a href="/kalkulacka" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-primary-600 hover:bg-primary-700 transition-colors duration-200">Chci Hypoteeku</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Kroky procesu -->
+        <div class="py-24 sm:py-32">
+            <div class="mx-auto max-w-7xl px-6 lg:px-8">
+                <div class="mx-auto max-w-4xl text-center">
+                    <h2 class="text-base font-semibold leading-7 text-primary-600">JAK TO FUNGUJE?</h2>
+                    <p class="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">Jak postupovat dál?</p>
+                </div>
+
+                <div class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+                    <!-- Krok 1 -->
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-64 h-64 rounded-full overflow-hidden shadow-lg border-8 border-white">
+                            <img src="images/step1-call.jpg" alt="Telefonát" class="w-full h-full object-cover object-center">
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mt-8 mb-4">Telefonát</h3>
+                        <p class="text-gray-600">Do 10 minut vám zavoláme a zjistíme vše potřebné, abychom vám mohli najít nejlepšího finančního poradce.</p>
+                    </div>
+
+                    <!-- Krok 2 -->
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-64 h-64 rounded-full overflow-hidden shadow-lg border-8 border-white">
+                            <img src="images/step2-specialist.jpg" alt="Schůzka s poradcem" class="w-full h-full object-cover object-center">
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mt-8 mb-4">Schůzka s poradcem</h3>
+                        <p class="text-gray-600">Námi doporučený finanční poradce vám ukáže všechny možnosti a vysvětlí vám celý proces.</p>
+                    </div>
+
+                    <!-- Krok 3 -->
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-64 h-64 rounded-full overflow-hidden shadow-lg border-8 border-white">
+                            <img src="images/step3-sign.jpg" alt="Podepsat" class="w-full h-full object-cover object-center">
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mt-8 mb-4">Podepsat</h3>
+                        <p class="text-gray-600">Pokud se vám nabídka líbí, stačí jen podepsat a můžete se těšit na nové bydlení.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nájem versus Hypotéka -->
+        <div class="py-24 sm:py-32">
+            <div class="mx-auto max-w-7xl px-6 lg:px-8">
+                <div class="mx-auto max-w-4xl text-center">
+                    <h2 class="text-base font-semibold leading-7 text-primary-600">NÁJEM VERSUS HYPOTÉKA</h2>
+                    <p class="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">Porovnání nájmu a hypotéky</p>
+                </div>
+
+                <div class="mx-auto mt-16 max-w-4xl">
+                    <!-- Kalkulátor -->
+                    <div class="bg-white rounded-3xl shadow-lg overflow-hidden p-12 mb-8">
+                        <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+                            <div>
+                                <label for="rent-amount" class="block text-base font-medium leading-6 text-gray-900 mb-3">Měsíční nájem</label>
+                                <div class="relative">
+                                    <input type="text" id="rent-amount" name="rent-amount" class="block w-full rounded-xl border-0 py-4 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 text-lg" placeholder="25 000" value="25000">
+                                    <div class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none text-gray-500">Kč</div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="mortgage-amount" class="block text-base font-medium leading-6 text-gray-900 mb-3">Měsíční hypotéka</label>
+                                <div class="relative">
+                                    <input type="text" id="mortgage-amount" name="mortgage-amount" class="block w-full rounded-xl border-0 py-4 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 text-lg" placeholder="20 000" value="20000">
+                                    <div class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none text-gray-500">Kč</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Výsledky -->
+                        <div class="mt-12">
+                            <div class="grid grid-cols-1 gap-8 sm:grid-cols-2">
+                                <!-- Nájem -->
+                                <div class="bg-gray-50 rounded-2xl p-8">
+                                    <h3 class="text-xl font-semibold text-gray-900 mb-6">Nájem</h3>
+                                    <table class="w-full">
+                                        <tr class="border-b border-gray-200">
+                                            <td class="py-4">Měsíčně</td>
+                                            <td class="py-4 text-right font-semibold" id="monthly-rent">25 000 Kč</td>
+                                        </tr>
+                                        <tr class="border-b border-gray-200">
+                                            <td class="py-4">Ročně</td>
+                                            <td class="py-4 text-right font-semibold" id="yearly-rent">300 000 Kč</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-4">Za 30 let</td>
+                                            <td class="py-4 text-right font-semibold" id="total-rent">9 000 000 Kč</td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <!-- Hypotéka -->
+                                <div class="bg-gray-50 rounded-2xl p-8">
+                                    <h3 class="text-xl font-semibold text-gray-900 mb-6">Hypotéka</h3>
+                                    <table class="w-full">
+                                        <tr class="border-b border-gray-200">
+                                            <td class="py-4">Měsíčně</td>
+                                            <td class="py-4 text-right font-semibold" id="monthly-mortgage">20 000 Kč</td>
+                                        </tr>
+                                        <tr class="border-b border-gray-200">
+                                            <td class="py-4">Ročně</td>
+                                            <td class="py-4 text-right font-semibold" id="yearly-mortgage">240 000 Kč</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-4">Za 30 let</td>
+                                            <td class="py-4 text-right font-semibold" id="total-mortgage">7 200 000 Kč</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Celková úspora -->
+                            <div class="mt-8 p-8 bg-primary-50 rounded-2xl border-2 border-primary-100">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="text-xl font-semibold text-gray-900">Celková úspora s Hypoteekou</h3>
+                                    <p class="text-2xl font-bold text-primary-600" id="total-savings">1 800 000 Kč</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Formulář pro výpočet hypotéky -->
+        <div class="py-24 sm:py-32 bg-gray-50">
+            <div class="mx-auto max-w-7xl px-6 lg:px-8">
+                <div class="mx-auto max-w-4xl text-center">
+                    <h2 class="text-base font-semibold leading-7 text-primary-600">HYPOTÉKA NA MÍRU</h2>
+                    <p class="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">Vyplňte formulář pro výpočet hypotéky</p>
+                </div>
+
+                <form class="mx-auto mt-16 max-w-4xl">
+                    <!-- Údaje o nemovitosti -->
+                    <div class="bg-white rounded-3xl shadow-lg overflow-hidden p-12 mb-8">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-8">Údaje o nemovitosti</h3>
+                        <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+                            <div class="sm:col-span-2">
+                                <label for="property-type" class="block text-base font-medium leading-6 text-gray-900 mb-3">Typ nemovitosti</label>
+                                <div class="relative">
+                                    <select id="property-type" name="property-type" class="block w-full rounded-xl border-0 py-4 pl-4 pr-12 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-primary-600 text-lg appearance-none">
+                                        <option>Byt</option>
+                                        <option>Dům</option>
+                                        <option>Pozemek</option>
+                                    </select>
+                                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4">
+                                        <svg class="h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                            <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="property-price" class="block text-base font-medium leading-6 text-gray-900 mb-3">Cena nemovitosti</label>
+                                <div class="relative">
+                                    <input type="text" id="property-price" name="property-price" class="block w-full rounded-xl border-0 py-4 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 text-lg" placeholder="5 000 000">
+                                    <div class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none text-gray-500">Kč</div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="own-resources" class="block text-base font-medium leading-6 text-gray-900 mb-3">Vlastní zdroje</label>
+                                <div class="relative">
+                                    <input type="text" id="own-resources" name="own-resources" class="block w-full rounded-xl border-0 py-4 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 text-lg" placeholder="1 000 000">
+                                    <div class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none text-gray-500">Kč</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Kontaktní údaje -->
+                    <div class="bg-white rounded-3xl shadow-lg overflow-hidden p-12">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-8">Kontaktní údaje</h3>
+                        <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+                            <div>
+                                <label for="first-name" class="block text-base font-medium leading-6 text-gray-900 mb-3">Jméno</label>
+                                <input type="text" id="first-name" name="first-name" class="block w-full rounded-xl border-0 py-4 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 text-lg">
+                            </div>
+
+                            <div>
+                                <label for="last-name" class="block text-base font-medium leading-6 text-gray-900 mb-3">Příjmení</label>
+                                <input type="text" id="last-name" name="last-name" class="block w-full rounded-xl border-0 py-4 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 text-lg">
+                            </div>
+
+                            <div>
+                                <label for="email" class="block text-base font-medium leading-6 text-gray-900 mb-3">E-mail</label>
+                                <input type="email" id="email" name="email" class="block w-full rounded-xl border-0 py-4 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 text-lg">
+                            </div>
+
+                            <div>
+                                <label for="phone" class="block text-base font-medium leading-6 text-gray-900 mb-3">Telefon</label>
+                                <input type="tel" id="phone" name="phone" class="block w-full rounded-xl border-0 py-4 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 text-lg">
+                            </div>
+
+                            <div class="sm:col-span-2">
+                                <label for="message" class="block text-base font-medium leading-6 text-gray-900 mb-3">Poznámka</label>
+                                <textarea id="message" name="message" rows="4" class="block w-full rounded-xl border-0 py-4 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 text-lg"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="mt-10">
+                            <button type="submit" class="w-full rounded-full bg-primary-600 px-8 py-5 text-lg font-semibold text-white shadow-lg hover:bg-primary-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 transition-all duration-200 ease-in-out transform hover:scale-[1.02]">Nezávazně spočítat hypotéku</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    <script>
+        // Formátování čísla s mezerami a měnou
+        function formatCurrency(number) {
+            return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' Kč';
+        }
+
+        // Výpočet všech hodnot
+        function calculateAll() {
+            // Získání hodnot
+            const rentAmount = parseInt(document.getElementById('rent-amount').value.replace(/\s+/g, '')) || 0;
+            const mortgageAmount = parseInt(document.getElementById('mortgage-amount').value.replace(/\s+/g, '')) || 0;
+
+            // Výpočty pro nájem
+            const yearlyRent = rentAmount * 12;
+            const totalRent = yearlyRent * 30;
+
+            // Výpočty pro hypotéku
+            const yearlyMortgage = mortgageAmount * 12;
+            const totalMortgage = yearlyMortgage * 30;
+
+            // Výpočet úspory
+            const totalSavings = totalRent - totalMortgage;
+
+            // Aktualizace všech hodnot v tabulkách
+            document.getElementById('monthly-rent').textContent = formatCurrency(rentAmount);
+            document.getElementById('yearly-rent').textContent = formatCurrency(yearlyRent);
+            document.getElementById('total-rent').textContent = formatCurrency(totalRent);
+
+            document.getElementById('monthly-mortgage').textContent = formatCurrency(mortgageAmount);
+            document.getElementById('yearly-mortgage').textContent = formatCurrency(yearlyMortgage);
+            document.getElementById('total-mortgage').textContent = formatCurrency(totalMortgage);
+
+            document.getElementById('total-savings').textContent = formatCurrency(totalSavings);
+        }
+
+        // Formátování vstupu
+        function formatInput(input) {
+            let value = input.value.replace(/\s+/g, '').replace(/[^0-9]/g, '');
+            if (value) {
+                value = parseInt(value).toString();
+                input.value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+            }
+            calculateAll();
+        }
+
+        // Přidání event listenerů
+        document.addEventListener('DOMContentLoaded', function() {
+            const rentInput = document.getElementById('rent-amount');
+            const mortgageInput = document.getElementById('mortgage-amount');
+
+            rentInput.addEventListener('input', function() { formatInput(this); });
+            mortgageInput.addEventListener('input', function() { formatInput(this); });
+
+            // Počáteční výpočet
+            formatInput(rentInput);
+            formatInput(mortgageInput);
+            calculateAll();
+        });
+
+        // Původní funkce pro výpočet celkové úspory
+        function calculateTotalSavings(bankPayment, mortgagePayment) {
+            const monthlyDiff = bankPayment - mortgagePayment;
+            const yearlyDiff = monthlyDiff * 12;
+            const totalDiff = yearlyDiff * 30; // 30 let
+            
+            document.getElementById('totalSavings').textContent = 
+                new Intl.NumberFormat('cs-CZ').format(totalDiff) + ' Kč';
+        }
+
+        // Funkce pro aktualizaci částky hypotéky
+        function updateMortgageAmount(value) {
+            // Formátování zobrazené částky
+            const formattedValue = new Intl.NumberFormat('cs-CZ').format(value);
+            document.getElementById('amount-display').textContent = `${formattedValue} Kč`;
+            
+            // Aktualizace pozice bubliny
+            const slider = document.getElementById('mortgage-amount');
+            const bubble = document.getElementById('amount-display');
+            const min = parseFloat(slider.min);
+            const max = parseFloat(slider.max);
+            const val = parseFloat(value);
+            const percentage = ((val - min) * 100) / (max - min);
+            bubble.style.left = `${percentage}%`;
+            
+            // Lokální výpočet splátek
+            const monthlyInterestRate = 4.69 / 100 / 12;
+            const numberOfPayments = 30 * 12;
+            const monthlyPayment = val * monthlyInterestRate * Math.pow(1 + monthlyInterestRate, numberOfPayments) 
+                                / (Math.pow(1 + monthlyInterestRate, numberOfPayments) - 1);
+            
+            // Aktualizace splátek
+            const bankPayment = Math.round(monthlyPayment * 1.03);
+            const mortgagePayment = Math.round(monthlyPayment);
+            
+            document.getElementById('bankOffer').textContent = 
+                new Intl.NumberFormat('cs-CZ').format(bankPayment) + ' Kč';
+            document.getElementById('mortgageOffer').textContent = 
+                new Intl.NumberFormat('cs-CZ').format(mortgagePayment) + ' Kč';
+            
+            // Výpočet celkové úspory
+            calculateTotalSavings(bankPayment, mortgagePayment);
+        }
+
+        // Inicializace při načtení stránky
+        document.addEventListener('DOMContentLoaded', function() {
+            const slider = document.getElementById('mortgage-amount');
+            if (slider) {
+                updateMortgageAmount(slider.value);
+            }
+        });
+
+        // Přidání třídy pro změnu barvy navigace při scrollování
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('bg-white/95');
+            } else {
+                header.classList.remove('bg-white/95');
+            }
+        });
+    </script>
+</body>
+</html>

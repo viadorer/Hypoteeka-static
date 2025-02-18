@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nájem vs. hypotéka | Hypoteeka.cz</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .nav-link {
+            @apply text-base font-medium transition-colors duration-200;
+        }
+        .btn {
+            @apply inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors duration-200;
+        }
+        .btn-primary {
+            @apply bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500;
+        }
+        .btn-secondary {
+            @apply bg-white text-primary-600 border-primary-600 hover:bg-primary-50 focus:ring-primary-500;
+        }
+        .btn-icon {
+            @apply p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500;
+        }
+        [x-cloak] { display: none !important; }
+    </style>
+</head>
+<body class="bg-white">
+    <div x-data="{ mobileMenuOpen: false }">
+        <!-- Plovoucí navigace -->
+        <header class="fixed top-0 left-0 right-0 z-50">
+            <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8" aria-label="Top">
+                <div class="bg-white/90 backdrop-blur-md rounded-full shadow-lg">
+                    <div class="relative flex items-center justify-between p-4">
+                        <!-- Logo -->
+                        <div class="flex lg:flex-1">
+                            <div class="flex-shrink-0 flex items-center space-x-3">
+                                <img src="images/logo.png" alt="Hypoteeka.cz" class="h-10 w-10 rounded-full">
+                                <a href="/" class="text-2xl font-bold text-primary-600">Hypoteeka.cz</a>
+                            </div>
+                        </div>
+
+                        <!-- Mobilní menu tlačítko -->
+                        <div class="flex lg:hidden">
+                            <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700" @click="mobileMenuOpen = true">
+                                <span class="sr-only">Otevřít hlavní menu</span>
+                                <i class="fas fa-bars h-6 w-6" aria-hidden="true"></i>
+                            </button>
+                        </div>
+
+                        <!-- Desktop menu -->
+                        <div class="hidden lg:flex lg:gap-x-12">
+                            <a href="#" class="nav-link text-gray-900 hover:text-primary-600">Domů</a>
+                            <a href="#" class="nav-link text-gray-900 hover:text-primary-600">Kalkulačka</a>
+                            <a href="#" class="nav-link text-gray-900 hover:text-primary-600">Nájem vs. hypotéka</a>
+                            <a href="#" class="nav-link text-gray-900 hover:text-primary-600">Blog</a>
+                            <a href="#" class="nav-link text-gray-900 hover:text-primary-600">Kontakt</a>
+                        </div>
+
+                        <!-- Přihlášení -->
+                        <div class="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-x-4">
+                            <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Přihlásit se</a>
+                            <a href="#" class="rounded-full bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-primary-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600">Registrovat se</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Mobilní menu panel -->
+            <div class="lg:hidden" x-show="mobileMenuOpen" x-cloak @click.away="mobileMenuOpen = false">
+                <div class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+                    <!-- Mobilní menu hlavička -->
+                    <div class="flex items-center justify-between">
+                        <div class="flex-shrink-0 flex items-center space-x-3">
+                            <img src="images/logo.png" alt="Hypoteeka.cz" class="h-10 w-10 rounded-full">
+                            <a href="/" class="text-2xl font-bold text-primary-600">Hypoteeka.cz</a>
+                        </div>
+                        <button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700" @click="mobileMenuOpen = false">
+                            <span class="sr-only">Zavřít menu</span>
+                            <i class="fas fa-times h-6 w-6" aria-hidden="true"></i>
+                        </button>
+                    </div>
+
+                    <!-- Mobilní menu odkazy -->
+                    <div class="mt-6 flow-root">
+                        <div class="-my-6 divide-y divide-gray-500/10">
+                            <div class="space-y-2 py-6">
+                                <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Domů</a>
+                                <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Kalkulačka</a>
+                                <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Nájem vs. hypotéka</a>
+                                <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Blog</a>
+                                <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Kontakt</a>
+                            </div>
+                            <div class="py-6 space-y-4">
+                                <a href="#" class="text-sm font-semibold leading-6 text-gray-900 block text-center">Přihlásit se</a>
+                                <a href="#" class="rounded-full bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-primary-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 block text-center">Registrovat se</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+    <!-- Hlavní obsah -->
+    <main>
+        <!-- Hero sekce -->
+        <div class="relative min-h-[600px] flex items-center pb-48">
+            <!-- Background image -->
+            <div class="absolute inset-0 z-0">
+                <img src="images/najemhypo.png" alt="" class="w-full h-full object-cover">
+                <div class="absolute inset-0 backdrop-blur-xl bg-black/40"></div>
+            </div>
+
+            <!-- Content -->
+            <div class="relative z-10 mx-auto max-w-7xl px-6 lg:px-8 text-center text-white">
+                <h1 class="mt-24 text-4xl font-bold tracking-tight sm:text-6xl">Nájem nebo hypotéka?</h1>
+                <p class="mt-6 text-lg leading-8">Porovnejte si výhodnost nájmu a hypotéky. Zjistěte, která varianta je pro vás výhodnější.</p>
+            </div>
+        </div>
+        <!-- Kalkulačka nájem vs. hypotéka -->
+        <div class="mx-auto max-w-7xl px-6 lg:px-8">
+            <div class="mx-auto max-w-4xl">
+                <div class="text-center mb-16">
+                    <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Nájem vs. hypotéka</h1>
+                    <p class="mt-6 text-lg leading-8 text-gray-600">Porovnejte si, zda se vám více vyplatí nájem nebo vlastní bydlení</p>
+                </div>
+
+                <!-- Kalkulačka -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Nájem -->
+                    <div class="bg-white rounded-3xl shadow-lg overflow-hidden p-8">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-8">Nájem</h2>
+                        <div class="space-y-6">
+                            <div>
+                                <label class="block text-base font-medium text-gray-900 mb-3">Kolik jste ochotni platit měsíčně?</label>
+                                <div class="relative mt-2">
+                                    <input type="text" id="rent-amount" class="block w-full rounded-xl border-0 py-4 pr-16 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 text-lg" value="24000">
+                                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4">
+                                        <span class="text-gray-500">Kč</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="pt-4">
+                                <h3 class="text-lg font-semibold text-gray-900 mb-4">Náklady na nájem v čase</h3>
+                                <div class="space-y-4">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-gray-600">Ročně:</span>
+                                        <span class="font-semibold" id="yearly-rent">288 000 Kč</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-gray-600">Za 10 let:</span>
+                                        <span class="font-semibold" id="rent-10-years">2 880 000 Kč</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-gray-600">Za 20 let:</span>
+                                        <span class="font-semibold" id="rent-20-years">5 760 000 Kč</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-gray-600">Za 30 let:</span>
+                                        <span class="font-semibold" id="rent-30-years">8 640 000 Kč</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hypotéka -->
+                    <div class="bg-white rounded-3xl shadow-lg overflow-hidden p-8">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-8">Hypotéka</h2>
+                        <div class="space-y-6">
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-4">Můžete si dovolit nemovitost v ceně</h3>
+                                <div class="text-3xl font-bold text-primary-600 mb-4" id="property-price">5 791 093 Kč</div>
+
+                                <div class="space-y-2">
+                                    <div class="flex justify-between items-center text-sm">
+                                        <span class="text-gray-600">z toho:</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-gray-600">vlastní zdroje (20%)</span>
+                                        <span class="font-semibold" id="own-resources">1 158 219 Kč</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-gray-600">hypotéka (80%)</span>
+                                        <span class="font-semibold" id="mortgage-amount">4 632 874 Kč</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="pt-4">
+                                <h3 class="text-lg font-semibold text-gray-900 mb-4">Vycházíme z toho, že:</h3>
+                                <ul class="space-y-3">
+                                    <li class="flex items-center">
+                                        <svg class="h-5 w-5 text-primary-600 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+                                        </svg>
+                                        <span id="monthly-payment">24 000 Kč budete splácet měsíčně</span>
+                                    </li>
+                                    <li class="flex items-center">
+                                        <svg class="h-5 w-5 text-primary-600 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+                                        </svg>
+                                        <span>máte naspořeno (přesně 20% z ceny nemovitosti)</span>
+                                    </li>
+                                    <li class="flex items-center">
+                                        <svg class="h-5 w-5 text-primary-600 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+                                        </svg>
+                                        <span>úroková sazba je aktuálně 4.69 % p.a.</span>
+                                    </li>
+                                    <li class="flex items-center">
+                                        <svg class="h-5 w-5 text-primary-600 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+                                        </svg>
+                                        <span>hypotéka je na 30 let</span>
+                                    </li>
+                                    <li class="flex items-center">
+                                        <svg class="h-5 w-5 text-primary-600 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+                                        </svg>
+                                        <span>fixace je na 3 roky (poté se úroková sazba může změnit)</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="mt-8">
+                                <button type="button" class="w-full rounded-full bg-primary-600 px-8 py-4 text-lg font-semibold text-white shadow-lg hover:bg-primary-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 transition-all duration-200 ease-in-out transform hover:scale-[1.02]">
+                                    Spočítat přesnou splátku
+                                </button>
+                            </div>
+
+                            <div class="text-sm text-gray-500 text-center mt-4">
+                                Jedná se o orientační výpočet. Neznamená detaily jako DTI <span class="inline-block w-4 h-4 bg-gray-100 rounded-full text-gray-600 text-center leading-4 cursor-help" title="Debt-to-Income">?</span> ani DSTI <span class="inline-block w-4 h-4 bg-gray-100 rounded-full text-gray-600 text-center leading-4 cursor-help" title="Debt Service-to-Income">?</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Formátování čísla s mezerami a měnou
+        function formatCurrency(number) {
+            return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' Kč';
+        }
+
+        // Výpočet maximální ceny nemovitosti
+        function calculatePropertyPrice(monthlyPayment) {
+            const interestRate = 0.0469; // 4.69%
+            const years = 30;
+            const monthlyRate = interestRate / 12;
+            const months = years * 12;
+            
+            // Výpočet pomocí vzorce pro hypoteční splátky
+            const presentValue = monthlyPayment * (1 - Math.pow(1 + monthlyRate, -months)) / monthlyRate;
+            
+            // Celková cena nemovitosti (hypotéka představuje 80%)
+            return Math.round(presentValue / 0.8);
+        }
+
+        // Aktualizace všech hodnot
+        function updateCalculations() {
+            const rentAmount = parseInt(document.getElementById('rent-amount').value.replace(/\s+/g, '')) || 0;
+            
+            // Výpočty pro nájem
+            const yearlyRent = rentAmount * 12;
+            const rent10Years = yearlyRent * 10;
+            const rent20Years = yearlyRent * 20;
+            const rent30Years = yearlyRent * 30;
+
+            // Aktualizace hodnot nájmu
+            document.getElementById('yearly-rent').textContent = formatCurrency(yearlyRent);
+            document.getElementById('rent-10-years').textContent = formatCurrency(rent10Years);
+            document.getElementById('rent-20-years').textContent = formatCurrency(rent20Years);
+            document.getElementById('rent-30-years').textContent = formatCurrency(rent30Years);
+
+            // Výpočty pro hypotéku
+            const propertyPrice = calculatePropertyPrice(rentAmount);
+            const ownResources = Math.round(propertyPrice * 0.2);
+            const mortgageAmount = Math.round(propertyPrice * 0.8);
+
+            // Aktualizace hodnot hypotéky
+            document.getElementById('property-price').textContent = formatCurrency(propertyPrice);
+            document.getElementById('own-resources').textContent = formatCurrency(ownResources);
+            document.getElementById('mortgage-amount').textContent = formatCurrency(mortgageAmount);
+            document.getElementById('monthly-payment').textContent = `${formatCurrency(rentAmount)} budete splácet měsíčně`;
+        }
+
+        // Formátování vstupu
+        function formatInput(input) {
+            let value = input.value.replace(/\s+/g, '').replace(/[^0-9]/g, '');
+            if (value) {
+                value = parseInt(value).toString();
+                input.value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+            }
+            updateCalculations();
+        }
+
+        // Inicializace
+        document.addEventListener('DOMContentLoaded', function() {
+            const rentInput = document.getElementById('rent-amount');
+            rentInput.addEventListener('input', function() { formatInput(this); });
+            formatInput(rentInput);
+            updateCalculations();
+        });
+    </script>
+</body>
+</html>
