@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="cs">
+<html lang="cs" style="scroll-behavior: smooth;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="images/favicon.png">
     <title>Hypoteeka.cz - Vaše cesta k vlastnímu bydlení</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -81,6 +82,32 @@
             backdrop-filter: blur(4px);
             -webkit-backdrop-filter: blur(4px);
         }
+
+        /* Notifikace */
+        .notification {
+            animation: slideIn 0.5s ease-out, fadeOut 0.5s ease-in 4.5s forwards;
+            transform-origin: bottom left;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body class="bg-white">
@@ -94,23 +121,19 @@
                             <!-- Logo -->
                             <div class="flex-shrink-0 flex items-center space-x-3">
                                 <img src="images/logo.png" alt="Hypoteeka.cz" class="h-10 w-10 rounded-full">
-                                <a href="/" class="text-2xl font-bold text-primary-600">Hypoteeka.cz</a>
+                                <a href="index.html" class="text-2xl font-bold text-primary-600">Hypoteeka.cz</a>
                             </div>
 
                             <!-- Hlavní navigace -->
                             <div class="hidden md:flex md:space-x-8">
-                                <a href="/" class="nav-link text-gray-900 hover:text-primary-600">Domů</a>
-                                <a href="/kalkulacka" class="nav-link text-gray-900 hover:text-primary-600">Kalkulačka</a>
-                                <a href="/srovnani" class="nav-link text-gray-900 hover:text-primary-600">Nájem vs. hypotéka</a>
+                                <a href="index.html" class="nav-link text-gray-900 hover:text-primary-600">Domů</a>
+                                <a href="#hypoteka" class="nav-link text-gray-900 hover:text-primary-600">Kalkulačka</a>
+                                <a href="najem-vs-hypoteka.html" class="nav-link text-gray-900 hover:text-primary-600">Nájem vs. hypotéka</a>
                                 <a href="/blog" class="nav-link text-gray-900 hover:text-primary-600">Blog</a>
                                 <a href="/kontakt" class="nav-link text-gray-900 hover:text-primary-600">Kontakt</a>
                             </div>
 
-                            <!-- Přihlášení a registrace -->
-                            <div class="hidden md:flex md:items-center md:space-x-4">
-                                <button class="btn btn-secondary">Přihlásit se</button>
-                                <button class="btn btn-primary">Registrovat se</button>
-                            </div>
+
 
                             <!-- Mobilní menu tlačítko -->
                             <div class="md:hidden">
@@ -142,7 +165,7 @@
                     <div class="px-2 pt-2 pb-3 space-y-1 bg-white rounded-lg shadow-lg mt-2">
                         <a href="/" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-primary-600 hover:bg-gray-50">Domů</a>
                         <a href="/kalkulacka" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-primary-600 hover:bg-gray-50">Kalkulačka</a>
-                        <a href="/srovnani" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-primary-600 hover:bg-gray-50">Nájem vs. hypotéka</a>
+                        <a href="najem-vs-hypoteka.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-primary-600 hover:bg-gray-50">Nájem vs. hypotéka</a>
                         <a href="/blog" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-primary-600 hover:bg-gray-50">Blog</a>
                         <a href="/kontakt" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-primary-600 hover:bg-gray-50">Kontakt</a>
                         <div class="mt-4 space-y-2">
@@ -172,8 +195,8 @@
                         Zadejte poptávku, do 10 minut si zavoláme a za pár týdnů bydlíte.
                     </p>
                 </div>
-                <a href="#calculator" class="inline-block bg-primary-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-primary-600 transition-colors duration-200">
-                    Spočítat hypotéku
+                <a href="#hypoteka" class="inline-block bg-primary-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-primary-600 transition-colors duration-200">
+                    HYPOTÉKA NA MÍRU
                 </a>
             </div>
         </div>
@@ -182,15 +205,15 @@
         <!-- Mortgage comparison -->
         <div class="mx-auto max-w-3xl px-6 lg:px-8 bg-white rounded-3xl p-8 shadow-xl -mt-32 relative z-20">
             <div class="mx-auto max-w-4xl text-center">
-                <h2 class="text-base font-semibold leading-7 text-primary-500">BYDLETE VE SVÉM</h2>
-                <p class="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">Proč využít Hypoteeku.cz?</p>
-                <p class="mt-6 text-2xl text-gray-700">Protože ušetříte. Za 30 let to může být až <span class="text-primary-600 font-bold">2 500 000 Kč</span></p>
-                <div class="mt-8 flex justify-center">
-                    <div class="animate-bounce">
-                        <svg class="w-8 h-8 text-primary-500" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                            <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-                        </svg>
-                    </div>
+                <h2 class="text-base font-semibold leading-7 text-primary-500">UŠETŘETE NA HYPOTÉCE</h2>
+                <p class="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">Kolik můžete ušetřit s Hypoteekou?</p>
+                <p class="mt-6 text-lg leading-8 text-gray-600">Na příkladu hypotéky vám ukážeme, kolik můžete ušetřit díky našim zkušeným poradcům na splátce hypotéky</p>
+                
+                <!-- Highlighted savings box -->
+                <div class="mt-8 mx-auto max-w-lg bg-primary-100 rounded-3xl p-8 border-2 border-primary-200 text-center shadow-sm">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Celková úspora za 30 let:</h3>
+                    <p class="text-4xl font-bold text-primary-600 mb-4" id="total-savings">0 Kč</p>
+                    <p class="text-sm text-gray-600">Tolik peněz můžete ušetřit díky výhodnější úrokové sazbě od Hypoteeka.cz u hypotéky ve výši <span id="selected-mortgage-amount">2 500 000 Kč</span></p>
                 </div>
             </div>
 
@@ -226,7 +249,7 @@
                         <div class="text-2xl font-bold text-gray-900 mb-2">
                             <span id="bankOffer">9 611 Kč</span>
                         </div>
-                        <div class="text-gray-600">Nabídka od banky</div>
+                        <div class="text-gray-600">Běžná měsíční splátka<br>při návštěvě banky bez experta</div>
                     </div>
 
                     <!-- Hypoteeka offer -->
@@ -236,20 +259,18 @@
                             <div class="text-2xl font-bold text-white mb-2">
                                 <span id="mortgageOffer">9 241 Kč</span>
                             </div>
-                            <div class="text-primary-100">Hypoteeka nabídka</div>
+                            <div class="text-primary-100">Vaše orientační měsíční splátka<br>s Hypoteekou</div>
                         </div>
                     </div>
                 </div>
 
                 <p class="text-sm text-gray-500 text-center mt-8 max-w-2xl mx-auto">
-                    Jedná se o příklad vypočítaný z koeficientu sazby, které dosahují naši poradci a toho, co získáte v nabídce od své banky.
+                    Díky zkušenostem našich poradců a vyjednané spolupráci s bankami dokážeme získat výhodnější úrokovou sazbu než při běžné návštěvě pobočky. Posuňte posuvník a uvidíte, kolik můžete ušetřit na vaší hypotéce.
                 </p>
 
                 <!-- Total savings -->
                 <div class="text-center mt-12">
-                    <p class="text-lg text-gray-600">Celková úspora za 30 let:</p>
-                    <p class="text-4xl font-bold text-primary-600 mt-2" id="totalSavings">133 200 Kč</p>
-
+                    
                     <!-- CTA tlačítka -->
                     <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4">
                         <a href="/konzultace" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-white bg-primary-600 hover:bg-primary-700 transition-colors duration-200">
@@ -271,10 +292,10 @@
                     <p class="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">Kdy je pro vás Hypoteeka správná volba?</p>
                 </div>
 
-                <div class="mx-auto mt-16 pt-24 grid max-w-2xl grid-cols-1 gap-8 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+                <div class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-4">
                     <!-- Karta: Bydlíte u rodičů -->
-                    <div class="bg-white rounded-3xl shadow-lg overflow-hidden p-8 flex flex-col items-center text-center relative">
-                        <div class="w-64 h-64 -mt-32 rounded-full overflow-hidden shadow-lg border-8 border-white">
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-64 h-64 rounded-full overflow-hidden shadow-lg border-8 border-white">
                             <img src="images/parents.jpg" alt="Bydlení u rodičů" class="w-full h-full object-cover object-center">
                         </div>
                         <h3 class="text-2xl font-bold text-gray-900 mb-4 mt-4">Bydlíte u rodičů</h3>
@@ -284,8 +305,8 @@
                     </div>
 
                     <!-- Karta: Bydlíte ve vlastním -->
-                    <div class="bg-white rounded-3xl shadow-lg overflow-hidden p-8 flex flex-col items-center text-center relative">
-                        <div class="w-64 h-64 -mt-32 rounded-full overflow-hidden shadow-lg border-8 border-white">
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-64 h-64 rounded-full overflow-hidden shadow-lg border-8 border-white">
                             <img src="images/own.jpg" alt="Bydlení ve vlastním" class="w-full h-full object-cover object-center">
                         </div>
                         <h3 class="text-2xl font-bold text-gray-900 mb-4 mt-4">Bydlíte ve vlastním</h3>
@@ -295,18 +316,32 @@
                     </div>
 
                     <!-- Karta: Bydlíte v nájmu -->
-                    <div class="bg-white rounded-3xl shadow-lg overflow-hidden p-8 flex flex-col items-center text-center relative">
-                        <div class="w-64 h-64 -mt-32 rounded-full overflow-hidden shadow-lg border-8 border-white">
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-64 h-64 rounded-full overflow-hidden shadow-lg border-8 border-white">
                             <img src="images/rent.jpg" alt="Bydlení v nájmu" class="w-full h-full object-cover object-center">
                         </div>
                         <h3 class="text-2xl font-bold text-gray-900 mb-4 mt-4">Bydlíte v nájmu</h3>
-                        <p class="text-lg text-gray-600 mb-4">Bydlíte v nájmu</p>
-                        <p class="text-gray-600 mb-8">Chcete, aby váš domov říkal pane pouze vám? Zadejte poptávku a my se vám do 10 minut ozveme, upřesníme detaily, spojíme s poradcem a do pár týdnů si můžete tento sen splnit.</p>
+                        <p class="text-lg text-gray-600 mb-4">Bydlíte v nájmu a chcete vlastní</p>
+                        <p class="text-gray-600 mb-8">Už vás nebaví platit nájem a chcete konečně bydlet ve vlastním? Vyplňte náš dotazník a my vám ukážeme, jak na to.</p>
+                        <a href="/kalkulacka" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-primary-600 hover:bg-primary-700 transition-colors duration-200">Chci Hypoteeku</a>
+                    </div>
+
+                    <!-- Karta: Investice -->
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-64 h-64 rounded-full overflow-hidden shadow-lg border-8 border-white">
+                            <img src="images/invest.png" alt="Investice do nemovitosti" class="w-full h-full object-cover object-center">
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4 mt-4">Chcete investovat</h3>
+                        <p class="text-lg text-gray-600 mb-4">Hledáte příležitost k investici</p>
+                        <p class="text-gray-600 mb-8">Máte našetřeno a chcete své peníze zhodnotit investicí do nemovitosti? Pomůžeme vám najít tu správnou nemovitost a zajistíme výhodné financování.</p>
                         <a href="/kalkulacka" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-primary-600 hover:bg-primary-700 transition-colors duration-200">Chci Hypoteeku</a>
                     </div>
                 </div>
             </div>
         </div>
+
+
+
 
         <!-- Kroky procesu -->
         <div class="py-24 sm:py-32">
@@ -347,92 +382,10 @@
             </div>
         </div>
 
-        <!-- Nájem versus Hypotéka -->
-        <div class="py-24 sm:py-32">
-            <div class="mx-auto max-w-7xl px-6 lg:px-8">
-                <div class="mx-auto max-w-4xl text-center">
-                    <h2 class="text-base font-semibold leading-7 text-primary-600">NÁJEM VERSUS HYPOTÉKA</h2>
-                    <p class="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">Porovnání nájmu a hypotéky</p>
-                </div>
-
-                <div class="mx-auto mt-16 max-w-4xl">
-                    <!-- Kalkulátor -->
-                    <div class="bg-white rounded-3xl shadow-lg overflow-hidden p-12 mb-8">
-                        <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
-                            <div>
-                                <label for="rent-amount" class="block text-base font-medium leading-6 text-gray-900 mb-3">Měsíční nájem</label>
-                                <div class="relative">
-                                    <input type="text" id="rent-amount" name="rent-amount" class="block w-full rounded-xl border-0 py-4 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 text-lg" placeholder="25 000" value="25000">
-                                    <div class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none text-gray-500">Kč</div>
-                                </div>
-                            </div>
-
-                            <div>
-                                <label for="mortgage-amount" class="block text-base font-medium leading-6 text-gray-900 mb-3">Měsíční hypotéka</label>
-                                <div class="relative">
-                                    <input type="text" id="mortgage-amount" name="mortgage-amount" class="block w-full rounded-xl border-0 py-4 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 text-lg" placeholder="20 000" value="20000">
-                                    <div class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none text-gray-500">Kč</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Výsledky -->
-                        <div class="mt-12">
-                            <div class="grid grid-cols-1 gap-8 sm:grid-cols-2">
-                                <!-- Nájem -->
-                                <div class="bg-gray-50 rounded-2xl p-8">
-                                    <h3 class="text-xl font-semibold text-gray-900 mb-6">Nájem</h3>
-                                    <table class="w-full">
-                                        <tr class="border-b border-gray-200">
-                                            <td class="py-4">Měsíčně</td>
-                                            <td class="py-4 text-right font-semibold" id="monthly-rent">25 000 Kč</td>
-                                        </tr>
-                                        <tr class="border-b border-gray-200">
-                                            <td class="py-4">Ročně</td>
-                                            <td class="py-4 text-right font-semibold" id="yearly-rent">300 000 Kč</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="py-4">Za 30 let</td>
-                                            <td class="py-4 text-right font-semibold" id="total-rent">9 000 000 Kč</td>
-                                        </tr>
-                                    </table>
-                                </div>
-
-                                <!-- Hypotéka -->
-                                <div class="bg-gray-50 rounded-2xl p-8">
-                                    <h3 class="text-xl font-semibold text-gray-900 mb-6">Hypotéka</h3>
-                                    <table class="w-full">
-                                        <tr class="border-b border-gray-200">
-                                            <td class="py-4">Měsíčně</td>
-                                            <td class="py-4 text-right font-semibold" id="monthly-mortgage">20 000 Kč</td>
-                                        </tr>
-                                        <tr class="border-b border-gray-200">
-                                            <td class="py-4">Ročně</td>
-                                            <td class="py-4 text-right font-semibold" id="yearly-mortgage">240 000 Kč</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="py-4">Za 30 let</td>
-                                            <td class="py-4 text-right font-semibold" id="total-mortgage">7 200 000 Kč</td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-
-                            <!-- Celková úspora -->
-                            <div class="mt-8 p-8 bg-primary-50 rounded-2xl border-2 border-primary-100">
-                                <div class="flex justify-between items-center">
-                                    <h3 class="text-xl font-semibold text-gray-900">Celková úspora s Hypoteekou</h3>
-                                    <p class="text-2xl font-bold text-primary-600" id="total-savings">1 800 000 Kč</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+ 
 
         <!-- Formulář pro výpočet hypotéky -->
-        <div class="py-24 sm:py-32 bg-gray-50">
+        <div id="hypoteka" class="py-24 sm:py-32 bg-gray-100">
             <div class="mx-auto max-w-7xl px-6 lg:px-8">
                 <div class="mx-auto max-w-4xl text-center">
                     <h2 class="text-base font-semibold leading-7 text-primary-600">HYPOTÉKA NA MÍRU</h2>
@@ -516,6 +469,212 @@
             </div>
         </div>
 
+<!-- Sociální důkazy -->
+<div class="py-24 sm:py-32">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <div class="mx-auto max-w-4xl text-center">
+            <h2 class="text-base font-semibold leading-7 text-primary-600">PROČ NÁM DŮVĚŘOVAT?</h2>
+            <p class="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">Co o nás říkají klienti</p>
+        </div>
+
+        <!-- Statistiky -->
+        <div class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 lg:max-w-none lg:grid-cols-3">
+            <div class="flex flex-col items-center p-8 bg-white rounded-3xl shadow-lg">
+                <div class="text-5xl font-bold text-primary-600 mb-4">1 200+</div>
+                <p class="text-lg text-gray-900 font-semibold">Spokojených klientů</p>
+                <p class="text-gray-600 text-center mt-2">Pomohli jsme více než 1 200 klientům získat výhodnější hypotéku</p>
+            </div>
+            <div class="flex flex-col items-center p-8 bg-white rounded-3xl shadow-lg">
+                <div class="text-5xl font-bold text-primary-600 mb-4">2.1 mld.</div>
+                <p class="text-lg text-gray-900 font-semibold">Sjednaných hypoték</p>
+                <p class="text-gray-600 text-center mt-2">Celková hodnota námi sjednaných hypoték přesahuje 2.1 miliardy Kč</p>
+            </div>
+            <div class="flex flex-col items-center p-8 bg-white rounded-3xl shadow-lg">
+                <div class="text-5xl font-bold text-primary-600 mb-4">4.9/5</div>
+                <p class="text-lg text-gray-900 font-semibold">Hodnocení klientů</p>
+                <p class="text-gray-600 text-center mt-2">Průměrné hodnocení našich služeb od spokojených klientů</p>
+            </div>
+        </div>
+
+        <!-- Recenze -->
+        <div class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 lg:max-w-none lg:grid-cols-3">
+            <!-- Recenze 1 -->
+            <div class="flex flex-col justify-between p-8 bg-white rounded-3xl shadow-lg">
+                <div>
+                    <div class="flex gap-1 mb-4">
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                        </svg>
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                        </svg>
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                        </svg>
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                        </svg>
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                        </svg>
+                    </div>
+                    <p class="text-gray-600 mb-4">"Díky Hypoteece jsme ušetřili přes 2 000 Kč měsíčně na splátkách. Proces byl rychlý a profesionální, vše nám bylo srozumitelně vysvětleno."</p>
+                </div>
+                <div class="flex items-center">
+                    <img class="h-12 w-12 rounded-full" src="images/testimonial-1.jpg" alt="">
+                    <div class="ml-4">
+                        <p class="text-base font-semibold text-gray-900">Jan Novák</p>
+                        <p class="text-sm text-gray-600">Praha</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recenze 2 -->
+            <div class="flex flex-col justify-between p-8 bg-white rounded-3xl shadow-lg">
+                <div>
+                    <div class="flex gap-1 mb-4">
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                        </svg>
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                        </svg>
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                        </svg>
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                        </svg>
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                        </svg>
+                    </div>
+                    <p class="text-gray-600 mb-4">"Oceňuji především individuální přístup a rychlost vyřízení. Poradce nám pomohl najít nejlepší řešení pro naši situaci a vše proběhlo hladce."</p>
+                </div>
+                <div class="flex items-center">
+                    <img class="h-12 w-12 rounded-full" src="images/testimonial-2.jpg" alt="">
+                    <div class="ml-4">
+                        <p class="text-base font-semibold text-gray-900">Marie Svobodová</p>
+                        <p class="text-sm text-gray-600">Brno</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recenze 3 -->
+            <div class="flex flex-col justify-between p-8 bg-white rounded-3xl shadow-lg">
+                <div>
+                    <div class="flex gap-1 mb-4">
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                        </svg>
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                        </svg>
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                        </svg>
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                        </svg>
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                        </svg>
+                    </div>
+                    <p class="text-gray-600 mb-4">"Skvělá služba! Díky Hypoteece jsme získali lepší úrok, než jsme původně očekávali. Komunikace byla perfektní a vše proběhlo podle plánu."</p>
+                </div>
+                <div class="flex items-center">
+                    <img class="h-12 w-12 rounded-full" src="images/testimonial-3.jpg" alt="">
+                    <div class="ml-4">
+                        <p class="text-base font-semibold text-gray-900">Petr Dvořák</p>
+                        <p class="text-sm text-gray-600">Ostrava</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <!-- Footer -->
+    <footer class="bg-white">
+        <!-- Newsletter subscription -->
+        <div class="mx-auto max-w-7xl px-6 py-12 lg:px-8 border-b border-gray-900/10">
+            <div class="mx-auto max-w-2xl text-center">
+                <h2 class="text-2xl font-bold tracking-tight text-gray-900">Přihlaste se k odběru Čtvrteční hypoteeční kávárny</h2>
+                <form class="mt-6 flex max-w-md gap-x-4 mx-auto">
+                    <label for="email-address" class="sr-only">Email</label>
+                    <input id="email-address" name="email" type="email" autocomplete="email" required class="min-w-0 flex-auto rounded-xl border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 text-sm sm:leading-6" placeholder="Vložte váš e-mail">
+                    <button type="submit" class="flex-none rounded-xl bg-primary-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600">Přihlásit se</button>
+                </form>
+                <p class="mt-4 text-sm text-gray-600">
+                    Odesláním formuláře souhlasíte se <a href="#" class="font-semibold text-primary-600 hover:text-primary-500">Zásady zpracování osobních údajů</a>
+                </p>
+            </div>
+        </div>
+
+        <div class="mx-auto max-w-7xl px-6 py-12 lg:px-8">
+            <div class="grid grid-cols-1 gap-8 md:grid-cols-4">
+                <!-- Půjčit si peníze -->
+                <div>
+                    <h3 class="text-sm font-semibold leading-6 text-gray-900">Půjčit si peníze</h3>
+                    <ul role="list" class="mt-6 space-y-4">
+                        <li><a href="#" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Hypotéky</a></li>
+                        <li><a href="#" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Hypotéka na koupi bytu</a></li>
+                        <li><a href="#" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Hypotéka na koupi domu</a></li>
+                        <li><a href="#" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Hypotéka na stavbu domu</a></li>
+                        <li><a href="#" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Hypotéka na rekonstrukci bytu</a></li>
+                        <li><a href="#" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Hypotéka na rekonstrukci domu</a></li>
+                        <li><a href="#" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Hypotéka na majetkové vypořádání</a></li>
+                    </ul>
+                </div>
+
+                <!-- Spolupráce s Hypoteeka.cz -->
+                <div>
+                    <h3 class="text-sm font-semibold leading-6 text-gray-900">Spolupráce s Hypoteeka.cz</h3>
+                    <ul role="list" class="mt-6 space-y-4">
+                        <li><a href="#" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Pro finanční specialisty</a></li>
+                        <li><a href="#" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Pro developery</a></li>
+                        <li><a href="#" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Doporučte nám klienta</a></li>
+                        <li><a href="#" class="text-sm leading-6 text-gray-600 hover:text-gray-900">21 rad pro finanční poradce</a></li>
+                        <li><a href="#" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Hypoteeka Admin</a></li>
+                        <li><a href="#" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Obchodní podmínky</a></li>
+                    </ul>
+                </div>
+
+                <!-- Užitečné informace -->
+                <div>
+                    <h3 class="text-sm font-semibold leading-6 text-gray-900">Užitečné informace</h3>
+                    <ul role="list" class="mt-6 space-y-4">
+                        <li><a href="#" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Blog</a></li>
+                        <li><a href="#" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Hypoteční kalkulačka</a></li>
+                        <li><a href="#" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Kontakt</a></li>
+                        <li><a href="#" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Obchodní podmínky</a></li>
+                    </ul>
+                </div>
+
+                <!-- About Hypoteeka.cz -->
+                <div>
+                    <img src="images/logo.png" alt="Hypoteeka.cz" class="h-8 w-auto mb-6">
+                    <h3 class="text-sm font-semibold leading-6 text-gray-900">Hypoteeka.cz</h3>
+                    <p class="mt-6 text-sm leading-6 text-gray-600">Hypoteeka.cz je moderní platforma pro sjednání hypotéky online. Díky našim zkušenostem a technologiím vám pomůžeme získat nejvýhodnější hypotéku na trhu.</p>
+                    <div class="mt-6 flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-gray-500">
+                            <span class="sr-only">Facebook</span>
+                            <i class="fab fa-facebook text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-gray-500">
+                            <span class="sr-only">Instagram</span>
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 border-t border-gray-900/10 pt-8">
+                <p class="text-sm leading-6 text-gray-600">&copy; 2025 Hypoteeka.cz. Všechna práva vyhrazena.</p>
+            </div>
+        </div>
+    </footer>
+
     <script>
         // Formátování čísla s mezerami a měnou
         function formatCurrency(number) {
@@ -588,8 +747,9 @@
         // Funkce pro aktualizaci částky hypotéky
         function updateMortgageAmount(value) {
             // Formátování zobrazené částky
-            const formattedValue = new Intl.NumberFormat('cs-CZ').format(value);
-            document.getElementById('amount-display').textContent = `${formattedValue} Kč`;
+            const formattedValue = formatCurrency(value);
+            document.getElementById('amount-display').textContent = formattedValue;
+            document.getElementById('selected-mortgage-amount').textContent = formattedValue;
             
             // Aktualizace pozice bubliny
             const slider = document.getElementById('mortgage-amount');
@@ -610,13 +770,13 @@
             const bankPayment = Math.round(monthlyPayment * 1.03);
             const mortgagePayment = Math.round(monthlyPayment);
             
-            document.getElementById('bankOffer').textContent = 
-                new Intl.NumberFormat('cs-CZ').format(bankPayment) + ' Kč';
-            document.getElementById('mortgageOffer').textContent = 
-                new Intl.NumberFormat('cs-CZ').format(mortgagePayment) + ' Kč';
+            document.getElementById('bankOffer').textContent = formatCurrency(bankPayment);
+            document.getElementById('mortgageOffer').textContent = formatCurrency(mortgagePayment);
             
             // Výpočet celkové úspory
-            calculateTotalSavings(bankPayment, mortgagePayment);
+            const monthlyDiff = bankPayment - mortgagePayment;
+            const totalSavings = monthlyDiff * 12 * 30; // Úspora za 30 let
+            document.getElementById('total-savings').textContent = formatCurrency(totalSavings);
         }
 
         // Inicializace při načtení stránky
@@ -636,6 +796,152 @@
                 header.classList.remove('bg-white/95');
             }
         });
+        // Notifikační systém
+        const names = [
+            'Adam', 'Barbora', 'Cyril', 'Dana', 'Emil', 'Františka', 'Gustav', 'Helena', 'Ivan', 'Jana',
+            'Karel', 'Lucie', 'Martin', 'Nina', 'Ondřej', 'Petra', 'Quido', 'Radka', 'Stanislav', 'Tereza',
+            'Urban', 'Věra', 'Walter', 'Xenie', 'Yvo', 'Zuzana', 'Antonín', 'Božena', 'Čestímír', 'Daniela',
+            'Eduard', 'František', 'Gabriel', 'Hana', 'Igor', 'Jitka', 'Kamil', 'Lenka', 'Marek', 'Natalie',
+            'Oldřich', 'Pavla', 'Richard', 'Soňa', 'Tomáš', 'Uršula', 'Viktor', 'Wendy', 'Xaver', 'Yveta',
+            'Zbyněk', 'Alena', 'Bedřich', 'Cecilie', 'David', 'Eliška', 'Filip', 'Gabriela', 'Hubert', 'Ilona'
+        ];
+
+        const cities = [
+            'Praha', 'Brno', 'Ostrava', 'Plzeň', 'Liberec', 'Olomouc', 'České Budějovice', 'Hradec Králové',
+            'Pardubice', 'Zlín', 'Kladno', 'Most', 'Karviná', 'Frýdek-Místek', 'Opava', 'Děčín', 'Karlovy Vary',
+            'Jičín', 'Tábor', 'Kroměříž', 'Přerov', 'Mladá Boleslav', 'Prostějov', 'Třebíč', 'Kolín',
+            'Česká Lípa', 'Třinec', 'Jihlava', 'Ústí nad Labem', 'Chomutov', 'Příbram', 'Teplice'
+        ];
+
+        function generateSavings() {
+            const baseAmount = Math.floor(Math.random() * (3000 - 1500) + 1500);
+            return Math.floor(baseAmount / 50) * 50; // Zaokrouhlení na padestky
+        }
+
+        function generateInterestDrop() {
+            return (Math.floor(Math.random() * 6) + 2) / 10; // 0.2% - 0.7%
+        }
+
+        function generateSuccessNotification() {
+            const name = names[Math.floor(Math.random() * names.length)];
+            const city = cities[Math.floor(Math.random() * cities.length)];
+            const savings = generateSavings();
+            const interestDrop = generateInterestDrop();
+
+            const templates = [
+                `${name} z města ${city} právě ušetřil(a) ${savings} Kč měsíčně`,
+                `${name} z ${city} refinancoval(a) hypotéku a ušetří ${savings} Kč měsíčně`,
+                `${name} (${city}) získal(a) hypotéku s úrokem o ${interestDrop}% nižším`,
+                `${name} z ${city} snížil(a) splátku o ${savings} Kč měsíčně`,
+                `Nový klient ${name} z ${city} ušetří ${savings} Kč každý měsíc`,
+                `Rodina z ${city} díky refinancování ušetří ${savings} Kč měsíčně`,
+                `${name} získal(a) v ${city} hypotéku se splátkou nižší o ${savings} Kč`,
+                `Úspěšná refinance v ${city}: úspora ${savings} Kč měsíčně`,
+                `${name} v ${city} snížil(a) úrok o ${interestDrop}% a ušetří ${savings} Kč`,
+                `Nová hypotéka v ${city} se splátkou nižší o ${savings} Kč`
+            ];
+
+            return templates[Math.floor(Math.random() * templates.length)];
+        }
+
+        function generateInfoNotification() {
+            const refinanceCount = Math.floor(Math.random() * (2000 - 1000) + 1000);
+            const monthlyClients = Math.floor(Math.random() * (60 - 30) + 30);
+            const avgSavings = Math.floor(Math.random() * (2500 - 1800) + 1800);
+            const successRate = Math.floor(Math.random() * (99 - 95) + 95);
+
+            const templates = [
+                `Již ${refinanceCount} refinancovaných hypoték`,
+                `Průměrná úspora našich klientů je ${avgSavings} Kč měsíčně`,
+                `Tento měsíc jsme pomohli ${monthlyClients} klientům`,
+                `Úspěšnost schválení hypotéky je ${successRate}%`,
+                `Celková úspora našich klientů: ${refinanceCount * avgSavings} Kč měsíčně`,
+                `${monthlyClients} nových klientů tento měsíc`,
+                `Průměrná doba vyřízení hypotéky: 21 dní`,
+                `${successRate}% klientů doporučuje naše služby`,
+                `Spolupracujeme s ${Math.floor(Math.random() * 5) + 10} bankami`,
+                `Již ${Math.floor(monthlyClients * 1.5)} konzultací tento měsíc`
+            ];
+
+            return templates[Math.floor(Math.random() * templates.length)];
+        }
+
+        const notificationTypes = [
+            {
+                type: 'success',
+                generate: generateSuccessNotification
+            },
+            {
+                type: 'info',
+                generate: generateInfoNotification
+            }
+        ];
+
+        function showNotification() {
+            const notificationType = notificationTypes[Math.floor(Math.random() * notificationTypes.length)];
+            const message = notificationType.generate();
+            
+            const notificationElement = document.createElement('div');
+            notificationElement.className = 'notification bg-white rounded-lg shadow-lg p-4 flex items-center gap-3 max-w-sm';
+            notificationElement.innerHTML = `
+                <div class="flex-shrink-0 text-primary-600">
+                    ${notificationType.type === 'success' 
+                        ? '<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>'
+                        : '<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>'
+                    }
+                </div>
+                <p class="text-sm text-gray-600">${message}</p>
+            `;
+
+            const container = document.getElementById('notifications');
+            container.appendChild(notificationElement);
+
+            // Odstranit notifikaci po 5 sekundách
+            setTimeout(() => {
+                notificationElement.remove();
+            }, 5000);
+        }
+
+        // Zobrazit notifikaci každých 8-15 sekund
+        function scheduleNextNotification() {
+            const delay = Math.random() * (15000 - 8000) + 8000;
+            setTimeout(() => {
+                showNotification();
+                scheduleNextNotification();
+            }, delay);
+        }
+
+        // Spustit notifikace po načtení stránky
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(scheduleNextNotification, 3000);
+        });
     </script>
+
+    <!-- Notifikace -->
+    <div id="notifications" class="fixed bottom-8 left-8 z-50 flex flex-col gap-4">
+        <!-- Notifikace budou přidávány zde dynamicky -->
+    </div>
+
+    <!-- Rychlé akce -->
+    <div class="fixed bottom-8 right-8 flex flex-col gap-4">
+        <!-- Tlačítko pro email -->
+        <a href="mailto:info@hypoteeka.cz" class="bg-primary-600 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-primary-700 transition-colors duration-200">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+        </a>
+        <!-- Tlačítko pro telefon -->
+        <a href="tel:+420777888999" class="bg-primary-600 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-primary-700 transition-colors duration-200">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+            </svg>
+        </a>
+        <!-- Tlačítko pro návrat nahoru -->
+        <a href="#" class="bg-primary-600 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-primary-700 transition-colors duration-200">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+            </svg>
+        </a>
+    </div>
 </body>
 </html>

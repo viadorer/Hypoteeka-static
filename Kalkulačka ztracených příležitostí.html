@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="cs" style="scroll-behavior: smooth;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <title>Investiční kalkulačka | Hypoteeka.cz</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .nav-link {
+            @apply text-base font-medium transition-colors duration-200;
+        }
+        .btn {
+            @apply inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors duration-200;
+        }
+        .btn-primary {
+            @apply bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500;
+        }
+        .btn-secondary {
+            @apply bg-white text-primary-600 border-primary-600 hover:bg-primary-50 focus:ring-primary-500;
+        }
+        .btn-icon {
+            @apply p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500;
+        }
+        [x-cloak] { display: none !important; }
+
+        /* Primary colors - Dark Blue */
+        .bg-primary-500 { background-color: #0F4C81; }
+        .bg-primary-600 { background-color: #0D3D66; }
+        .bg-primary-700 { background-color: #0B2F4D; }
+        .text-primary-500 { color: #0F4C81; }
+        .text-primary-600 { color: #0D3D66; }
+        .text-primary-100 { color: #E6F3FF; }
+        
+        /* Gradients */
+        .bg-gradient-to-br {
+            background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));
+        }
+        .from-primary-600 {
+            --tw-gradient-from: #0D3D66;
+            --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(67 56 202 / 0));
+        }
+        .to-primary-700 {
+            --tw-gradient-to: #0B2F4D;
+        }
+        
+        /* Opacity */
+        .bg-primary-500\/20 {
+            background-color: rgb(15 76 129 / 0.2);
+        }
+        
+        /* Backdrop blur */
+        .backdrop-blur-sm {
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <div x-data="{ mobileMenuOpen: false }">
+        <!-- Plovoucí navigace -->
+        <header class="fixed top-0 left-0 right-0 z-50">
+            <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8" aria-label="Top">
+                <div class="bg-white rounded-full shadow-lg">
+                    <div class="relative flex h-16 items-center justify-between px-8">
+                        <!-- Logo -->
+                        <div class="flex flex-shrink-0 items-center">
+                            <a href="index.html">
+                                <img class="h-8 w-auto" src="images/logo.png" alt="Hypoteeka">
+                            </a>
+                        </div>
+
+                        <!-- Desktop menu -->
+                        <div class="hidden md:flex md:gap-x-8">
+                            <a href="index.html" class="nav-link text-gray-700 hover:text-primary-600">Domů</a>
+                            <a href="najem-vs-hypoteka.html" class="nav-link text-gray-700 hover:text-primary-600">Nájem vs. hypotéka</a>
+                            <a href="investicni-kalkulacka.html" class="nav-link text-gray-700 hover:text-primary-600">Investiční kalkulačka</a>
+                            <a href="Kalkulačka ztracených příležitostí.html" class="nav-link text-primary-600">Kalkulačka ztracených příležitostí</a>
+                        </div>
+
+                        <!-- CTA button -->
+                        <div class="hidden md:flex md:flex-1 md:justify-end">
+                            <a href="index.html#hypoteka" class="btn btn-primary">
+                                Spočítat hypotéku
+                            </a>
+                        </div>
+
+                        <!-- Mobile menu button -->
+                        <div class="flex md:hidden">
+                            <button type="button" @click="mobileMenuOpen = !mobileMenuOpen" class="btn-icon">
+                                <span class="sr-only">Otevřít menu</span>
+                                <i class="fas fa-bars text-gray-600 text-xl" x-show="!mobileMenuOpen"></i>
+                                <i class="fas fa-times text-gray-600 text-xl" x-show="mobileMenuOpen" style="display: none;"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile menu -->
+                <div class="md:hidden" x-show="mobileMenuOpen" @click.away="mobileMenuOpen = false" style="display: none;">
+                    <div class="bg-white rounded-3xl shadow-lg mt-4 px-2 py-3 space-y-1">
+                        <a href="index.html" class="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Domů</a>
+                        <a href="najem-vs-hypoteka.html" class="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Nájem vs. hypotéka</a>
+                        <a href="investicni-kalkulacka.html" class="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Investiční kalkulačka</a>
+                        <a href="Kalkulačka ztracených příležitostí.html" class="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-primary-600 bg-gray-50">Kalkulačka ztracených příležitostí</a>
+                        <a href="index.html#hypoteka" class="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white bg-primary-600 hover:bg-primary-700">Spočítat hypotéku</a>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Hero sekce -->
+        <div class="relative min-h-[600px] flex items-center pb-48">
+            <!-- Background image -->
+            <div class="absolute inset-0 z-0">
+                <img src="images/hero.png" alt="" class="w-full h-full object-cover">
+                <div class="absolute inset-0 backdrop-blur-sm bg-black/20"></div>
+            </div>
+
+            <!-- Hero content -->
+            <div class="relative z-10 mx-auto max-w-7xl px-6 lg:px-8 pt-32">
+                <div class="mx-auto max-w-2xl text-center">
+                    <h1 class="text-4xl font-bold tracking-tight text-white sm:text-6xl">Kalkulačka ztracených příležitostí</h1>
+                    <p class="mt-6 text-lg leading-8 text-gray-300">
+                        Zjistěte, kolik peněz ztrácíte placením nájmu místo vlastního bydlení a jaký majetek byste mohli mít za 10 let.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+<!-- Hlavní container -->
+<div class="mx-auto max-w-3xl px-6 lg:px-8 bg-white rounded-3xl p-8 shadow-xl -mt-32 relative z-20">
+    <!-- Úvodní sekce -->
+    <div class="mx-auto max-w-4xl text-center">
+        <h2 class="text-base font-semibold leading-7 text-primary-500">KALKULAČKA ZTRACENÝCH PŘÍLEŽITOSTÍ</h2>
+        <p class="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">Kolik peněz ztrácíte nájmem?</p>
+        <p class="mt-6 text-lg leading-8 text-gray-600">Spočítejte si, o kolik přicházíte tím, že nemáte vlastní nemovitost</p>
+    </div>
+
+    <!-- Vysvětlení konceptu -->
+    <div class="mt-12 bg-gray-50 rounded-2xl p-8">
+        <h3 class="text-xl font-bold text-gray-900 mb-6">Jak to funguje?</h3>
+        
+        <div class="space-y-6">
+            <div class="flex gap-4">
+                <div class="flex-shrink-0 w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center text-white font-bold">1</div>
+                <div>
+                    <h4 class="font-semibold text-gray-900">Nájem vs. Vlastní bydlení</h4>
+                    <p class="text-gray-600">Když platíte nájem, peníze každý měsíc odcházejí bez návratnosti. Při splácení hypotéky si budujete vlastní majetek a nemovitost se navíc zhodnocuje.</p>
+                </div>
+            </div>
+
+            <div class="flex gap-4">
+                <div class="flex-shrink-0 w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center text-white font-bold">2</div>
+                <div>
+                    <h4 class="font-semibold text-gray-900">Růst hodnoty nemovitosti</h4>
+                    <p class="text-gray-600">Nemovitosti dlouhodobě rostou na hodnotě v průměru o 4-6% ročně. Tento růst představuje pasivní zisk, který v nájmu nikdy nezískáte.</p>
+                </div>
+            </div>
+
+            <div class="flex gap-4">
+                <div class="flex-shrink-0 w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center text-white font-bold">3</div>
+                <div>
+                    <h4 class="font-semibold text-gray-900">Vlastní kapitál</h4>
+                    <p class="text-gray-600">Každou splátkou hypotéky si budujete vlastní kapitál v nemovitosti. Po 10 letech můžete mít vlastní kapitál v hodnotě několika milionů korun.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Příklad -->
+        <div class="mt-8 bg-white rounded-xl p-6 border border-gray-200">
+            <h4 class="font-semibold text-gray-900 mb-4">Příklad z praxe:</h4>
+            <p class="text-gray-600">Rodina platí měsíčně nájem 20 000 Kč. Za 10 let:</p>
+            <ul class="mt-4 space-y-2 text-gray-600">
+                <li class="flex items-start gap-2">
+                    <svg class="w-5 h-5 text-red-500 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                    <span>Zaplatí 2 400 000 Kč na nájmu</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <svg class="w-5 h-5 text-red-500 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                    <span>Nemají žádný vlastní majetek v nemovitosti</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <svg class="w-5 h-5 text-red-500 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                    <span>Přišli o zhodnocení nemovitosti (cca 1-2 miliony Kč)</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Co můžete získat -->
+        <div class="mt-8 bg-primary-50 rounded-xl p-6 border border-primary-100">
+            <h4 class="font-semibold text-gray-900 mb-4">Co můžete získat vlastním bydlením:</h4>
+            <ul class="mt-4 space-y-2 text-gray-600">
+                <li class="flex items-start gap-2">
+                    <svg class="w-5 h-5 text-primary-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <span>Vlastní kapitál v nemovitosti (30-40% z hodnoty)</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <svg class="w-5 h-5 text-primary-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <span>Zhodnocení nemovitosti (4-6% ročně)</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <svg class="w-5 h-5 text-primary-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <span>Jistotu vlastního bydlení bez rizika výpovědi</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Kalkulačka -->
+    <div class="mt-12">
+        <!-- Vstupní údaje -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Levá strana - Nájem -->
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-200">
+                <h3 class="text-lg font-semibold text-gray-900 mb-6">Vaše současná situace</h3>
+                <div class="space-y-4">
+                    <div>
+                        <label for="monthly-rent" class="block text-sm font-medium text-gray-700">Měsíční nájem</label>
+                        <div class="mt-1 relative">
+                            <input type="text" id="monthly-rent" class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500" value="20000">
+                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                <span class="text-gray-500 sm:text-sm">Kč</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="savings" class="block text-sm font-medium text-gray-700">Měsíční úspory</label>
+                        <div class="mt-1 relative">
+                            <input type="text" id="savings" class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500" value="10000">
+                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                <span class="text-gray-500 sm:text-sm">Kč</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pravá strana - Hypotéka -->
+            <div class="bg-primary-50 rounded-2xl p-6 border border-primary-100">
+                <h3 class="text-lg font-semibold text-gray-900 mb-6">Alternativní scénář</h3>
+                <div class="space-y-4">
+                    <div>
+                        <label for="property-price" class="block text-sm font-medium text-gray-700">Cena nemovitosti</label>
+                        <div class="mt-1 relative">
+                            <input type="text" id="property-price" class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500" value="5000000">
+                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                <span class="text-gray-500 sm:text-sm">Kč</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="mortgage-payment" class="block text-sm font-medium text-gray-700">Splátka hypotéky</label>
+                        <div class="mt-1 relative">
+                            <input type="text" id="mortgage-payment" class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500" value="25000">
+                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                <span class="text-gray-500 sm:text-sm">Kč</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Výsledky -->
+        <div class="mt-12 bg-red-50 rounded-2xl p-8 border border-red-100">
+            <div class="text-center">
+                <h3 class="text-2xl font-bold text-red-800 mb-2">Měsíční ztráta</h3>
+                <p class="text-5xl font-bold text-red-800" id="monthly-loss">35 000 Kč</p>
+                <p class="mt-2 text-red-600">Tolik peněz každý měsíc ztrácíte placením nájmu</p>
+            </div>
+
+            <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="text-center">
+                    <h4 class="text-lg font-semibold text-red-800 mb-2">Za rok přijdete o</h4>
+                    <p class="text-3xl font-bold text-red-800" id="yearly-loss">420 000 Kč</p>
+                </div>
+                <div class="text-center">
+                    <h4 class="text-lg font-semibold text-red-800 mb-2">Za 10 let přijdete o</h4>
+                    <p class="text-3xl font-bold text-red-800" id="decade-loss">4 200 000 Kč</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Graf vývoje majetku -->
+        <div class="mt-12">
+            <h3 class="text-xl font-semibold text-gray-900 mb-6 text-center">Vývoj vašeho majetku v čase</h3>
+            <canvas id="wealth-chart" class="w-full"></canvas>
+        </div>
+
+        <!-- Co by se stalo, kdybyste začali dnes -->
+        <div class="mt-12 bg-white rounded-2xl p-8 border border-gray-200">
+            <h3 class="text-xl font-semibold text-gray-900 mb-6">Po 10 letech byste mohli mít:</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h4 class="font-semibold text-gray-900">Scénář s nájmem</h4>
+                    <ul class="mt-4 space-y-3">
+                        <li class="flex items-center gap-2">
+                            <svg class="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+                            </svg>
+                            <span id="rent-scenario-total" class="text-red-600">2 400 000 Kč zaplaceno na nájmu</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                            <span id="savings-total" class="text-green-600">1 200 000 Kč naspořeno</span>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-gray-900">Scénář s vlastním bydlením</h4>
+                    <ul class="mt-4 space-y-3">
+                        <li class="flex items-center gap-2">
+                            <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                            <span id="property-value-total" class="text-green-600">6 000 000 Kč hodnota nemovitosti</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                            <span id="equity-total" class="text-green-600">1 500 000 Kč vlastní kapitál</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="mt-12 text-center">
+            <a href="#hypoteka" class="inline-block rounded-full bg-red-600 px-12 py-4 text-lg font-semibold text-white shadow-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-all duration-200">
+                Spočítat si hypotéku
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript pro kalkulačku -->
+<script>
+// Formátování měny
+function formatCurrency(amount) {
+    return new Intl.NumberFormat('cs-CZ', {
+        style: 'currency',
+        currency: 'CZK',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+    }).format(amount);
+}
+
+// Formátování vstupů
+function formatInput(input) {
+    let value = input.value.replace(/\D/g, '');
+    if (value === '') return;
+    input.value = new Intl.NumberFormat('cs-CZ').format(value);
+}
+
+// Výpočet budoucí hodnoty
+function calculateFutureValue(monthlyAmount, years, rate) {
+    const monthlyRate = rate / 12 / 100;
+    const months = years * 12;
+    let futureValue = 0;
+    
+    for (let i = 0; i < months; i++) {
+        futureValue = (futureValue + monthlyAmount) * (1 + monthlyRate);
+    }
+    
+    return futureValue;
+}
+
+// Inicializace grafu
+let wealthChart = null;
+
+function updateChart(rentData, propertyData) {
+    const ctx = document.getElementById('wealth-chart').getContext('2d');
+    
+    if (wealthChart) {
+        wealthChart.destroy();
+    }
+
+    wealthChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: Array.from({length: 11}, (_, i) => `Rok ${i}`),
+            datasets: [{
+                label: 'Nájem + Úspory',
+                data: rentData,
+                borderColor: '#DC2626',
+                backgroundColor: 'rgba(220, 38, 38, 0.1)',
+                fill: true
+            }, {
+                label: 'Vlastní bydlení',
+                data: propertyData,
+                borderColor: '#0F4C81',
+                backgroundColor: 'rgba(15, 76, 129, 0.1)',
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Vývoj majetku v čase'
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return formatCurrency(value);
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
+// Aktualizace výpočtů
+function updateCalculations() {
+    // Získání hodnot
+    const monthlyRent = parseFloat(document.getElementById('monthly-rent').value.replace(/\D/g, ''));
+    const monthlySavings = parseFloat(document.getElementById('savings').value.replace(/\D/g, ''));
+    const propertyPrice = parseFloat(document.getElementById('property-price').value.replace(/\D/g, ''));
+    const mortgagePayment = parseFloat(document.getElementById('mortgage-payment').value.replace(/\D/g, ''));
+
+    // Konstanty
+    const propertyAppreciation = 4; // 4% ročně
+    const investmentReturn = 7; // 7% ročně
+    const years = 10;
+
+    // Výpočet měsíční ztráty
+    const monthlyLoss = mortgagePayment - monthlyRent;
+    const yearlyLoss = monthlyLoss * 12;
+    const decadeLoss = yearlyLoss * years;
+
+    // Aktualizace výsledků
+    document.getElementById('monthly-loss').textContent = formatCurrency(monthlyLoss);
+    document.getElementById('yearly-loss').textContent = formatCurrency(yearlyLoss);
+    document.getElementById('decade-loss').textContent = formatCurrency(decadeLoss);
+
+    // Výpočet celkových částek po 10 letech
+    const totalRentPaid = monthlyRent * 12 * years;
+    const totalSavings = calculateFutureValue(monthlySavings, years, investmentReturn);
+    const futurePropertyValue = propertyPrice * Math.pow(1 + propertyAppreciation/100, years);
+    const totalEquity = futurePropertyValue - (propertyPrice * 0.7); // Předpokládáme 30% akontaci
+
+    // Aktualizace celkových částek
+    document.getElementById('rent-scenario-total').textContent = `${formatCurrency(totalRentPaid)} zaplaceno na nájmu`;
+    document.getElementById('savings-total').textContent = `${formatCurrency(totalSavings)} naspořeno`;
+    document.getElementById('property-value-total').textContent = `${formatCurrency(futurePropertyValue)} hodnota nemovitosti`;
+    document.getElementById('equity-total').textContent = `${formatCurrency(totalEquity)} vlastní kapitál`;
+
+    // Data pro graf
+    const rentData = [];
+    const propertyData = [];
+    
+    for (let year = 0; year <= years; year++) {
+        let rentScenario = calculateFutureValue(monthlySavings, year, investmentReturn);
+        rentData.push(rentScenario);
+
+        let propertyScenario = propertyPrice * Math.pow(1 + propertyAppreciation/100, year);
+        propertyData.push(propertyScenario);
+    }
+
+    updateChart(rentData, propertyData);
+}
+
+// Event listenery
+document.addEventListener('DOMContentLoaded', function() {
+    const inputs = document.querySelectorAll('input');
+    inputs.forEach(input => {
+        formatInput(input);
+        input.addEventListener('input', function() {
+            formatInput(this);
+            updateCalculations();
+        });
+    });
+
+    // Inicializace výpočtů
+    updateCalculations();
+});
+</script>
+</body>
+</html>

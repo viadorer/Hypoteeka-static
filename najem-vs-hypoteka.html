@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="images/favicon.png">
     <title>Nájem vs. hypotéka | Hypoteeka.cz</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -25,6 +26,25 @@
         }
     </script>
     <style>
+        /* Primary colors - Dark Blue */
+        .bg-primary-500 { background-color: #0F4C81; }
+        .bg-primary-600 { background-color: #0D3D66; }
+        .bg-primary-700 { background-color: #0B2F4D; }
+        .text-primary-500 { color: #0F4C81; }
+        .text-primary-600 { color: #0D3D66; }
+        .text-primary-100 { color: #E6F3FF; }
+        .bg-primary-50 { background-color: #F0F7FF; }
+        .border-primary-100 { border-color: #E6F3FF; }
+        
+        /* Opacity */
+        .bg-white\/90 { background-color: rgb(255 255 255 / 0.9); }
+        
+        /* Backdrop blur */
+        .backdrop-blur-md {
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
         .nav-link {
             @apply text-base font-medium transition-colors duration-200;
         }
@@ -54,7 +74,7 @@
                         <div class="flex lg:flex-1">
                             <div class="flex-shrink-0 flex items-center space-x-3">
                                 <img src="images/logo.png" alt="Hypoteeka.cz" class="h-10 w-10 rounded-full">
-                                <a href="/" class="text-2xl font-bold text-primary-600">Hypoteeka.cz</a>
+                                <a href="index.html" class="text-2xl font-bold text-primary-600">Hypoteeka.cz</a>
                             </div>
                         </div>
 
@@ -68,18 +88,14 @@
 
                         <!-- Desktop menu -->
                         <div class="hidden lg:flex lg:gap-x-12">
-                            <a href="#" class="nav-link text-gray-900 hover:text-primary-600">Domů</a>
-                            <a href="#" class="nav-link text-gray-900 hover:text-primary-600">Kalkulačka</a>
+                            <a href="index.html" class="nav-link text-gray-900 hover:text-primary-600">Domů</a>
+                            <a href="index.html#hypoteka" class="nav-link text-gray-900 hover:text-primary-600">Kalkulačka</a>
                             <a href="#" class="nav-link text-gray-900 hover:text-primary-600">Nájem vs. hypotéka</a>
                             <a href="#" class="nav-link text-gray-900 hover:text-primary-600">Blog</a>
                             <a href="#" class="nav-link text-gray-900 hover:text-primary-600">Kontakt</a>
                         </div>
 
-                        <!-- Přihlášení -->
-                        <div class="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-x-4">
-                            <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Přihlásit se</a>
-                            <a href="#" class="rounded-full bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-primary-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600">Registrovat se</a>
-                        </div>
+
                     </div>
                 </div>
             </nav>
@@ -103,15 +119,11 @@
                     <div class="mt-6 flow-root">
                         <div class="-my-6 divide-y divide-gray-500/10">
                             <div class="space-y-2 py-6">
-                                <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Domů</a>
-                                <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Kalkulačka</a>
+                                <a href="index.html" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Domů</a>
+                                <a href="index.html#hypoteka" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Kalkulačka</a>
                                 <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Nájem vs. hypotéka</a>
                                 <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Blog</a>
                                 <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Kontakt</a>
-                            </div>
-                            <div class="py-6 space-y-4">
-                                <a href="#" class="text-sm font-semibold leading-6 text-gray-900 block text-center">Přihlásit se</a>
-                                <a href="#" class="rounded-full bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-primary-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 block text-center">Registrovat se</a>
                             </div>
                         </div>
                     </div>
@@ -122,37 +134,34 @@
     <!-- Hlavní obsah -->
     <main>
         <!-- Hero sekce -->
-        <div class="relative min-h-[600px] flex items-center pb-48">
+        <div class="relative min-h-[800px] flex items-center pb-96">
             <!-- Background image -->
             <div class="absolute inset-0 z-0">
                 <img src="images/najemhypo.png" alt="" class="w-full h-full object-cover">
                 <div class="absolute inset-0 backdrop-blur-xl bg-black/40"></div>
             </div>
 
-            <!-- Content -->
-            <div class="relative z-10 mx-auto max-w-7xl px-6 lg:px-8 text-center text-white">
-                <h1 class="mt-24 text-4xl font-bold tracking-tight sm:text-6xl">Nájem nebo hypotéka?</h1>
-                <p class="mt-6 text-lg leading-8">Porovnejte si výhodnost nájmu a hypotéky. Zjistěte, která varianta je pro vás výhodnější.</p>
-            </div>
+            
         </div>
         <!-- Kalkulačka nájem vs. hypotéka -->
-        <div class="mx-auto max-w-7xl px-6 lg:px-8">
-            <div class="mx-auto max-w-4xl">
+        <div class="mx-auto max-w-7xl px-6 lg:px-8 -mt-32 relative z-20">
+            <div class="mx-auto max-w-4xl bg-white rounded-3xl shadow-xl p-8">
                 <div class="text-center mb-16">
-                    <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Nájem vs. hypotéka</h1>
+                    <h2 class="text-base font-semibold leading-7 text-primary-600">SROVNÁNÍ</h2>
+                    <p class="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">Nájem vs. hypotéka</p>
                     <p class="mt-6 text-lg leading-8 text-gray-600">Porovnejte si, zda se vám více vyplatí nájem nebo vlastní bydlení</p>
                 </div>
 
                 <!-- Kalkulačka -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     <!-- Nájem -->
-                    <div class="bg-white rounded-3xl shadow-lg overflow-hidden p-8">
+                    <div class="overflow-hidden bg-gray-50 rounded-2xl p-8 shadow-lg border border-gray-100">
                         <h2 class="text-2xl font-bold text-gray-900 mb-8">Nájem</h2>
                         <div class="space-y-6">
                             <div>
-                                <label class="block text-base font-medium text-gray-900 mb-3">Kolik jste ochotni platit měsíčně?</label>
+                                <label class="block text-base font-medium text-gray-900 mb-3">Kolik jste ochotni platit nebo platíte měsíčně za nájemné?</label>
                                 <div class="relative mt-2">
-                                    <input type="text" id="rent-amount" class="block w-full rounded-xl border-0 py-4 pr-16 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 text-lg" value="24000">
+                                    <input type="text" id="rent-amount" class="block w-full rounded-xl border-0 py-5 px-6 pr-16 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 text-lg font-medium" value="24000">
                                     <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4">
                                         <span class="text-gray-500">Kč</span>
                                     </div>
@@ -184,7 +193,7 @@
                     </div>
 
                     <!-- Hypotéka -->
-                    <div class="bg-white rounded-3xl shadow-lg overflow-hidden p-8">
+                    <div class="overflow-hidden bg-primary-50 rounded-2xl p-8 shadow-lg border border-primary-100">
                         <h2 class="text-2xl font-bold text-gray-900 mb-8">Hypotéka</h2>
                         <div class="space-y-6">
                             <div>
@@ -225,7 +234,7 @@
                                         <svg class="h-5 w-5 text-primary-600 mr-2" viewBox="0 0 20 20" fill="currentColor">
                                             <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                                         </svg>
-                                        <span>úroková sazba je aktuálně 4.69 % p.a.</span>
+                                        <span>úroková sazba je aktuálně 4.69 % p.a. a samozřejmě se neustále mění</span>
                                     </li>
                                     <li class="flex items-center">
                                         <svg class="h-5 w-5 text-primary-600 mr-2" viewBox="0 0 20 20" fill="currentColor">
@@ -243,9 +252,9 @@
                             </div>
 
                             <div class="mt-8">
-                                <button type="button" class="w-full rounded-full bg-primary-600 px-8 py-4 text-lg font-semibold text-white shadow-lg hover:bg-primary-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 transition-all duration-200 ease-in-out transform hover:scale-[1.02]">
-                                    Spočítat přesnou splátku
-                                </button>
+                                <a href="index.html#hypoteka" class="block w-full rounded-full bg-primary-600 px-8 py-4 text-lg font-semibold text-white text-center shadow-lg hover:bg-primary-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 transition-all duration-200 ease-in-out transform hover:scale-[1.02]">
+                                    HYPOTÉKA NA MÍRU
+                                </a>
                             </div>
 
                             <div class="text-sm text-gray-500 text-center mt-4">

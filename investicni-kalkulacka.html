@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="cs" style="scroll-behavior: smooth;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <title>Investiční kalkulačka | Hypoteeka.cz</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .nav-link {
+            @apply text-base font-medium transition-colors duration-200;
+        }
+        .btn {
+            @apply inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors duration-200;
+        }
+        .btn-primary {
+            @apply bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500;
+        }
+        .btn-secondary {
+            @apply bg-white text-primary-600 border-primary-600 hover:bg-primary-50 focus:ring-primary-500;
+        }
+        .btn-icon {
+            @apply p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500;
+        }
+        [x-cloak] { display: none !important; }
+
+        /* Primary colors - Dark Blue */
+        .bg-primary-500 { background-color: #0F4C81; }
+        .bg-primary-600 { background-color: #0D3D66; }
+        .bg-primary-700 { background-color: #0B2F4D; }
+        .text-primary-500 { color: #0F4C81; }
+        .text-primary-600 { color: #0D3D66; }
+        .text-primary-100 { color: #E6F3FF; }
+        
+        /* Gradients */
+        .bg-gradient-to-br {
+            background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));
+        }
+        .from-primary-600 {
+            --tw-gradient-from: #0D3D66;
+            --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(67 56 202 / 0));
+        }
+        .to-primary-700 {
+            --tw-gradient-to: #0B2F4D;
+        }
+        
+        /* Opacity */
+        .bg-primary-500\/20 {
+            background-color: rgb(15 76 129 / 0.2);
+        }
+        
+        /* Backdrop blur */
+        .backdrop-blur-sm {
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <div x-data="{ mobileMenuOpen: false }">
+        <!-- Plovoucí navigace -->
+        <header class="fixed top-0 left-0 right-0 z-50">
+            <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8" aria-label="Top">
+                <div class="bg-white rounded-full shadow-lg">
+                    <div class="relative flex h-16 items-center justify-between px-8">
+                        <!-- Logo -->
+                        <div class="flex flex-shrink-0 items-center">
+                            <a href="index.html">
+                                <img class="h-8 w-auto" src="images/logo.png" alt="Hypoteeka">
+                            </a>
+                        </div>
+
+                        <!-- Desktop menu -->
+                        <div class="hidden md:flex md:gap-x-8">
+                            <a href="index.html" class="nav-link text-gray-700 hover:text-primary-600">Domů</a>
+                            <a href="najem-vs-hypoteka.html" class="nav-link text-gray-700 hover:text-primary-600">Nájem vs. hypotéka</a>
+                            <a href="investicni-kalkulacka.html" class="nav-link text-primary-600">Investiční kalkulačka</a>
+                        </div>
+
+                        <!-- CTA button -->
+                        <div class="hidden md:flex md:flex-1 md:justify-end">
+                            <a href="index.html#hypoteka" class="btn btn-primary">
+                                Spočítat hypotéku
+                            </a>
+                        </div>
+
+                        <!-- Mobile menu button -->
+                        <div class="flex md:hidden">
+                            <button type="button" @click="mobileMenuOpen = !mobileMenuOpen" class="btn-icon">
+                                <span class="sr-only">Otevřít menu</span>
+                                <i class="fas fa-bars text-gray-600 text-xl" x-show="!mobileMenuOpen"></i>
+                                <i class="fas fa-times text-gray-600 text-xl" x-show="mobileMenuOpen" style="display: none;"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile menu -->
+                <div class="md:hidden" x-show="mobileMenuOpen" @click.away="mobileMenuOpen = false" style="display: none;">
+                    <div class="bg-white rounded-3xl shadow-lg mt-4 px-2 py-3 space-y-1">
+                        <a href="index.html" class="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Domů</a>
+                        <a href="najem-vs-hypoteka.html" class="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Nájem vs. hypotéka</a>
+                        <a href="investicni-kalkulacka.html" class="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-primary-600 bg-gray-50">Investiční kalkulačka</a>
+                        <a href="index.html#hypoteka" class="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white bg-primary-600 hover:bg-primary-700">Spočítat hypotéku</a>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Hero sekce -->
+        <div class="relative min-h-[600px] flex items-center pb-48">
+            <!-- Background image -->
+            <div class="absolute inset-0 z-0">
+                <img src="images/hero.png" alt="" class="w-full h-full object-cover">
+                <div class="absolute inset-0 backdrop-blur-sm bg-black/20"></div>
+            </div>
+
+            <!-- Hero content -->
+            <div class="relative z-10 mx-auto max-w-7xl px-6 lg:px-8 pt-32">
+                <div class="mx-auto max-w-2xl text-center">
+                    <h1 class="text-4xl font-bold tracking-tight text-white sm:text-6xl">Investiční kalkulačka</h1>
+                    <p class="mt-6 text-lg leading-8 text-gray-300">
+                        Porovnejte investici do nemovitosti s alternativními možnostmi investování a zjistěte, která varianta je pro vás nejvýhodnější.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Investiční kalkulačka -->
+<div class="mx-auto max-w-3xl px-6 lg:px-8 bg-white rounded-3xl p-8 shadow-xl -mt-32 relative z-20">
+    <div class="mx-auto max-w-4xl text-center">
+        <h2 class="text-base font-semibold leading-7 text-primary-500">POROVNÁNÍ INVESTIC</h2>
+        <p class="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">Nemovitost vs. ETF Portfolio</p>
+        <p class="mt-6 text-lg leading-8 text-gray-600">Porovnejte investici do nemovitosti s pasivním ETF portfoliem a zjistěte, která varianta vám přinese lepší výnos</p>
+    </div>
+
+    <div class="mt-16 grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Nemovitost -->
+        <div class="bg-gray-50 rounded-2xl p-8 shadow-lg border border-gray-100">
+            <h3 class="text-2xl font-bold text-gray-900 mb-8">Investice do nemovitosti</h3>
+            <div class="space-y-6">
+                <div>
+                    <label for="property-price" class="block text-sm font-medium text-gray-700 mb-1">Cena nemovitosti</label>
+                    <input type="text" id="property-price" class="block w-full rounded-lg border-0 py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm" value="5000000">
+                </div>
+                <div>
+                    <label for="down-payment" class="block text-sm font-medium text-gray-700 mb-1">Vlastní zdroje</label>
+                    <input type="text" id="down-payment" class="block w-full rounded-lg border-0 py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm" value="1000000">
+                </div>
+                <div>
+                    <label for="mortgage-rate" class="block text-sm font-medium text-gray-700 mb-1">Úroková sazba hypotéky (%)</label>
+                    <input type="text" id="mortgage-rate" class="block w-full rounded-lg border-0 py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm" value="5.9">
+                </div>
+                <div>
+                    <label for="mortgage-years" class="block text-sm font-medium text-gray-700 mb-1">Délka hypotéky (roky)</label>
+                    <input type="text" id="mortgage-years" class="block w-full rounded-lg border-0 py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm" value="30">
+                </div>
+                <div>
+                    <label for="monthly-rent" class="block text-sm font-medium text-gray-700 mb-1">Očekávaný měsíční nájem</label>
+                    <input type="text" id="monthly-rent" class="block w-full rounded-lg border-0 py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm" value="25000">
+                </div>
+                <div>
+                    <label for="property-appreciation" class="block text-sm font-medium text-gray-700 mb-1">Roční zhodnocení nemovitosti (%)</label>
+                    <input type="text" id="property-appreciation" class="block w-full rounded-lg border-0 py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm" value="3">
+                </div>
+                <div>
+                    <label for="maintenance-cost" class="block text-sm font-medium text-gray-700 mb-1">Roční náklady na údržbu (%)</label>
+                    <input type="text" id="maintenance-cost" class="block w-full rounded-lg border-0 py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm" value="1">
+                </div>
+                <div>
+                    <label for="occupancy-rate" class="block text-sm font-medium text-gray-700 mb-1">Průměrná obsazenost (%)</label>
+                    <input type="text" id="occupancy-rate" class="block w-full rounded-lg border-0 py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm" value="95">
+                </div>
+            </div>
+        </div>
+
+        <!-- ETF Portfolio -->
+        <div class="bg-primary-50 rounded-2xl p-8 shadow-lg border border-primary-100">
+            <h3 class="text-2xl font-bold text-gray-900 mb-8">ETF Portfolio</h3>
+            <div class="space-y-6">
+                <div>
+                    <label for="initial-investment" class="block text-sm font-medium text-gray-700 mb-1">Počáteční investice</label>
+                    <input type="text" id="initial-investment" class="block w-full rounded-lg border-0 py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm" value="1000000">
+                </div>
+                <div>
+                    <label for="monthly-investment" class="block text-sm font-medium text-gray-700 mb-1">Měsíční investice</label>
+                    <input type="text" id="monthly-investment" class="block w-full rounded-lg border-0 py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm" value="25000">
+                </div>
+                <div>
+                    <label for="portfolio-return" class="block text-sm font-medium text-gray-700 mb-1">Očekávaný roční výnos (%)</label>
+                    <input type="text" id="portfolio-return" class="block w-full rounded-lg border-0 py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm" value="7">
+                </div>
+                <div>
+                    <label for="portfolio-risk" class="block text-sm font-medium text-gray-700 mb-1">Volatilita (%)</label>
+                    <input type="text" id="portfolio-risk" class="block w-full rounded-lg border-0 py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm" value="15">
+                </div>
+                <div>
+                    <label for="management-fee" class="block text-sm font-medium text-gray-700 mb-1">Roční poplatek za správu (%)</label>
+                    <input type="text" id="management-fee" class="block w-full rounded-lg border-0 py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm" value="0.2">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Výsledky -->
+    <div class="mt-16">
+        <h3 class="text-2xl font-bold text-gray-900 mb-8 text-center" id="comparison-title">Porovnání po 30 letech</h3>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Nemovitost výsledky -->
+            <div class="bg-white rounded-xl border border-gray-200 shadow p-6">
+                <h4 class="text-lg font-semibold text-gray-900 mb-4">Nemovitost</h4>
+                <div class="space-y-4">
+                    <div>
+                        <p class="text-sm text-gray-500">Hodnota nemovitosti</p>
+                        <p class="text-2xl font-bold text-primary-600" id="property-final-value">12 000 000 Kč</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500">Celkový čistý příjem z pronájmu</p>
+                        <p class="text-2xl font-bold text-primary-600" id="total-rental-income">8 500 000 Kč</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500">Celkové náklady</p>
+                        <p class="text-2xl font-bold text-red-600" id="total-property-costs">3 200 000 Kč</p>
+                    </div>
+                    <div class="pt-4 border-t border-gray-200">
+                        <p class="text-sm text-gray-500">Celkový čistý výnos</p>
+                        <p class="text-3xl font-bold text-primary-600" id="property-total-return">17 300 000 Kč</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ETF výsledky -->
+            <div class="bg-white rounded-xl border border-gray-200 shadow p-6">
+                <h4 class="text-lg font-semibold text-gray-900 mb-4">ETF Portfolio</h4>
+                <div class="space-y-4">
+                    <div>
+                        <p class="text-sm text-gray-500">Hodnota portfolia</p>
+                        <p class="text-2xl font-bold text-primary-600" id="portfolio-final-value">15 000 000 Kč</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500">Celkové vklady</p>
+                        <p class="text-2xl font-bold text-primary-600" id="total-investments">10 000 000 Kč</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500">Celkové poplatky</p>
+                        <p class="text-2xl font-bold text-red-600" id="total-fees">250 000 Kč</p>
+                    </div>
+                    <div class="pt-4 border-t border-gray-200">
+                        <p class="text-sm text-gray-500">Celkový čistý výnos</p>
+                        <p class="text-3xl font-bold text-primary-600" id="portfolio-total-return">14 750 000 Kč</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Graf -->
+    <div class="mt-16">
+        <canvas id="comparison-chart" class="w-full"></canvas>
+    </div>
+</div>
+
+<!-- Přidat do head sekce -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- Přidat před konec body -->
+<script>
+// Formátování měny
+function formatCurrency(number) {
+    return new Intl.NumberFormat('cs-CZ', {
+        style: 'currency',
+        currency: 'CZK',
+        maximumFractionDigits: 0
+    }).format(number);
+}
+
+// Formátování vstupu
+function formatInput(input) {
+    let value = input.value.replace(/\D/g, '');
+    if (value === '') return;
+    input.value = new Intl.NumberFormat('cs-CZ').format(value);
+}
+
+// Výpočet měsíční splátky hypotéky
+function calculateMortgagePayment(principal, rate, years) {
+    const monthlyRate = rate / 100 / 12;
+    const numberOfPayments = years * 12;
+    return principal * monthlyRate * Math.pow(1 + monthlyRate, numberOfPayments) 
+           / (Math.pow(1 + monthlyRate, numberOfPayments) - 1);
+}
+
+// Výpočet hodnoty nemovitosti
+function calculatePropertyValue(initialValue, appreciationRate, years) {
+    return initialValue * Math.pow(1 + appreciationRate / 100, years);
+}
+
+// Výpočet hodnoty ETF portfolia
+function calculatePortfolioValue(initialInvestment, monthlyInvestment, returnRate, managementFee, years) {
+    const monthlyRate = (returnRate - managementFee) / 100 / 12;
+    let value = initialInvestment;
+    
+    for (let i = 0; i < years * 12; i++) {
+        value = value * (1 + monthlyRate) + monthlyInvestment;
+    }
+    
+    return value;
+}
+
+// Inicializace grafu
+let comparisonChart = null;
+
+function updateChart(propertyValues, portfolioValues) {
+    const ctx = document.getElementById('comparison-chart').getContext('2d');
+    
+    if (comparisonChart) {
+        comparisonChart.destroy();
+    }
+
+    comparisonChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: Array.from({length: 31}, (_, i) => i),
+            datasets: [{
+                label: 'Nemovitost',
+                data: propertyValues,
+                borderColor: '#0F4C81',
+                backgroundColor: 'rgba(15, 76, 129, 0.1)',
+                fill: true
+            }, {
+                label: 'ETF Portfolio',
+                data: portfolioValues,
+                borderColor: '#10B981',
+                backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Vývoj hodnoty investic v čase'
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return formatCurrency(value);
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
+// Aktualizace výpočtů
+function updateCalculations() {
+    // Získání hodnot z inputů
+    const propertyPrice = parseFloat(document.getElementById('property-price').value.replace(/\D/g, ''));
+    const downPayment = parseFloat(document.getElementById('down-payment').value.replace(/\D/g, ''));
+    const mortgageRate = parseFloat(document.getElementById('mortgage-rate').value);
+    const mortgageYears = parseInt(document.getElementById('mortgage-years').value);
+    const monthlyRent = parseFloat(document.getElementById('monthly-rent').value.replace(/\D/g, ''));
+    const propertyAppreciation = parseFloat(document.getElementById('property-appreciation').value);
+    const maintenanceCost = parseFloat(document.getElementById('maintenance-cost').value);
+    const occupancyRate = parseFloat(document.getElementById('occupancy-rate').value);
+    
+    const initialInvestment = parseFloat(document.getElementById('initial-investment').value.replace(/\D/g, ''));
+    const monthlyInvestment = parseFloat(document.getElementById('monthly-investment').value.replace(/\D/g, ''));
+    const portfolioReturn = parseFloat(document.getElementById('portfolio-return').value);
+    const managementFee = parseFloat(document.getElementById('management-fee').value);
+
+    // Výpočty pro nemovitost
+    const mortgageAmount = propertyPrice - downPayment;
+    const monthlyMortgagePayment = calculateMortgagePayment(mortgageAmount, mortgageRate, mortgageYears);
+    const finalPropertyValue = calculatePropertyValue(propertyPrice, propertyAppreciation, mortgageYears);
+    
+    const annualRent = monthlyRent * 12 * (occupancyRate / 100);
+    const annualMaintenance = propertyPrice * (maintenanceCost / 100);
+    const totalRentalIncome = annualRent * mortgageYears;
+    const totalPropertyCosts = (monthlyMortgagePayment * 12 * mortgageYears) + (annualMaintenance * mortgageYears);
+    const propertyTotalReturn = finalPropertyValue + totalRentalIncome - totalPropertyCosts;
+
+    // Výpočty pro ETF portfolio
+    const portfolioFinalValue = calculatePortfolioValue(initialInvestment, monthlyInvestment, portfolioReturn, managementFee, mortgageYears);
+    const totalInvestments = initialInvestment + (monthlyInvestment * 12 * mortgageYears);
+    const totalFees = portfolioFinalValue * (managementFee / 100) * mortgageYears;
+    const portfolioTotalReturn = portfolioFinalValue - totalFees;
+
+    // Aktualizace výsledků
+    document.getElementById('comparison-title').textContent = `Porovnání po ${mortgageYears} ${mortgageYears === 1 ? 'roce' : mortgageYears < 5 ? 'letech' : 'letech'}`;
+    document.getElementById('property-final-value').textContent = formatCurrency(finalPropertyValue);
+    document.getElementById('total-rental-income').textContent = formatCurrency(totalRentalIncome);
+    document.getElementById('total-property-costs').textContent = formatCurrency(totalPropertyCosts);
+    document.getElementById('property-total-return').textContent = formatCurrency(propertyTotalReturn);
+
+    document.getElementById('portfolio-final-value').textContent = formatCurrency(portfolioFinalValue);
+    document.getElementById('total-investments').textContent = formatCurrency(totalInvestments);
+    document.getElementById('total-fees').textContent = formatCurrency(totalFees);
+    document.getElementById('portfolio-total-return').textContent = formatCurrency(portfolioTotalReturn);
+
+    // Generování dat pro graf
+    const propertyValues = [];
+    const portfolioValues = [];
+    
+    for (let year = 0; year <= mortgageYears; year++) {
+        const propertyValue = calculatePropertyValue(propertyPrice, propertyAppreciation, year);
+        const rentIncome = annualRent * year;
+        const costs = (monthlyMortgagePayment * 12 * year) + (annualMaintenance * year);
+        propertyValues.push(propertyValue + rentIncome - costs);
+
+        const portfolioValue = calculatePortfolioValue(initialInvestment, monthlyInvestment, portfolioReturn, managementFee, year);
+        portfolioValues.push(portfolioValue);
+    }
+
+    updateChart(propertyValues, portfolioValues);
+}
+
+// Přidání event listenerů
+document.addEventListener('DOMContentLoaded', function() {
+    const inputs = document.querySelectorAll('input');
+    inputs.forEach(input => {
+        if (input.id !== 'mortgage-rate' && input.id !== 'mortgage-years' && 
+            input.id !== 'property-appreciation' && input.id !== 'maintenance-cost' && 
+            input.id !== 'occupancy-rate' && input.id !== 'portfolio-return' && 
+            input.id !== 'portfolio-risk' && input.id !== 'management-fee') {
+            input.addEventListener('input', function() { 
+                formatInput(this);
+                updateCalculations();
+            });
+        } else {
+            input.addEventListener('input', updateCalculations);
+        }
+    });
+
+    // Inicializace výpočtů
+    updateCalculations();
+});
+</script>
+    <script>
+        // Alpine.js initialization if needed
+    </script>
+</body>
+</html>

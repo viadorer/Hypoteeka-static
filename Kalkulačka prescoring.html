@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="cs" style="scroll-behavior: smooth;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <title>Investiční kalkulačka | Hypoteeka.cz</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .nav-link {
+            @apply text-base font-medium transition-colors duration-200;
+        }
+        .btn {
+            @apply inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors duration-200;
+        }
+        .btn-primary {
+            @apply bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500;
+        }
+        .btn-secondary {
+            @apply bg-white text-primary-600 border-primary-600 hover:bg-primary-50 focus:ring-primary-500;
+        }
+        .btn-icon {
+            @apply p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500;
+        }
+        [x-cloak] { display: none !important; }
+
+        /* Primary colors - Dark Blue */
+        .bg-primary-500 { background-color: #0F4C81; }
+        .bg-primary-600 { background-color: #0D3D66; }
+        .bg-primary-700 { background-color: #0B2F4D; }
+        .text-primary-500 { color: #0F4C81; }
+        .text-primary-600 { color: #0D3D66; }
+        .text-primary-100 { color: #E6F3FF; }
+        
+        /* Gradients */
+        .bg-gradient-to-br {
+            background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));
+        }
+        .from-primary-600 {
+            --tw-gradient-from: #0D3D66;
+            --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(67 56 202 / 0));
+        }
+        .to-primary-700 {
+            --tw-gradient-to: #0B2F4D;
+        }
+        
+        /* Opacity */
+        .bg-primary-500\/20 {
+            background-color: rgb(15 76 129 / 0.2);
+        }
+        
+        /* Backdrop blur */
+        .backdrop-blur-sm {
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <div x-data="{ mobileMenuOpen: false }">
+        <!-- Plovoucí navigace -->
+        <header class="fixed top-0 left-0 right-0 z-50">
+            <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8" aria-label="Top">
+                <div class="bg-white rounded-full shadow-lg">
+                    <div class="relative flex h-16 items-center justify-between px-8">
+                        <!-- Logo -->
+                        <div class="flex flex-shrink-0 items-center">
+                            <a href="index.html">
+                                <img class="h-8 w-auto" src="images/logo.png" alt="Hypoteeka">
+                            </a>
+                        </div>
+
+                        <!-- Desktop menu -->
+                        <div class="hidden md:flex md:gap-x-8">
+                            <a href="index.html" class="nav-link text-gray-700 hover:text-primary-600">Domů</a>
+                            <a href="najem-vs-hypoteka.html" class="nav-link text-gray-700 hover:text-primary-600">Nájem vs. hypotéka</a>
+                            <a href="investicni-kalkulacka.html" class="nav-link text-gray-700 hover:text-primary-600">Investiční kalkulačka</a>
+                            <a href="Kalkulačka ztracených příležitostí.html" class="nav-link text-primary-600">Kalkulačka ztracených příležitostí</a>
+                        </div>
+
+                        <!-- CTA button -->
+                        <div class="hidden md:flex md:flex-1 md:justify-end">
+                            <a href="index.html#hypoteka" class="btn btn-primary">
+                                Spočítat hypotéku
+                            </a>
+                        </div>
+
+                        <!-- Mobile menu button -->
+                        <div class="flex md:hidden">
+                            <button type="button" @click="mobileMenuOpen = !mobileMenuOpen" class="btn-icon">
+                                <span class="sr-only">Otevřít menu</span>
+                                <i class="fas fa-bars text-gray-600 text-xl" x-show="!mobileMenuOpen"></i>
+                                <i class="fas fa-times text-gray-600 text-xl" x-show="mobileMenuOpen" style="display: none;"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile menu -->
+                <div class="md:hidden" x-show="mobileMenuOpen" @click.away="mobileMenuOpen = false" style="display: none;">
+                    <div class="bg-white rounded-3xl shadow-lg mt-4 px-2 py-3 space-y-1">
+                        <a href="index.html" class="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Domů</a>
+                        <a href="najem-vs-hypoteka.html" class="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Nájem vs. hypotéka</a>
+                        <a href="investicni-kalkulacka.html" class="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Investiční kalkulačka</a>
+                        <a href="Kalkulačka ztracených příležitostí.html" class="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-primary-600 bg-gray-50">Kalkulačka ztracených příležitostí</a>
+                        <a href="index.html#hypoteka" class="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white bg-primary-600 hover:bg-primary-700">Spočítat hypotéku</a>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+       
+    </div>
+
+    <!DOCTYPE html>
+    <html lang="cs">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Prescoring kalkulačka | Hypoteeka.cz</title>
+        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+        <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <style>
+            .bg-primary-500 { background-color: #0F4C81; }
+            .bg-primary-600 { background-color: #0D3D66; }
+            .bg-primary-700 { background-color: #0B2F4D; }
+            .text-primary-500 { color: #0F4C81; }
+            .text-primary-600 { color: #0D3D66; }
+            .text-primary-100 { color: #E6F3FF; }
+            .bg-primary-50 { background-color: #F0F7FF; }
+            .border-primary-100 { border-color: #E6F3FF; }
+        </style>
+    </head>
+    <body class="bg-white">
+        <main>
+            <!-- Hero sekce -->
+            <div class="relative min-h-[800px] flex items-center pb-96">
+                <div class="absolute inset-0 z-0">
+                    <img src="images/hero.png" alt="" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 backdrop-blur-sm bg-black/20"></div>
+                </div>
+            </div>
+    
+            <!-- Kalkulačka -->
+            <div class="mx-auto max-w-7xl px-6 lg:px-8 -mt-32 relative z-20">
+                <div class="mx-auto max-w-4xl bg-white rounded-3xl shadow-xl p-8">
+                    <div class="text-center mb-16">
+                        <h2 class="text-base font-semibold leading-7 text-primary-600">PRESCORING</h2>
+                        <p class="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">Zjistěte svou šanci na hypotéku</p>
+                        <p class="mt-6 text-lg leading-8 text-gray-600">Vypočítejte si předběžné posouzení vaší schopnosti splácet hypotéku</p>
+                    </div>
+    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <!-- Vstupní údaje -->
+                        <div class="overflow-hidden bg-gray-50 rounded-2xl p-8 shadow-lg border border-gray-100">
+                            <h2 class="text-2xl font-bold text-gray-900 mb-8">Vaše údaje</h2>
+                            <div class="space-y-6">
+                                <div>
+                                    <label class="block text-base font-medium text-gray-900 mb-3">Jaký je váš čistý měsíční příjem?</label>
+                                    <div class="relative mt-2">
+                                        <input type="text" id="monthly-income" class="block w-full rounded-xl border-0 py-5 px-6 pr-16 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 text-lg font-medium" value="0">
+                                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4">
+                                            <span class="text-gray-500">Kč</span>
+                                        </div>
+                                    </div>
+                                    <p class="mt-2 text-sm text-gray-600">Váš čistý měsíční příjem je základem pro výpočet vaší schopnosti splácet hypotéku (DSTI).</p>
+                                </div>
+    
+                                <div>
+                                    <label class="block text-base font-medium text-gray-900 mb-3">Jaké jsou vaše měsíční výdaje?</label>
+                                    <div class="relative mt-2">
+                                        <input type="text" id="monthly-expenses" class="block w-full rounded-xl border-0 py-5 px-6 pr-16 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 text-lg font-medium" value="0">
+                                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4">
+                                            <span class="text-gray-500">Kč</span>
+                                        </div>
+                                    </div>
+                                    <p class="mt-2 text-sm text-gray-600">Běžné výdaje jako nájem, jídlo, dopravu, zájmy atd.</p>
+                                </div>
+
+                                <div>
+                                    <label class="block text-base font-medium text-gray-900 mb-3">Jaké máte stávající závazky?</label>
+                                    <div class="relative mt-2">
+                                        <input type="text" id="monthly-debts" class="block w-full rounded-xl border-0 py-5 px-6 pr-16 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 text-lg font-medium" value="0">
+                                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4">
+                                            <span class="text-gray-500">Kč</span>
+                                        </div>
+                                    </div>
+                                    <p class="mt-2 text-sm text-gray-600">Měsíční splátky úvěrů, půjček, leasingu, kontokorentu atd.</p>
+                                </div>
+    
+                                <div>
+                                    <label class="block text-base font-medium text-gray-900 mb-3">Kolik máte vyživovaných osob?</label>
+                                    <div class="relative mt-2">
+                                        <select id="dependents" class="block w-full rounded-xl border-0 py-5 px-6 pr-16 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 text-lg font-medium">
+                                        <option value="0">0</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5+</option>
+                                        </select>
+                                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4">
+                                            <svg class="h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+    
+                                <div>
+                                    <label class="block text-base font-medium text-gray-900 mb-3">Jaká je hodnota nemovitosti?</label>
+                                    <div class="relative mt-2">
+                                        <input type="text" id="property-value" class="block w-full rounded-xl border-0 py-5 px-6 pr-16 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 text-lg font-medium" value="0">
+                                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4">
+                                            <span class="text-gray-500">Kč</span>
+                                        </div>
+                                    </div>
+                                    <p class="mt-2 text-sm text-gray-600">Hodnota nemovitosti je důležitá pro výpočet LTV (poměr úvěru k hodnotě nemovitosti).</p>
+                                </div>
+    
+                                <div>
+                                    <label class="block text-base font-medium text-gray-900 mb-3">Na jak dlouho chcete hypotéku?</label>
+                                    <div class="relative mt-2">
+                                        <select id="mortgage-years" class="block w-full rounded-xl border-0 py-5 px-6 pr-16 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 text-lg font-medium">
+                                        <option value="20">20 let</option>
+                                        <option value="25">25 let</option>
+                                        <option value="30" selected>30 let</option>
+                                        <option value="35">35 let</option>
+                                        </select>
+                                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4">
+                                            <svg class="h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <!-- Výsledky -->
+                        <div class="overflow-hidden bg-primary-50 rounded-2xl p-8 shadow-lg border border-primary-100">
+                            <h2 class="text-2xl font-bold text-gray-900 mb-8">Váš výsledek prescoringu</h2>
+                            <p class="text-gray-600 mb-8">Na základě vašich údajů jsme vypočítali následující hodnoty. Banka při posuzování žádosti o hypotéku sleduje zejména ukazatele DSTI (poměr splátky k příjmu) a LTV (poměr úvěru k hodnotě nemovitosti).</p>
+                            <div class="space-y-6">
+                                <div>
+                                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Maximální výše hypotéky</h3>
+                                    <div class="text-3xl font-bold text-primary-600 mb-4" id="max-mortgage">0 Kč</div>
+                                </div>
+    
+                                <div>
+                                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Měsíční splátka</h3>
+                                    <div class="text-3xl font-bold text-primary-600 mb-4" id="monthly-payment">0 Kč</div>
+                                </div>
+    
+                                <div>
+                                    <h3 class="text-lg font-semibold text-gray-900 mb-4">LTV (Loan to Value)</h3>
+                                    <div class="text-3xl font-bold text-primary-600 mb-4" id="ltv">0 %</div>
+                                </div>
+    
+                                <div>
+                                    <h3 class="text-lg font-semibold text-gray-900 mb-4">DSTI (Debt Service to Income)</h3>
+                                    <div class="text-3xl font-bold text-primary-600 mb-4" id="dsti">0 %</div>
+                                </div>
+
+                                <div>
+                                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Nutné vlastní zdroje</h3>
+                                    <div class="text-3xl font-bold text-primary-600 mb-4" id="own-resources">0 Kč</div>
+                                    <p class="text-sm text-gray-600">Toto je částka, kterou musíte mít našetřenou z vlastních zdrojů.</p>
+                                </div>
+    
+                                <div class="mt-8 space-y-4">
+                                    <div>
+                                        <label class="block text-base font-medium text-gray-900 mb-3">Chcete zaslat podrobný report?</label>
+                                        <div class="relative mt-2">
+                                            <input type="email" id="email" placeholder="vas@email.cz" class="block w-full rounded-xl border-0 py-5 px-6 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 text-lg font-medium">
+                                        </div>
+                                        <p class="mt-2 text-sm text-gray-600">Pošleme vám podrobný report s vysvětlením všech ukazatelů.</p>
+                                    </div>
+
+                                    <button onclick="sendReport()" class="block w-full rounded-full bg-primary-600 px-8 py-4 text-lg font-semibold text-white text-center shadow-lg hover:bg-primary-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 transition-all duration-200 ease-in-out transform hover:scale-[1.02]">
+                                        POSLAT REPORT NA EMAIL
+                                    </button>
+
+                                    <a href="index.html#hypoteka" class="block w-full rounded-full bg-primary-600 px-8 py-4 text-lg font-semibold text-white text-center shadow-lg hover:bg-primary-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 transition-all duration-200 ease-in-out transform hover:scale-[1.02]">
+                                        SPOČÍTAT HYPOTÉKU NA MÍRU
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    
+        <script>
+            // Formátování čísla s mezerami a měnou
+            function formatCurrency(number) {
+                return new Intl.NumberFormat('cs-CZ').format(Math.round(number)) + ' Kč';
+            }
+    
+            // Formátování procent
+            function formatPercent(number) {
+                return new Intl.NumberFormat('cs-CZ', { maximumFractionDigits: 1 }).format(number) + ' %';
+            }
+    
+            // Výpočet měsíční splátky
+            function calculateMonthlyPayment(loanAmount, years, rate) {
+                const monthlyRate = rate / 12 / 100;
+                const months = years * 12;
+                return (loanAmount * monthlyRate * Math.pow(1 + monthlyRate, months)) / (Math.pow(1 + monthlyRate, months) - 1);
+            }
+    
+            // Výpočet maximální výše hypotéky
+            function calculateMaxMortgage(monthlyIncome, monthlyExpenses, dependents) {
+                const livingExpenses = dependents * 4000; // Životní minimum na vyživovanou osobu
+                const availableIncome = monthlyIncome - monthlyExpenses - livingExpenses;
+                const maxMonthlyPayment = availableIncome * 0.45; // DSTI limit 45%
+                
+                // Předpokládaná úroková sazba 6%
+                const years = parseInt(document.getElementById('mortgage-years').value);
+                const monthlyRate = 6 / 12 / 100;
+                const months = years * 12;
+                
+                // Vzorec pro výpočet maximální výše hypotéky z měsíční splátky
+                return (maxMonthlyPayment * (Math.pow(1 + monthlyRate, months) - 1)) / (monthlyRate * Math.pow(1 + monthlyRate, months));
+            }
+    
+            // Aktualizace výpočtů
+            function updateCalculations() {
+                const monthlyIncome = parseFloat(document.getElementById('monthly-income').value.replace(/\s/g, '')) || 0;
+                const monthlyExpenses = parseFloat(document.getElementById('monthly-expenses').value.replace(/\s/g, '')) || 0;
+                const monthlyDebts = parseFloat(document.getElementById('monthly-debts').value.replace(/\s/g, '')) || 0;
+                const dependents = parseInt(document.getElementById('dependents').value);
+                const propertyValue = parseFloat(document.getElementById('property-value').value.replace(/\s/g, '')) || 0;
+                const years = parseInt(document.getElementById('mortgage-years').value);
+    
+                // Výpočet maximální výše hypotéky
+                const maxMortgage = calculateMaxMortgage(monthlyIncome, monthlyExpenses + monthlyDebts, dependents);
+                
+                // Výpočet měsíční splátky
+                const monthlyPayment = calculateMonthlyPayment(maxMortgage, years, 6);
+                
+                // Výpočet LTV a vlastních zdrojů
+                const maxLTV = 80; // Maximální povolené LTV je 80%
+                const ltv = propertyValue > 0 ? (maxMortgage / propertyValue) * 100 : 0;
+                const ownResources = propertyValue > 0 ? Math.max(propertyValue * (1 - maxLTV/100), propertyValue - maxMortgage) : 0;
+                
+                // Výpočet DSTI
+                const dsti = monthlyIncome > 0 ? (monthlyPayment / monthlyIncome) * 100 : 0;
+    
+                // Aktualizace UI
+                document.getElementById('max-mortgage').textContent = formatCurrency(maxMortgage);
+                document.getElementById('monthly-payment').textContent = formatCurrency(monthlyPayment);
+                document.getElementById('ltv').textContent = formatPercent(ltv);
+                document.getElementById('dsti').textContent = formatPercent(dsti);
+                document.getElementById('own-resources').textContent = formatCurrency(ownResources);
+            }
+    
+            // Formátování vstupu
+            function formatInput(input) {
+                let value = input.value.replace(/\s/g, '').replace(/[^\d]/g, '');
+                if (value) {
+                    input.value = new Intl.NumberFormat('cs-CZ').format(parseInt(value));
+                }
+            }
+    
+            // Generování reportu
+            function generateReport() {
+                const monthlyIncome = parseFloat(document.getElementById('monthly-income').value.replace(/\s/g, '')) || 0;
+                const monthlyExpenses = parseFloat(document.getElementById('monthly-expenses').value.replace(/\s/g, '')) || 0;
+                const monthlyDebts = parseFloat(document.getElementById('monthly-debts').value.replace(/\s/g, '')) || 0;
+                const dependents = parseInt(document.getElementById('dependents').value);
+                const propertyValue = parseFloat(document.getElementById('property-value').value.replace(/\s/g, '')) || 0;
+                const years = parseInt(document.getElementById('mortgage-years').value);
+
+                const maxMortgage = calculateMaxMortgage(monthlyIncome, monthlyExpenses + monthlyDebts, dependents);
+                const monthlyPayment = calculateMonthlyPayment(maxMortgage, years, 6);
+                const ltv = propertyValue > 0 ? (maxMortgage / propertyValue) * 100 : 0;
+                const dsti = monthlyIncome > 0 ? (monthlyPayment / monthlyIncome) * 100 : 0;
+                const ownResources = propertyValue > 0 ? Math.max(propertyValue * (1 - maxLTV/100), propertyValue - maxMortgage) : 0;
+
+                return `
+Podrobný report z Hypoteeka.cz prescoring kalkulačky
+
+Vaše údaje:
+- Čistý měsíční příjem: ${formatCurrency(monthlyIncome)}
+- Měsíční výdaje: ${formatCurrency(monthlyExpenses)}
+- Stávající závazky: ${formatCurrency(monthlyDebts)}
+- Počet vyživovaných osob: ${dependents}
+- Hodnota nemovitosti: ${formatCurrency(propertyValue)}
+- Délka hypotéky: ${years} let
+
+Výsledky prescoringu:
+- Maximální výše hypotéky: ${formatCurrency(maxMortgage)}
+- Měsíční splátka: ${formatCurrency(monthlyPayment)}
+- LTV (Loan to Value): ${formatPercent(ltv)}
+  Tento ukazatel říká, jaké procento z hodnoty nemovitosti tvoří hypotéka. Banky aktuálně poskytují hypotéky do 80 % LTV.
+
+- DSTI (Debt Service to Income): ${formatPercent(dsti)}
+  Tento ukazatel říká, jakou část vašeho měsíčního příjmu tvoří splátka hypotéky. Čím nižší, tím lépe.
+
+- Nutné vlastní zdroje: ${formatCurrency(ownResources)}
+  Toto je částka, kterou musíte mít našetřenou z vlastních zdrojů.
+
+Další kroky:
+1. Kontaktujte nás pro konzultaci vaší situace
+2. Připravte si potřebné dokumenty (výpisy z účtu, potvrzení o příjmu)
+3. Společně vybereme nejvýhodnější hypotéku
+
+Máte-li jakékoliv dotazy, neváhejte nás kontaktovat.
+Tým Hypoteeka.cz
+`;
+            }
+
+            // Funkce pro odeslání reportu
+            function sendReport() {
+                const email = document.getElementById('email').value;
+                if (!email) {
+                    alert('Prosím zadejte svůj email.');
+                    return;
+                }
+                if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+                    alert('Prosím zadejte platný email.');
+                    return;
+                }
+
+                const report = generateReport();
+                
+                // Zobrazíme loading stav
+                const button = document.querySelector('button[onclick="sendReport()"]');
+                const originalText = button.textContent;
+                button.textContent = 'Odesílám...';
+                button.disabled = true;
+
+                // Použijeme EmailJS pro odeslání emailu
+                emailjs.send(
+                    "VÁŠ_SERVICE_ID", // ID vaší EmailJS service
+                    "VAŠE_TEMPLATE_ID", // ID vaší EmailJS šablony
+                    {
+                        to_email: email,
+                        report_content: report
+                    }
+                ).then(
+                    function(response) {
+                        alert('Report byl úspěšně odeslán na váš email!');
+                        button.textContent = originalText;
+                        button.disabled = false;
+                    },
+                    function(error) {
+                        alert('Omlouváme se, při odesílání reportu došlo k chybě. Zkuste to prosím později.');
+                        console.error('Email error:', error);
+                        button.textContent = originalText;
+                        button.disabled = false;
+                    }
+                );
+            }
+
+            // Inicializace
+            document.addEventListener('DOMContentLoaded', function() {
+                const inputs = ['monthly-income', 'monthly-expenses', 'monthly-debts', 'property-value'];
+                inputs.forEach(id => {
+                    const input = document.getElementById(id);
+                    input.addEventListener('input', function() { 
+                        formatInput(this);
+                        updateCalculations();
+                    });
+                });
+    
+                document.getElementById('dependents').addEventListener('change', updateCalculations);
+                document.getElementById('mortgage-years').addEventListener('change', updateCalculations);
+            });
+        </script>
+    </body>
+    </html>
+
+</body>
+</html>
