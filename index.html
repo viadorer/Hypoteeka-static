@@ -127,10 +127,11 @@
                             <!-- Hlavní navigace -->
                             <div class="hidden md:flex md:space-x-8">
                                 <a href="index.html" class="nav-link text-gray-900 hover:text-primary-600">Domů</a>
-                                <a href="#hypoteka" class="nav-link text-gray-900 hover:text-primary-600">Kalkulačka</a>
+                                <a href="#hypoteka" class="nav-link text-gray-900 hover:text-primary-600">Hypoteční kalkulačka</a>
                                 <a href="najem-vs-hypoteka.html" class="nav-link text-gray-900 hover:text-primary-600">Nájem vs. hypotéka</a>
-                                <a href="/blog" class="nav-link text-gray-900 hover:text-primary-600">Blog</a>
-                                <a href="/kontakt" class="nav-link text-gray-900 hover:text-primary-600">Kontakt</a>
+                                <a href="investicni-kalkulacka.html" class="nav-link text-gray-900 hover:text-primary-600">Investiční kalkulačka</a>
+                                <a href="kalkulacka-prescoring.html" class="nav-link text-gray-900 hover:text-primary-600">Prescoring</a>
+                                <a href="kalkulacka-ztracenych-prilezitosti.html" class="nav-link text-gray-900 hover:text-primary-600">Ztracené příležitosti</a>
                             </div>
 
 
@@ -163,15 +164,12 @@
                     x-cloak
                 >
                     <div class="px-2 pt-2 pb-3 space-y-1 bg-white rounded-lg shadow-lg mt-2">
-                        <a href="/" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-primary-600 hover:bg-gray-50">Domů</a>
-                        <a href="/kalkulacka" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-primary-600 hover:bg-gray-50">Kalkulačka</a>
+                        <a href="index.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-primary-600 hover:bg-gray-50">Domů</a>
+                        <a href="#hypoteka" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-primary-600 hover:bg-gray-50">Hypoteční kalkulačka</a>
                         <a href="najem-vs-hypoteka.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-primary-600 hover:bg-gray-50">Nájem vs. hypotéka</a>
-                        <a href="/blog" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-primary-600 hover:bg-gray-50">Blog</a>
-                        <a href="/kontakt" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-primary-600 hover:bg-gray-50">Kontakt</a>
-                        <div class="mt-4 space-y-2">
-                            <button class="w-full btn btn-secondary">Přihlásit se</button>
-                            <button class="w-full btn btn-primary">Registrovat se</button>
-                        </div>
+                        <a href="investicni-kalkulacka.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-primary-600 hover:bg-gray-50">Investiční kalkulačka</a>
+                        <a href="kalkulacka-prescoring.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-primary-600 hover:bg-gray-50">Prescoring</a>
+                        <a href="kalkulacka-ztracenych-prilezitosti.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-primary-600 hover:bg-gray-50">Ztracené příležitosti</a>
                     </div>
                 </div>
             </nav>
@@ -268,15 +266,30 @@
                     Díky zkušenostem našich poradců a vyjednané spolupráci s bankami dokážeme získat výhodnější úrokovou sazbu než při běžné návštěvě pobočky. Posuňte posuvník a uvidíte, kolik můžete ušetřit na vaší hypotéce.
                 </p>
 
+                <!-- Video vysvětlení výhod -->                
+                <div class="mt-12 rounded-2xl overflow-hidden max-w-2xl mx-auto">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Proč využít služby Hypoteeka.cz?</h3>
+                    <div class="relative" style="padding-top: 56.25%;">
+                        <iframe 
+                            class="absolute inset-0 w-full h-full rounded-2xl"
+                            src="https://www.youtube.com/embed/Z3KzGrhrJ24?rel=0&controls=1&modestbranding=1" 
+                            title="Proč využít služby Hypoteeka.cz?"
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+
                 <!-- Total savings -->
                 <div class="text-center mt-12">
                     
                     <!-- CTA tlačítka -->
                     <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4">
-                        <a href="/konzultace" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-white bg-primary-600 hover:bg-primary-700 transition-colors duration-200">
+                        <a href="#konzultace" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-white bg-primary-600 hover:bg-primary-700 transition-colors duration-200">
                             Domluvit konzultaci
                         </a>
-                        <a href="/kalkulacka" class="inline-flex items-center justify-center px-6 py-3 border border-primary-600 text-base font-medium rounded-full text-primary-600 hover:bg-primary-50 transition-colors duration-200">
+                        <a href="#hypoteka" class="inline-flex items-center justify-center px-6 py-3 border border-primary-600 text-base font-medium rounded-full text-primary-600 hover:bg-primary-50 transition-colors duration-200">
                             Nezávazně spočítat hypotéku
                         </a>
                     </div>
@@ -301,7 +314,7 @@
                         <h3 class="text-2xl font-bold text-gray-900 mb-4 mt-4">Bydlíte u rodičů</h3>
                         <p class="text-lg text-gray-600 mb-4">Bydlíte u rodičů a chcete se posunout</p>
                         <p class="text-gray-600 mb-8">Už bylo dost otázek, kde jste zase včera byli a u koho jste vlastně spali? Vyplňte náš dotazník a my se vám do pár minut ozveme, abychom si vše podrobně prošli a pak už bude vašemu snu bránit jen příjemné posezení s námi doporučeným finančním poradcem.</p>
-                        <a href="/kalkulacka" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-primary-600 hover:bg-primary-700 transition-colors duration-200">Chci Hypoteeku</a>
+                        <a href="#hypoteka" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-primary-600 hover:bg-primary-700 transition-colors duration-200">Chci Hypoteeku</a>
                     </div>
 
                     <!-- Karta: Bydlíte ve vlastním -->
@@ -312,7 +325,7 @@
                         <h3 class="text-2xl font-bold text-gray-900 mb-4 mt-4">Bydlíte ve vlastním</h3>
                         <p class="text-lg text-gray-600 mb-4">Bydlíte ve vlastním, ale chcete nové</p>
                         <p class="text-gray-600 mb-8">Taky si už delší dobu říkáte, že to chce změnu? Stačí vyplnit dotazník a doplnit nám telefonicky některé údaje, abychom vás mohli spojit s nejvhodnějším finančním poradcem.</p>
-                        <a href="/kalkulacka" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-primary-600 hover:bg-primary-700 transition-colors duration-200">Chci Hypoteeku</a>
+                        <a href="#hypoteka" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-primary-600 hover:bg-primary-700 transition-colors duration-200">Chci Hypoteeku</a>
                     </div>
 
                     <!-- Karta: Bydlíte v nájmu -->
@@ -323,7 +336,7 @@
                         <h3 class="text-2xl font-bold text-gray-900 mb-4 mt-4">Bydlíte v nájmu</h3>
                         <p class="text-lg text-gray-600 mb-4">Bydlíte v nájmu a chcete vlastní</p>
                         <p class="text-gray-600 mb-8">Už vás nebaví platit nájem a chcete konečně bydlet ve vlastním? Vyplňte náš dotazník a my vám ukážeme, jak na to.</p>
-                        <a href="/kalkulacka" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-primary-600 hover:bg-primary-700 transition-colors duration-200">Chci Hypoteeku</a>
+                        <a href="#hypoteka" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-primary-600 hover:bg-primary-700 transition-colors duration-200">Chci Hypoteeku</a>
                     </div>
 
                     <!-- Karta: Investice -->
@@ -334,12 +347,47 @@
                         <h3 class="text-2xl font-bold text-gray-900 mb-4 mt-4">Chcete investovat</h3>
                         <p class="text-lg text-gray-600 mb-4">Hledáte příležitost k investici</p>
                         <p class="text-gray-600 mb-8">Máte našetřeno a chcete své peníze zhodnotit investicí do nemovitosti? Pomůžeme vám najít tu správnou nemovitost a zajistíme výhodné financování.</p>
-                        <a href="/kalkulacka" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-primary-600 hover:bg-primary-700 transition-colors duration-200">Chci Hypoteeku</a>
+                        <a href="#hypoteka" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-primary-600 hover:bg-primary-700 transition-colors duration-200">Chci Hypoteeku</a>
                     </div>
                 </div>
             </div>
         </div>
 
+
+
+<!-- Spolupracující banky -->
+<div class="bg-white py-24 sm:py-32">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <div class="mx-auto max-w-2xl lg:text-center">
+            <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Spolupracujeme s předními bankami</h2>
+            <p class="mt-6 text-lg leading-8 text-gray-600">
+                Díky našim partnerstvím s největšími bankami na trhu vám můžeme nabídnout nejlepší podmínky pro vaše klienty
+            </p>
+        </div>
+        <div class="mx-auto mt-16 max-w-7xl">
+            <div class="grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-6">
+                <div class="col-span-1 flex justify-center items-center">
+                    <img class="h-12 object-contain" src="images/cs.png" alt="Česká spořitelna">
+                </div>
+                <div class="col-span-1 flex justify-center items-center">
+                    <img class="h-12 object-contain" src="images/csob.png" alt="ČSOB">
+                </div>
+                <div class="col-span-1 flex justify-center items-center">
+                    <img class="h-12 object-contain" src="images/hb.png" alt="Hypoteční banka">
+                </div>
+                <div class="col-span-1 flex justify-center items-center">
+                    <img class="h-12 object-contain" src="images/kb.png" alt="Komerční banka">
+                </div>
+                <div class="col-span-1 flex justify-center items-center">
+                    <img class="h-12 object-contain" src="images/rb.png" alt="Raiffeisenbank">
+                </div>
+                <div class="col-span-1 flex justify-center items-center">
+                    <img class="h-12 object-contain" src="images/uc.png" alt="UniCredit Bank">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
@@ -392,7 +440,9 @@
                     <p class="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">Vyplňte formulář pro výpočet hypotéky</p>
                 </div>
 
-                <form class="mx-auto mt-16 max-w-4xl">
+                <form id="mortgage-form" class="mx-auto mt-16 max-w-4xl" action="https://ptf.ecomailapp.cz/public/subscribe/40/4325317eca104948dd258a30cd624948" method="post" onsubmit="return validateForm(event)">
+                    <div id="form-success" class="hidden mb-6 p-4 rounded-lg bg-green-100 text-green-700">Formulář byl úspěšně odeslán!</div>
+                    <div id="form-error" class="hidden mb-6 p-4 rounded-lg bg-red-100 text-red-700"></div>
                     <!-- Údaje o nemovitosti -->
                     <div class="bg-white rounded-3xl shadow-lg overflow-hidden p-12 mb-8">
                         <h3 class="text-2xl font-bold text-gray-900 mb-8">Údaje o nemovitosti</h3>
@@ -416,7 +466,7 @@
                             <div>
                                 <label for="property-price" class="block text-base font-medium leading-6 text-gray-900 mb-3">Cena nemovitosti</label>
                                 <div class="relative">
-                                    <input type="text" id="property-price" name="property-price" class="block w-full rounded-xl border-0 py-4 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 text-lg" placeholder="5 000 000">
+                                    <input type="text" id="property-price" name="property-price" required class="block w-full rounded-xl border-0 py-4 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 text-lg" placeholder="5 000 000">
                                     <div class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none text-gray-500">Kč</div>
                                 </div>
                             </div>
@@ -424,7 +474,7 @@
                             <div>
                                 <label for="own-resources" class="block text-base font-medium leading-6 text-gray-900 mb-3">Vlastní zdroje</label>
                                 <div class="relative">
-                                    <input type="text" id="own-resources" name="own-resources" class="block w-full rounded-xl border-0 py-4 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 text-lg" placeholder="1 000 000">
+                                    <input type="text" id="own-resources" name="own-resources" required class="block w-full rounded-xl border-0 py-4 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 text-lg" placeholder="1 000 000">
                                     <div class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none text-gray-500">Kč</div>
                                 </div>
                             </div>
@@ -437,22 +487,22 @@
                         <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
                             <div>
                                 <label for="first-name" class="block text-base font-medium leading-6 text-gray-900 mb-3">Jméno</label>
-                                <input type="text" id="first-name" name="first-name" class="block w-full rounded-xl border-0 py-4 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 text-lg">
+                                <input type="text" id="first-name" name="name" required class="block w-full rounded-xl border-0 py-4 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 text-lg" placeholder="Jan">
                             </div>
 
                             <div>
                                 <label for="last-name" class="block text-base font-medium leading-6 text-gray-900 mb-3">Příjmení</label>
-                                <input type="text" id="last-name" name="last-name" class="block w-full rounded-xl border-0 py-4 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 text-lg">
+                                <input type="text" id="last-name" name="surname" required class="block w-full rounded-xl border-0 py-4 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 text-lg" placeholder="Novák">
                             </div>
 
                             <div>
                                 <label for="email" class="block text-base font-medium leading-6 text-gray-900 mb-3">E-mail</label>
-                                <input type="email" id="email" name="email" class="block w-full rounded-xl border-0 py-4 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 text-lg">
+                                <input type="email" id="email" name="email" required class="block w-full rounded-xl border-0 py-4 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 text-lg" placeholder="jan.novak@email.cz">
                             </div>
 
                             <div>
                                 <label for="phone" class="block text-base font-medium leading-6 text-gray-900 mb-3">Telefon</label>
-                                <input type="tel" id="phone" name="phone" class="block w-full rounded-xl border-0 py-4 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 text-lg">
+                                <input type="tel" id="phone" name="phone" required class="block w-full rounded-xl border-0 py-4 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 text-lg" placeholder="+420 123 456 789">
                             </div>
 
                             <div class="sm:col-span-2">
@@ -646,7 +696,7 @@
                     <h3 class="text-sm font-semibold leading-6 text-gray-900">Užitečné informace</h3>
                     <ul role="list" class="mt-6 space-y-4">
                         <li><a href="#" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Blog</a></li>
-                        <li><a href="#" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Hypoteční kalkulačka</a></li>
+                        <li><a href="#hypoteka" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Hypoteční kalkulačka</a></li>
                         <li><a href="#" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Kontakt</a></li>
                         <li><a href="#" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Obchodní podmínky</a></li>
                     </ul>
@@ -676,6 +726,51 @@
     </footer>
 
     <script>
+        // Cookie funkce
+        function setCookie(name, value, days) {
+            let expires = '';
+            if (days) {
+                const date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = '; expires=' + date.toUTCString();
+            }
+            document.cookie = name + '=' + (value || '') + expires + '; path=/';
+        }
+
+        function getCookie(name) {
+            const nameEQ = name + '=';
+            const ca = document.cookie.split(';');
+            for(let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
+        // Zobrazení cookie lišty
+        document.addEventListener('DOMContentLoaded', () => {
+            const cookieBanner = document.getElementById('cookie-banner');
+            const acceptButton = document.getElementById('accept-cookies');
+            const rejectButton = document.getElementById('reject-cookies');
+
+            if (!getCookie('cookies-accepted')) {
+                setTimeout(() => {
+                    cookieBanner.classList.remove('translate-y-full');
+                }, 1000);
+            }
+
+            acceptButton.addEventListener('click', () => {
+                setCookie('cookies-accepted', 'true', 365);
+                cookieBanner.classList.add('translate-y-full');
+            });
+
+            rejectButton.addEventListener('click', () => {
+                setCookie('cookies-accepted', 'false', 365);
+                cookieBanner.classList.add('translate-y-full');
+            });
+        });
+
         // Formátování čísla s mezerami a měnou
         function formatCurrency(number) {
             return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' Kč';
@@ -683,9 +778,15 @@
 
         // Výpočet všech hodnot
         function calculateAll() {
+            // Získání elementů
+            const rentAmountEl = document.getElementById('rent-amount');
+            const mortgageAmountEl = document.getElementById('mortgage-amount');
+            
+            if (!rentAmountEl || !mortgageAmountEl) return;
+
             // Získání hodnot
-            const rentAmount = parseInt(document.getElementById('rent-amount').value.replace(/\s+/g, '')) || 0;
-            const mortgageAmount = parseInt(document.getElementById('mortgage-amount').value.replace(/\s+/g, '')) || 0;
+            const rentAmount = parseInt(rentAmountEl.value.replace(/\s+/g, '')) || 0;
+            const mortgageAmount = parseInt(mortgageAmountEl.value.replace(/\s+/g, '')) || 0;
 
             // Výpočty pro nájem
             const yearlyRent = rentAmount * 12;
@@ -698,26 +799,38 @@
             // Výpočet úspory
             const totalSavings = totalRent - totalMortgage;
 
+            // Helper funkce pro bezpečnou aktualizaci elementu
+            const updateElement = (id, value) => {
+                const element = document.getElementById(id);
+                if (element) element.textContent = formatCurrency(value);
+            };
+
             // Aktualizace všech hodnot v tabulkách
-            document.getElementById('monthly-rent').textContent = formatCurrency(rentAmount);
-            document.getElementById('yearly-rent').textContent = formatCurrency(yearlyRent);
-            document.getElementById('total-rent').textContent = formatCurrency(totalRent);
-
-            document.getElementById('monthly-mortgage').textContent = formatCurrency(mortgageAmount);
-            document.getElementById('yearly-mortgage').textContent = formatCurrency(yearlyMortgage);
-            document.getElementById('total-mortgage').textContent = formatCurrency(totalMortgage);
-
-            document.getElementById('total-savings').textContent = formatCurrency(totalSavings);
+            updateElement('monthly-rent', rentAmount);
+            updateElement('yearly-rent', yearlyRent);
+            updateElement('total-rent', totalRent);
+            updateElement('monthly-mortgage', mortgageAmount);
+            updateElement('yearly-mortgage', yearlyMortgage);
+            updateElement('total-mortgage', totalMortgage);
+            updateElement('total-savings', totalSavings);
         }
 
         // Formátování vstupu
         function formatInput(input) {
+            if (!input || !input.value) return;
+            
             let value = input.value.replace(/\s+/g, '').replace(/[^0-9]/g, '');
             if (value) {
                 value = parseInt(value).toString();
                 input.value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
             }
-            calculateAll();
+            
+            // Pouze zavolat calculateAll pokud existují potřebné elementy
+            const rentInput = document.getElementById('rent-amount');
+            const mortgageInput = document.getElementById('mortgage-amount');
+            if (rentInput && mortgageInput) {
+                calculateAll();
+            }
         }
 
         // Přidání event listenerů
@@ -725,13 +838,19 @@
             const rentInput = document.getElementById('rent-amount');
             const mortgageInput = document.getElementById('mortgage-amount');
 
-            rentInput.addEventListener('input', function() { formatInput(this); });
-            mortgageInput.addEventListener('input', function() { formatInput(this); });
+            if (rentInput) {
+                rentInput.addEventListener('input', function() { formatInput(this); });
+                formatInput(rentInput);
+            }
+            
+            if (mortgageInput) {
+                mortgageInput.addEventListener('input', function() { formatInput(this); });
+                formatInput(mortgageInput);
+            }
 
-            // Počáteční výpočet
-            formatInput(rentInput);
-            formatInput(mortgageInput);
-            calculateAll();
+            if (rentInput && mortgageInput) {
+                calculateAll();
+            }
         });
 
         // Původní funkce pro výpočet celkové úspory
@@ -914,12 +1033,106 @@
         // Spustit notifikace po načtení stránky
         document.addEventListener('DOMContentLoaded', () => {
             setTimeout(scheduleNextNotification, 3000);
+
+            // Přidání formátování pro ceny
+            const priceInputs = ['property-price', 'own-resources'];
+            priceInputs.forEach(id => {
+                const input = document.getElementById(id);
+                if (input) {
+                    input.addEventListener('input', function(e) {
+                        let value = e.target.value.replace(/\D/g, '');
+                        if (value) {
+                            value = parseInt(value).toLocaleString('cs-CZ');
+                            e.target.value = value;
+                        }
+                    });
+                }
+            });
         });
+
+        function validateForm(event) {
+            const form = event.target;
+            const formError = document.getElementById('form-error');
+            const formSuccess = document.getElementById('form-success');
+            
+            // Skryjeme předchozí zprávy
+            formError.classList.add('hidden');
+            formSuccess.classList.add('hidden');
+            
+            // Validace formuláře
+            const requiredFields = ['email', 'name', 'surname', 'phone'];
+            const errors = [];
+            
+            for (const fieldName of requiredFields) {
+                const field = form.querySelector(`[name="${fieldName}"]`);
+                if (!field || !field.value.trim()) {
+                    const fieldLabels = {
+                        'email': 'e-mail',
+                        'name': 'jméno',
+                        'surname': 'příjmení',
+                        'phone': 'telefon'
+                    };
+                    errors.push(`Prosím vyplňte ${fieldLabels[fieldName]}`);
+                }
+            }
+
+            if (errors.length > 0) {
+                formError.innerHTML = errors.join('<br>');
+                formError.classList.remove('hidden');
+                event.preventDefault();
+                return false;
+            }
+
+            // Přidáme vlastní pole pro Ecomail
+            const customFields = {
+                'property_type': form.querySelector('#property-type')?.value,
+                'property_value': form.querySelector('#property-price')?.value,
+                'own_resources': form.querySelector('#own-resources')?.value,
+                'note': form.querySelector('#message')?.value
+            };
+
+            // Přidáme skrytá pole pro vlastní pole
+            for (const [key, value] of Object.entries(customFields)) {
+                if (value) {
+                    const hiddenField = document.createElement('input');
+                    hiddenField.type = 'hidden';
+                    hiddenField.name = `custom_fields[${key}]`;
+                    hiddenField.value = value;
+                    form.appendChild(hiddenField);
+                }
+            }
+
+            formSuccess.innerHTML = 'Odesílám formulář...';
+            formSuccess.classList.remove('hidden');
+            return true;
+        }
     </script>
 
     <!-- Notifikace -->
     <div id="notifications" class="fixed bottom-8 left-8 z-50 flex flex-col gap-4">
         <!-- Notifikace budou přidávány zde dynamicky -->
+    </div>
+
+    <!-- Cookie lišta -->
+    <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 bg-white shadow-lg transform translate-y-full transition-transform duration-300 ease-in-out z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="flex-1">
+                    <p class="text-gray-600">
+                        Používáme cookies, abychom vám poskytli co nejlepší zážitek z našich stránek. Více informací o používání cookies najdete v našich 
+                        <a href="#" class="text-primary-600 hover:text-primary-700 underline">Zásadách ochrany osobních údajů</a>.
+                    </p>
+                </div>
+                <div class="flex gap-4">
+                    <button id="reject-cookies" class="btn btn-secondary">
+                        Odmítnout
+                    </button>
+                    <button id="accept-cookies" class="btn btn-primary">
+                        Přijmout vše
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Rychlé akce -->

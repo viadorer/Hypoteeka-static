@@ -1,0 +1,60 @@
+<!-- Plovoucí navigace -->
+<header class="fixed top-0 left-0 right-0 z-50">
+    <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8" aria-label="Top">
+        <div class="bg-white rounded-full shadow-lg">
+            <div class="mx-auto max-w-7xl px-6 sm:px-8 lg:px-10">
+                <div class="flex h-16 justify-between items-center">
+                    <!-- Logo -->
+                    <div class="flex-shrink-0 flex items-center space-x-3">
+                        <img src="images/logo.png" alt="Hypoteeka.cz" class="h-10 w-10 rounded-full">
+                        <a href="index.html" class="text-2xl font-bold text-primary-600">Hypoteeka.cz</a>
+                    </div>
+
+                    <!-- Hlavní navigace -->
+                    <div class="hidden md:flex md:space-x-8">
+                        <a href="index.html" class="nav-link text-gray-900 hover:text-primary-600">Domů</a>
+                        <a href="#hypoteka" class="nav-link text-gray-900 hover:text-primary-600">Hypoteční kalkulačka</a>
+                        <a href="najem-vs-hypoteka.html" class="nav-link text-gray-900 hover:text-primary-600">Nájem vs. hypotéka</a>
+                        <a href="investicni-kalkulacka.html" class="nav-link text-gray-900 hover:text-primary-600">Investiční kalkulačka</a>
+                        <a href="kalkulacka-prescoring.html" class="nav-link text-gray-900 hover:text-primary-600">Prescoring</a>
+                        <a href="kalkulacka-ztracenych-prilezitosti.html" class="nav-link text-gray-900 hover:text-primary-600">Ztracené příležitosti</a>
+                    </div>
+
+                    <!-- Mobilní menu tlačítko -->
+                    <div class="md:hidden">
+                        <button 
+                            type="button"
+                            class="btn-icon bg-primary-50 text-primary-600 hover:bg-primary-100"
+                            @click="mobileMenuOpen = !mobileMenuOpen"
+                        >
+                            <i class="fas fa-bars" x-show="!mobileMenuOpen"></i>
+                            <i class="fas fa-times" x-show="mobileMenuOpen" x-cloak></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobilní menu -->
+        <div 
+            class="md:hidden"
+            x-show="mobileMenuOpen"
+            x-transition:enter="transition ease-out duration-100"
+            x-transition:enter-start="transform opacity-0 scale-95"
+            x-transition:enter-end="transform opacity-100 scale-100"
+            x-transition:leave="transition ease-in duration-75"
+            x-transition:leave-start="transform opacity-100 scale-100"
+            x-transition:leave-end="transform opacity-0 scale-95"
+            x-cloak
+        >
+            <div class="px-2 pt-2 pb-3 space-y-1 bg-white rounded-lg shadow-lg mt-2">
+                <a href="index.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-primary-600 hover:bg-gray-50">Domů</a>
+                <a href="#hypoteka" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-primary-600 hover:bg-gray-50">Hypoteční kalkulačka</a>
+                <a href="najem-vs-hypoteka.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-primary-600 hover:bg-gray-50">Nájem vs. hypotéka</a>
+                <a href="investicni-kalkulacka.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-primary-600 hover:bg-gray-50">Investiční kalkulačka</a>
+                <a href="kalkulacka-prescoring.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-primary-600 hover:bg-gray-50">Prescoring</a>
+                <a href="kalkulacka-ztracenych-prilezitosti.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-primary-600 hover:bg-gray-50">Ztracené příležitosti</a>
+            </div>
+        </div>
+    </nav>
+</header>

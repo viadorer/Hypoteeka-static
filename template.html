@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <title>TITLE | Hypoteeka.cz</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        [x-cloak] { display: none !important; }
+        .btn-icon {
+            @apply inline-flex items-center p-2 rounded-lg text-sm;
+        }
+        .nav-link {
+            @apply text-base font-medium;
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <div x-data="{ mobileMenuOpen: false }">
+        <!-- Navigace -->
+        <div id="nav-placeholder"></div>
+
+        <main>
+            <!-- Obsah stránky -->
+            CONTENT
+        </main>
+
+        <!-- Footer -->
+        <div id="footer-placeholder"></div>
+    </div>
+
+    <script>
+        // Načtení navigace
+        fetch('nav.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('nav-placeholder').innerHTML = data;
+            });
+    </script>
+</body>
+</html>
