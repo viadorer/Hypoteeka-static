@@ -52,6 +52,28 @@
             border: 2px solid white;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
+        
+        /* FAQ Styles - jednodušší přístup */
+        .faq-answer {
+            display: none;
+            padding: 1rem 1.5rem;
+            background-color: #f9fafb;
+            border-top: 1px solid #e5e7eb;
+        }
+        
+        .question-icon {
+            transition: transform 0.3s ease;
+        }
+        
+        .question-icon.rotate-180 {
+            transform: rotate(180deg);
+        }
+        
+        /* Hover efekt pro FAQ otázky */
+        .faq-question:hover {
+            background-color: #f1f5fb; /* Světle modrý nádech při hover */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
                 /* Primary colors - Dark Blue */
         .bg-primary-500 { background-color: #0F4C81; }
         .bg-primary-600 { background-color: #0D3D66; }
@@ -64,12 +86,27 @@
         .bg-gradient-to-br {
             background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));
         }
+        .bg-gradient-to-r {
+            background-image: linear-gradient(to right, var(--tw-gradient-stops));
+        }
         .from-primary-600 {
             --tw-gradient-from: #0D3D66;
             --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(67 56 202 / 0));
         }
+        .from-primary-500 {
+            --tw-gradient-from: #0F4C81;
+            --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(15 76 129 / 0));
+        }
         .to-primary-700 {
             --tw-gradient-to: #0B2F4D;
+        }
+        .to-blue-600 {
+            --tw-gradient-to: #1C64F2;
+        }
+        
+        /* Button Shadow */
+        .shadow-button {
+            box-shadow: 0 4px 14px 0 rgba(15, 76, 129, 0.4);
         }
         
         /* Opacity */
@@ -126,12 +163,8 @@
 
                             <!-- Hlavní navigace -->
                             <div class="hidden md:flex md:space-x-8">
-                                <a href="index.html" class="nav-link text-gray-900 hover:text-primary-600">Domů</a>
                                 <a href="#hypoteka" class="nav-link text-gray-900 hover:text-primary-600">Hypoteční kalkulačka</a>
                                 <a href="najem-vs-hypoteka.html" class="nav-link text-gray-900 hover:text-primary-600">Nájem vs. hypotéka</a>
-                                <a href="investicni-kalkulacka.html" class="nav-link text-gray-900 hover:text-primary-600">Investiční kalkulačka</a>
-                                <a href="kalkulacka-prescoring.html" class="nav-link text-gray-900 hover:text-primary-600">Prescoring</a>
-                                <a href="kalkulacka-ztracenych-prilezitosti.html" class="nav-link text-gray-900 hover:text-primary-600">Ztracené příležitosti</a>
                             </div>
 
 
@@ -200,27 +233,31 @@
         </div>
     </div>
 
-        <!-- Mortgage comparison -->
-        <div class="mx-auto max-w-3xl px-6 lg:px-8 bg-white rounded-3xl p-8 shadow-xl -mt-32 relative z-20">
-            <div class="mx-auto max-w-4xl text-center">
-                <h2 class="text-base font-semibold leading-7 text-primary-500">UŠETŘETE NA HYPOTÉCE</h2>
-                <p class="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">Kolik můžete ušetřit s Hypoteekou?</p>
-                <p class="mt-6 text-lg leading-8 text-gray-600">Na příkladu hypotéky vám ukážeme, kolik můžete ušetřit díky našim zkušeným poradcům na splátce hypotéky</p>
+        <!-- Sekce UŠETŘETE NA HYPOTÉCE s modrým přechodem na pozadí -->
+        <div class="w-full bg-gradient-to-b from-blue-50 to-gray-50 py-20 pb-32">
+            <div class="mx-auto max-w-3xl px-6 lg:px-8 bg-white rounded-3xl p-8 shadow-xl -mt-32 relative z-20 mb-16">
+                <div class="mx-auto max-w-4xl text-center">
+                    <h2 class="text-base font-semibold leading-7 text-primary-600">UŠETŘETE NA HYPOTÉCE</h2>
+                    <p class="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">Kolik můžete ušetřit s Hypoteekou?</p>
+                    <p class="mt-6 text-lg leading-8 text-gray-600">Na příkladu hypotéky vám ukážeme, kolik můžete ušetřit díky našim zkušeným poradcům na splátce hypotéky</p>
                 
                 <!-- Highlighted savings box -->
-                <div class="mt-8 mx-auto max-w-lg bg-primary-100 rounded-3xl p-8 border-2 border-primary-200 text-center shadow-sm">
+                <div class="mt-8 mx-auto max-w-lg bg-primary-100 rounded-3xl p-8 border-2 border-primary-200 text-center shadow-sm relative">
+                        <div class="absolute -top-5 left-1/2 transform -translate-x-1/2 bg-white p-2 rounded-full shadow-md">
+                            <img src="images/logo.png" alt="Hypoteeka.cz" class="h-10 w-10">
+                        </div>
                     <h3 class="text-xl font-semibold text-gray-900 mb-2">Celková úspora za 30 let:</h3>
                     <p class="text-4xl font-bold text-primary-600 mb-4" id="total-savings">0 Kč</p>
                     <p class="text-sm text-gray-600">Tolik peněz můžete ušetřit díky výhodnější úrokové sazbě od Hypoteeka.cz u hypotéky ve výši <span id="selected-mortgage-amount">2 500 000 Kč</span></p>
                 </div>
-            </div>
+                </div>
 
-            <div class="mt-10">
+                <div class="mt-10">
                 <!-- Slider -->
                 <div class="relative mx-auto max-w-2xl">
                     <div class="relative mt-4 mb-8">
-                        <div id="bubble" class="absolute -top-8 left-0 w-full pointer-events-none">
-                            <div id="amount-display" class="bg-gray-900 text-white px-4 py-1.5 rounded-full text-sm min-w-[140px] inline-block text-center absolute transform -translate-x-1/2">
+                        <div id="bubble" class="absolute -top-8 left-0 right-0 pointer-events-none">
+                            <div id="amount-display" class="bg-gray-900 text-white px-4 py-1.5 rounded-full text-sm min-w-[140px] inline-block text-center absolute transform -translate-x-1/2" style="left: 10%">
                                 2 500 000 Kč
                             </div>
                         </div>
@@ -296,6 +333,7 @@
                 </div>
             </div>
         </div>
+    </div>
 
         <!-- Jak to funguje sekce -->
         <div class="py-24 sm:py-32 bg-gray-50">
@@ -307,47 +345,58 @@
 
                 <div class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-4">
                     <!-- Karta: Bydlíte u rodičů -->
-                    <div class="flex flex-col items-center text-center">
-                        <div class="w-64 h-64 rounded-full overflow-hidden shadow-lg border-8 border-white">
-                            <img src="images/parents.jpg" alt="Bydlení u rodičů" class="w-full h-full object-cover object-center">
+                    <div class="flex flex-col items-center text-center h-full">
+                        <div class="relative w-64 h-64 rounded-full overflow-hidden shadow-lg border-8 border-white">
+                            <img src="images/parents.jpg" alt="Bydlení u rodiōů" class="w-full h-full object-cover object-center">
+                            <div class="absolute bottom-0 right-0 bg-white p-1 rounded-full shadow-md">
+                                <img src="images/logo.png" alt="Hypoteeka.cz" class="h-10 w-10">
+                            </div>
                         </div>
                         <h3 class="text-2xl font-bold text-gray-900 mb-4 mt-4">Bydlíte u rodičů</h3>
-                        <p class="text-lg text-gray-600 mb-4">Bydlíte u rodičů a chcete se posunout</p>
-                        <p class="text-gray-600 mb-8">Už bylo dost otázek, kde jste zase včera byli a u koho jste vlastně spali? Vyplňte náš dotazník a my se vám do pár minut ozveme, abychom si vše podrobně prošli a pak už bude vašemu snu bránit jen příjemné posezení s námi doporučeným finančním poradcem.</p>
-                        <a href="#hypoteka" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-primary-600 hover:bg-primary-700 transition-colors duration-200">Chci Hypoteeku</a>
+                        <p class="text-lg text-gray-500 mb-4">Bydlíte u rodičů a chcete se posunout</p>
+                        <div class="flex-grow">
+                            <p class="text-gray-600">Toužíte po vlastním bydlení a větší nezávislosti? Vyplňte náš dotazník a my se vám do pár minut ozveme, abychom si vše podrobně prošli. Pak už vás od vašeho snu dělí jen konzultace s námi doporučeným finančním poradcem.</p>
+                        </div>
+                        <a href="#hypoteka" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-primary-600 hover:bg-primary-700 transition-colors duration-200 mt-8">Zjistit, jak se osamostatnit</a>
                     </div>
 
                     <!-- Karta: Bydlíte ve vlastním -->
-                    <div class="flex flex-col items-center text-center">
+                    <div class="flex flex-col items-center text-center h-full">
                         <div class="w-64 h-64 rounded-full overflow-hidden shadow-lg border-8 border-white">
                             <img src="images/own.jpg" alt="Bydlení ve vlastním" class="w-full h-full object-cover object-center">
                         </div>
                         <h3 class="text-2xl font-bold text-gray-900 mb-4 mt-4">Bydlíte ve vlastním</h3>
-                        <p class="text-lg text-gray-600 mb-4">Bydlíte ve vlastním, ale chcete nové</p>
-                        <p class="text-gray-600 mb-8">Taky si už delší dobu říkáte, že to chce změnu? Stačí vyplnit dotazník a doplnit nám telefonicky některé údaje, abychom vás mohli spojit s nejvhodnějším finančním poradcem.</p>
-                        <a href="#hypoteka" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-primary-600 hover:bg-primary-700 transition-colors duration-200">Chci Hypoteeku</a>
+                        <p class="text-lg text-gray-500 mb-4">Bydlíte ve vlastním, ale chcete nové</p>
+                        <div class="flex-grow">
+                            <p class="text-gray-600">Taky si už delší dobu říkáte, že to chce změnu? Stačí vyplnit dotazník a doplnit nám telefonicky některé údaje, abychom vás mohli spojit s nejvhodnějším finančním poradcem.</p>
+                        </div>
+                        <a href="#hypoteka" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-primary-600 hover:bg-primary-700 transition-colors duration-200 mt-8">Nezávazně spočítat úsporu</a>
                     </div>
 
                     <!-- Karta: Bydlíte v nájmu -->
-                    <div class="flex flex-col items-center text-center">
+                    <div class="flex flex-col items-center text-center h-full">
                         <div class="w-64 h-64 rounded-full overflow-hidden shadow-lg border-8 border-white">
                             <img src="images/rent.jpg" alt="Bydlení v nájmu" class="w-full h-full object-cover object-center">
                         </div>
                         <h3 class="text-2xl font-bold text-gray-900 mb-4 mt-4">Bydlíte v nájmu</h3>
-                        <p class="text-lg text-gray-600 mb-4">Bydlíte v nájmu a chcete vlastní</p>
-                        <p class="text-gray-600 mb-8">Už vás nebaví platit nájem a chcete konečně bydlet ve vlastním? Vyplňte náš dotazník a my vám ukážeme, jak na to.</p>
-                        <a href="#hypoteka" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-primary-600 hover:bg-primary-700 transition-colors duration-200">Chci Hypoteeku</a>
+                        <p class="text-lg text-gray-500 mb-4">Bydlíte v nájmu a chcete vlastní</p>
+                        <div class="flex-grow">
+                            <p class="text-gray-600">Už vás nebaví platit nájem a chcete konečně bydlet ve vlastním? Vyplňte náš dotazník a my vám ukážeme, jak na to.</p>
+                        </div>
+                        <a href="#hypoteka" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-primary-600 hover:bg-primary-700 transition-colors duration-200 mt-8">Nezávazně spočítat úsporu</a>
                     </div>
 
                     <!-- Karta: Investice -->
-                    <div class="flex flex-col items-center text-center">
+                    <div class="flex flex-col items-center text-center h-full">
                         <div class="w-64 h-64 rounded-full overflow-hidden shadow-lg border-8 border-white">
                             <img src="images/invest.png" alt="Investice do nemovitosti" class="w-full h-full object-cover object-center">
                         </div>
                         <h3 class="text-2xl font-bold text-gray-900 mb-4 mt-4">Chcete investovat</h3>
-                        <p class="text-lg text-gray-600 mb-4">Hledáte příležitost k investici</p>
-                        <p class="text-gray-600 mb-8">Máte našetřeno a chcete své peníze zhodnotit investicí do nemovitosti? Pomůžeme vám najít tu správnou nemovitost a zajistíme výhodné financování.</p>
-                        <a href="#hypoteka" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-primary-600 hover:bg-primary-700 transition-colors duration-200">Chci Hypoteeku</a>
+                        <p class="text-lg text-gray-500 mb-4">Hledáte příležitost k investici</p>
+                        <div class="flex-grow">
+                            <p class="text-gray-600">Máte našetřeno a chcete své peníze zhodnotit investicí do nemovitosti? Pomůžeme vám najít tu správnou nemovitost a zajistíme výhodné financování.</p>
+                        </div>
+                        <a href="#hypoteka" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-primary-600 hover:bg-primary-700 transition-colors duration-200 mt-8">Spočítat investiční návratnost</a>
                     </div>
                 </div>
             </div>
@@ -391,11 +440,11 @@
 
 
 
-        <!-- Kroky procesu -->
-        <div class="py-24 sm:py-32">
+        <!-- Jednotná sekce JAK TO FUNGUJE -->
+        <div class="pt-24 pb-16 bg-gradient-to-b from-blue-100 via-blue-50 to-white">
             <div class="mx-auto max-w-7xl px-6 lg:px-8">
                 <div class="mx-auto max-w-4xl text-center">
-                    <h2 class="text-base font-semibold leading-7 text-primary-600">JAK TO FUNGUJE?</h2>
+                    <h2 class="text-base font-semibold leading-7 text-primary-600">JAK TO FUNGUJE? JEDNODUŠE:</h2>
                     <p class="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">Jak postupovat dál?</p>
                 </div>
 
@@ -406,7 +455,7 @@
                             <img src="images/step1-call.jpg" alt="Telefonát" class="w-full h-full object-cover object-center">
                         </div>
                         <h3 class="text-2xl font-bold text-gray-900 mt-8 mb-4">Telefonát</h3>
-                        <p class="text-gray-600">Do 10 minut vám zavoláme a zjistíme vše potřebné, abychom vám mohli najít nejlepšího finančního poradce.</p>
+                        <p class="text-gray-600">V co nejratší době vám zavolá Kája nebo Míša a zjistí od vás vše potřebné, abychom vám mohli nabídnout nejlepší hypoteeku.</p>
                     </div>
 
                     <!-- Krok 2 -->
@@ -415,7 +464,7 @@
                             <img src="images/step2-specialist.jpg" alt="Schůzka s poradcem" class="w-full h-full object-cover object-center">
                         </div>
                         <h3 class="text-2xl font-bold text-gray-900 mt-8 mb-4">Schůzka s poradcem</h3>
-                        <p class="text-gray-600">Námi doporučený finanční poradce vám ukáže všechny možnosti a vysvětlí vám celý proces.</p>
+                        <p class="text-gray-600">S naším expertem si dohodnete schůzku - osobně nebo online podle vašich preferencí. Expert vám ukáže všechny možnosti a podrobně vysvětlí celý proces.</p>
                     </div>
 
                     <!-- Krok 3 -->
@@ -427,10 +476,128 @@
                         <p class="text-gray-600">Pokud se vám nabídka líbí, stačí jen podepsat a můžete se těšit na nové bydlení.</p>
                     </div>
                 </div>
+                
+                <!-- Rozbalovací detailní informace o procesu -->
+                <div class="mx-auto max-w-4xl mt-16">
+                    <div class="bg-white rounded-3xl shadow-lg overflow-hidden p-8">
+                        <div class="text-center mb-8">
+                            <p class="mt-2 text-3xl font-bold tracking-tight text-gray-900">Detailní proces získání Hypoteeky</p>
+                        </div>
+                        
+                        <div class="mt-8">
+                            <button id="process-toggle" class="w-full flex justify-between items-center bg-primary-600 p-6 rounded-xl hover:bg-primary-700 transition-colors duration-150 shadow-lg">
+                                <span class="text-xl font-bold text-white">Zobrazit podrobný online proces</span>
+                                <svg id="arrow-icon" class="w-6 h-6 text-white transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            
+                            <div id="process-details" class="mt-6 hidden">
+                                <div class="mb-8 p-6 bg-gray-50 rounded-xl">
+                                    <p class="text-lg text-gray-600">Naším cílem je zjednodušit sjednání hypotéky bez nutnosti návštěv poboček bank nebo našich kanceláří.</p>
+                                </div>
+                                
+                                <!-- Krok 1 -->
+                                <div class="mb-8 p-6 bg-gray-50 rounded-xl">
+                                    <div class="flex items-center mb-4">
+                                        <div class="flex-shrink-0 w-12 h-12 bg-primary-500 rounded-full flex items-center justify-center">
+                                            <span class="text-xl font-bold text-white">1</span>
+                                        </div>
+                                        <h3 class="ml-4 text-2xl font-bold text-gray-900">Hypoteční kalkulačka</h3>
+                                    </div>
+                                    <p class="text-lg text-gray-600 ml-16">Vyplňte hypoteční kalkulačku online. Získáte okamžitý přehled o úrokové sazbě a měsíční splátce. Vyplněním doplňkového formuláře dostanete přesný propočet na míru vaší situace.</p>
+                                </div>
+                                
+                                <!-- Krok 2 -->
+                                <div class="mb-8 p-6 bg-gray-50 rounded-xl">
+                                    <div class="flex items-center mb-4">
+                                        <div class="flex-shrink-0 w-12 h-12 bg-primary-500 rounded-full flex items-center justify-center">
+                                            <span class="text-xl font-bold text-white">2</span>
+                                        </div>
+                                        <h3 class="ml-4 text-2xl font-bold text-gray-900">Individuální konzultace</h3>
+                                    </div>
+                                    <p class="text-lg text-gray-600 ml-16">Hypoteční specialista vás kontaktuje do 24 hodin. Během videohovoru nebo telefonické konzultace získáte odpovědi na všechny otázky a ušetříte čas, který byste strávili návštěvami různých bank.</p>
+                                </div>
+                                
+                                <!-- Krok 3 -->
+                                <div class="mb-8 p-6 bg-gray-50 rounded-xl">
+                                    <div class="flex items-center mb-4">
+                                        <div class="flex-shrink-0 w-12 h-12 bg-primary-500 rounded-full flex items-center justify-center">
+                                            <span class="text-xl font-bold text-white">3</span>
+                                        </div>
+                                        <h3 class="ml-4 text-2xl font-bold text-gray-900">Srovnání hypoték</h3>
+                                    </div>
+                                    <p class="text-lg text-gray-600 ml-16">Obdržíte srovnání nabídek bank zahrnující všechny náklady spojené s hypotékou - nejen úrokovou sazbu, ale i poplatky a pojištění. Objevíme skryté poplatky a podmínky, které banky běžně nezdůrazňují.</p>
+                                </div>
+                                
+                                <!-- Krok 4 -->
+                                <div class="mb-8 p-6 bg-gray-50 rounded-xl">
+                                    <div class="flex items-center mb-4">
+                                        <div class="flex-shrink-0 w-12 h-12 bg-primary-500 rounded-full flex items-center justify-center">
+                                            <span class="text-xl font-bold text-white">4</span>
+                                        </div>
+                                        <h3 class="ml-4 text-2xl font-bold text-gray-900">Výběr nejlepší hypotéky</h3>
+                                    </div>
+                                    <p class="text-lg text-gray-600 ml-16">S pomocí specialisty vyberete hypotéku, která vám ušetří tisíce korun ročně. Hypoteční specialista vyjedná s bankou nejlepší možné podmínky, které byste sami nezískali.</p>
+                                </div>
+                                
+                                <!-- Krok 5 -->
+                                <div class="mb-8 p-6 bg-gray-50 rounded-xl">
+                                    <div class="flex items-center mb-4">
+                                        <div class="flex-shrink-0 w-12 h-12 bg-primary-500 rounded-full flex items-center justify-center">
+                                            <span class="text-xl font-bold text-white">5</span>
+                                        </div>
+                                        <h3 class="ml-4 text-2xl font-bold text-gray-900">Proces schvalování hypotéky</h3>
+                                    </div>
+                                    <p class="text-lg text-gray-600 ml-16">Specialista za vás vyplní všechny formuláře a zajistí dokumentaci. Místo několika návštěv banky stačí jen elektronický podpis. Máte jednoho kontaktního člověka místo anonymního bankovního systému.</p>
+                                </div>
+                                
+                                <!-- Krok 6 -->
+                                <div class="mb-8 p-6 bg-gray-50 rounded-xl">
+                                    <div class="flex items-center mb-4">
+                                        <div class="flex-shrink-0 w-12 h-12 bg-primary-500 rounded-full flex items-center justify-center">
+                                            <span class="text-xl font-bold text-white">6</span>
+                                        </div>
+                                        <h3 class="ml-4 text-2xl font-bold text-gray-900">Podpis smlouvy</h3>
+                                    </div>
+                                    <p class="text-lg text-gray-600 ml-16">Specialista dohodne termín podpisu na vámi vybrané pobočce nebo zajistí online podpis, pokud to banka umožňuje. Ušetříte minimálně 70% času oproti standardnímu procesu vyřizování hypotéky.</p>
+                                </div>
+                                
+                                <!-- Krok 7 -->
+                                <div class="mb-8 p-6 bg-gray-50 rounded-xl">
+                                    <div class="flex items-center mb-4">
+                                        <div class="flex-shrink-0 w-12 h-12 bg-primary-500 rounded-full flex items-center justify-center">
+                                            <span class="text-xl font-bold text-white">7</span>
+                                        </div>
+                                        <h3 class="ml-4 text-2xl font-bold text-gray-900">Čerpání hypotéky</h3>
+                                    </div>
+                                    <p class="text-lg text-gray-600 ml-16">Všechny podklady pro čerpání hypotéky můžete dodat elektronicky. Specialista zajistí správné načasování čerpání, aby nedocházelo ke zbytečným poplatkům za rezervaci prostředků.</p>
+                                </div>
+                                
+                                <!-- Krok 8 -->
+                                <div class="p-6 bg-gray-50 rounded-xl">
+                                    <div class="flex items-center mb-4">
+                                        <div class="flex-shrink-0 w-12 h-12 bg-primary-500 rounded-full flex items-center justify-center">
+                                            <span class="text-xl font-bold text-white">8</span>
+                                        </div>
+                                        <h3 class="ml-4 text-2xl font-bold text-gray-900">Dlouhodobá spolupráce</h3>
+                                    </div>
+                                    <p class="text-lg text-gray-600 ml-16">I po vyřízení hypotéky získáváte:</p>
+                                    <ul class="text-lg text-gray-600 ml-24 list-disc space-y-2 mt-4">
+                                        <li>Bezplatné konzultace při změnách úrokových sazeb</li>
+                                        <li>Úsporu při refinancování (průměrně 0,3-0,5% nižší sazba než při standardní nabídce)</li>
+                                        <li>Včasné upozornění před koncem fixace</li>
+                                        <li>Přednostní řešení žádostí o změny v úvěru</li>
+                                    </ul>
+                                    <p class="text-lg text-gray-600 ml-16 mt-4">S naším specialistou ušetříte peníze i čas nejen při sjednání, ale i po celou dobu splácení hypotéky.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
- 
 
         <!-- Formulář pro výpočet hypotéky -->
         <div id="hypoteka" class="py-24 sm:py-32 bg-gray-100">
@@ -644,17 +811,666 @@
     </div>
 </div>
 
+    <!-- Příběhy klientů Section -->
+    <div class="bg-gradient-to-b from-white to-gray-50 py-24 sm:py-32">
+        <div class="mx-auto max-w-7xl px-6 lg:px-8">
+            <div class="mx-auto max-w-4xl text-center mb-16">
+                <span class="inline-flex items-center justify-center px-4 py-1 rounded-full bg-primary-50 text-primary-700 text-sm font-medium mb-4">
+                    PŘÍBĚHY NAŠICH KLIENTŮ
+                </span>
+                <h2 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">Jak jsme pomohli našim klientům</h2>
+                <p class="mt-6 text-lg leading-8 text-gray-600">Poznejte skutečné případy, kde jsme našim klientům pomohli získat výhodné hypotéky a ušetřit statisíce korun.</p>
+                <div class="h-1 w-20 bg-primary-600 mx-auto mt-8"></div>
+            </div>
+            
+            <!-- Horizontální posuvník příběhů -->
+            <div class="relative mt-6 overflow-hidden">
+                <!-- Ovládací prvky posuvníku -->
+                <div class="absolute top-1/2 left-3 -translate-y-1/2 z-10">
+                    <button id="prev-story" class="bg-white rounded-full p-4 shadow-xl focus:outline-none hover:bg-gray-50 transition-all duration-200 border border-gray-100 text-gray-500 hover:text-primary-600 group">
+                        <svg class="w-6 h-6 group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="absolute top-1/2 right-3 -translate-y-1/2 z-10">
+                    <button id="next-story" class="bg-white rounded-full p-4 shadow-xl focus:outline-none hover:bg-gray-50 transition-all duration-200 border border-gray-100 text-gray-500 hover:text-primary-600 group">
+                        <svg class="w-6 h-6 group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </button>
+                </div>
+                
+                <!-- Kontejner s příběhy -->
+                <div class="stories-container overflow-x-auto py-6 px-6 hide-scrollbar">
+                    <div class="stories-slider flex space-x-6" style="transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)">
+                        
+                        <!-- Příběh 1: Rodina Novákových -->
+                        <div class="story-card bg-white rounded-2xl shadow-xl flex-none w-full border border-gray-100 hover:shadow-2xl transition-shadow duration-300 overflow-hidden">
+                            <div class="p-8 flex flex-col md:flex-row gap-8">
+                                <div class="md:w-1/3">
+                                    <div class="relative overflow-hidden rounded-xl shadow-lg">
+                                        <img src="images/najemhypo.png" alt="Rodina Novákových" class="w-full h-auto object-cover aspect-square transform hover:scale-105 transition-transform duration-500">
+                                        <div class="absolute top-0 left-0 bg-primary-600 text-white px-3 py-1 text-sm font-semibold rounded-br-lg">Příběh 1/6</div>
+                                    </div>
+                                    <div class="mt-6 bg-gradient-to-br from-gray-50 to-white p-5 rounded-xl shadow-sm border border-gray-100">
+                                        <h4 class="font-semibold text-gray-800 mb-3 flex items-center">
+                                            <svg class="w-5 h-5 mr-2 text-primary-600" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
+                                            </svg>
+                                            Parametry hypotéky
+                                        </h4>
+                                        <ul class="space-y-2">
+                                            <li class="flex justify-between pb-2 border-b border-gray-100">
+                                                <span class="text-gray-500">Typ úvěru</span>
+                                                <span class="font-medium text-gray-900">Nový hypoteční úvěr</span>
+                                            </li>
+                                            <li class="flex justify-between pb-2 border-b border-gray-100">
+                                                <span class="text-gray-500">Výše hypotéky</span>
+                                                <span class="font-medium text-gray-900">4 850 000 Kč</span>
+                                            </li>
+                                            <li class="flex justify-between pb-2 border-b border-gray-100">
+                                                <span class="text-gray-500">Úroková sazba</span>
+                                                <span class="font-medium text-gray-900">3,89 %</span>
+                                            </li>
+                                            <li class="flex justify-between pb-2 border-b border-gray-100">
+                                                <span class="text-gray-500">Splatnost</span>
+                                                <span class="font-medium text-gray-900">25 let</span>
+                                            </li>
+                                            <li class="flex justify-between pt-1">
+                                                <span class="text-primary-600 font-medium">Úspora</span>
+                                                <span class="text-primary-600 font-bold">367 000 Kč</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="md:w-2/3 flex flex-col justify-between">
+                                    <div>
+                                        <span class="text-sm font-medium text-primary-600 mb-2 inline-block">OSVČ s nepravidelnými příjmy</span>
+                                        <h3 class="text-2xl font-bold text-gray-900 mb-4">Rodina Novákových: Hypotéka na dům se zahradou</h3>
+                                        <div class="bg-gray-50 px-4 py-3 border-l-4 border-primary-600 rounded-r-lg mb-5">
+                                            <p class="italic text-gray-700">„Hledáme dům pro rodinu, ale jako OSVČ nám banky nabízely nevýhodné podmínky. S pomocí hypotečního specialisty jsme získali výrazně lepší úrok a mohli si dovolit větší dům, než jsme čekali.“</p>
+                                        </div>
+                                        <p class="text-gray-600 mb-4">Manželé Novákovi potřebovali hypotéku na dům se zahradou na okraji Prahy. Jako OSVČ s nepravidelnými příjmy dostali od první banky nabídku s úrokem 4,59 % a podmínkou dodatečného zajištění.</p>
+                                        <p class="text-gray-600">Náš hypoteční specialista připravil dokumentaci tak, aby maximálně podpořil jejich bonitu. Díky vyjednávání s více bankami najednou získali o 0,7 procentního bodu nižší sazbu bez nutnosti dodatečného zajištění.</p>
+                                    </div>
+                                    <div class="mt-8 md:self-end">
+                                        <a href="#hypoteka" class="inline-flex items-center gap-2 bg-primary-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-primary-700 transition-all duration-300 shadow-md text-base group">
+                                            <span>Také potřebujete hypotéku pro OSVČ?</span>
+                                            <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Příběh 2: Pan Svoboda -->
+                        <div class="story-card bg-white rounded-2xl shadow-xl flex-none w-full border border-gray-100 hover:shadow-2xl transition-shadow duration-300 overflow-hidden">
+                            <div class="p-8 flex flex-col md:flex-row gap-8">
+                                <div class="md:w-1/3">
+                                    <div class="relative overflow-hidden rounded-xl shadow-lg">
+                                        <img src="images/najemhypo.png" alt="Pan Svoboda" class="w-full h-auto object-cover aspect-square transform hover:scale-105 transition-transform duration-500">
+                                        <div class="absolute top-0 left-0 bg-primary-600 text-white px-3 py-1 text-sm font-semibold rounded-br-lg">Příběh 2/6</div>
+                                    </div>
+                                    <div class="mt-6 bg-gradient-to-br from-gray-50 to-white p-5 rounded-xl shadow-sm border border-gray-100">
+                                        <h4 class="font-semibold text-gray-800 mb-3 flex items-center">
+                                            <svg class="w-5 h-5 mr-2 text-primary-600" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
+                                            </svg>
+                                            Parametry hypotéky
+                                        </h4>
+                                        <ul class="space-y-2">
+                                            <li class="flex justify-between pb-2 border-b border-gray-100">
+                                                <span class="text-gray-500">Typ úvěru</span>
+                                                <span class="font-medium text-gray-900">Refinancování</span>
+                                            </li>
+                                            <li class="flex justify-between pb-2 border-b border-gray-100">
+                                                <span class="text-gray-500">Výše hypotéky</span>
+                                                <span class="font-medium text-gray-900">3 200 000 Kč</span>
+                                            </li>
+                                            <li class="flex justify-between pb-2 border-b border-gray-100">
+                                                <span class="text-gray-500">Původní sazba</span>
+                                                <span class="font-medium text-gray-900">5,19 %</span>
+                                            </li>
+                                            <li class="flex justify-between pb-2 border-b border-gray-100">
+                                                <span class="text-gray-500">Nová sazba</span>
+                                                <span class="font-medium text-gray-900">3,75 %</span>
+                                            </li>
+                                            <li class="flex justify-between pb-2 border-b border-gray-100">
+                                                <span class="text-gray-500">Splatnost</span>
+                                                <span class="font-medium text-gray-900">20 let</span>
+                                            </li>
+                                            <li class="flex justify-between pt-1">
+                                                <span class="text-primary-600 font-medium">Celková úspora</span>
+                                                <span class="text-primary-600 font-bold">583 200 Kč</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="md:w-2/3 flex flex-col justify-between">
+                                    <div>
+                                        <span class="text-sm font-medium text-primary-600 mb-2 inline-block">Předčasné refinancování</span>
+                                        <h3 class="text-2xl font-bold text-gray-900 mb-4">Pan Svoboda: Refinancování ještě před koncem fixace</h3>
+                                        <div class="bg-gray-50 px-4 py-3 border-l-4 border-primary-600 rounded-r-lg mb-5">
+                                            <p class="italic text-gray-700">„Myslel jsem, že budu muset čekat do konce fixace, abych mohl změnit banku. Předčasné splacení mi ušetřilo statisice korun, které bych jinak zaplatil na úrocích.“</p>
+                                        </div>
+                                        <p class="text-gray-600 mb-4">Pan Svoboda měl hypotéku s nevýhodnou sazbou 5,19 %. Náš specialista ho kontaktoval 9 měsíců před koncem fixace a navrhl předčasné refinancování.</p>
+                                        <p class="text-gray-600">I po započtení sankce 42 000 Kč za předčasné splacení se refinancování vyplatilo. Pan Svoboda nyní platí o 2 430 Kč měsíčně méně a za 20 let ušetří přes půl milionu korun.</p>
+                                    </div>
+                                    <div class="mt-8 md:self-end">
+                                        <a href="#hypoteka" class="inline-flex items-center gap-2 bg-primary-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-primary-700 transition-all duration-300 shadow-md text-base group">
+                                            <span>Zjistit možnosti refinancování</span>
+                                            <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Příběh 3: Petra a Tomáš -->
+                        <div class="story-card bg-white rounded-2xl shadow-xl flex-none w-full border border-gray-100 hover:shadow-2xl transition-shadow duration-300 overflow-hidden">
+                            <div class="p-8 flex flex-col md:flex-row gap-8">
+                                <div class="md:w-1/3">
+                                    <div class="relative overflow-hidden rounded-xl shadow-lg">
+                                        <img src="images/najemhypo.png" alt="Petra a Tomáš" class="w-full h-auto object-cover aspect-square transform hover:scale-105 transition-transform duration-500">
+                                        <div class="absolute top-0 left-0 bg-primary-600 text-white px-3 py-1 text-sm font-semibold rounded-br-lg">Příběh 3/6</div>
+                                    </div>
+                                    <div class="mt-6 bg-gradient-to-br from-gray-50 to-white p-5 rounded-xl shadow-sm border border-gray-100">
+                                        <h4 class="font-semibold text-gray-800 mb-3 flex items-center">
+                                            <svg class="w-5 h-5 mr-2 text-primary-600" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
+                                            </svg>
+                                            Parametry hypotéky
+                                        </h4>
+                                        <ul class="space-y-2">
+                                            <li class="flex justify-between pb-2 border-b border-gray-100">
+                                                <span class="text-gray-500">Typ úvěru</span>
+                                                <span class="font-medium text-gray-900">Nový hypoteční úvěr</span>
+                                            </li>
+                                            <li class="flex justify-between pb-2 border-b border-gray-100">
+                                                <span class="text-gray-500">Výše hypotéky</span>
+                                                <span class="font-medium text-gray-900">2 950 000 Kč</span>
+                                            </li>
+                                            <li class="flex justify-between pb-2 border-b border-gray-100">
+                                                <span class="text-gray-500">Úroková sazba</span>
+                                                <span class="font-medium text-gray-900">3,95 %</span>
+                                            </li>
+                                            <li class="flex justify-between pb-2 border-b border-gray-100">
+                                                <span class="text-gray-500">Splatnost</span>
+                                                <span class="font-medium text-gray-900">30 let</span>
+                                            </li>
+                                            <li class="flex justify-between pt-1">
+                                                <span class="text-gray-500">Vlastní zdroje</span>
+                                                <span class="font-medium text-gray-900">300 000 Kč (dar)</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="md:w-2/3 flex flex-col justify-between">
+                                    <div>
+                                        <span class="text-sm font-medium text-primary-600 mb-2 inline-block">Mladý pár bez úspor</span>
+                                        <h3 class="text-2xl font-bold text-gray-900 mb-4">Petra a Tomáš: První hypotéka na vysněný byt</h3>
+                                        <div class="bg-gray-50 px-4 py-3 border-l-4 border-primary-600 rounded-r-lg mb-5">
+                                            <p class="italic text-gray-700">„Každý nám říkal, že na vlastní bydlení nemůžeme dosáhnout, protože nemáme vlastní peníze. Hypoteční poradce nám ukázal cestu, jak na to. Nyní máme vlastní byt, o kterém jsme ani nesníli.“</p>
+                                        </div>
+                                        <p class="text-gray-600 mb-4">Petra a Tomáš (26 let) chtěli vlastní byt, ale neměli našetřeno 10-20 % z ceny nemovitosti, jak požadovaly banky. Náš specialista navrhl strategické využití daru od rodičů a připravil darovací smlouvy tak, aby je banka akceptovala jako vlastní zdroje.</p>
+                                        <p class="text-gray-600">Řešili jsme i to, že Tomáš nedávno změnil zaměstnání. Doložili jsme, že šlo o kariérní postup s vyšším příjmem, což banku přesvědčilo. Mladý pár se tak mohl nastěhovat do svého prvního bytu o dva roky dříve, než původně plánoval.</p>
+                                    </div>
+                                    <div class="mt-8 md:self-end">
+                                        <a href="#hypoteka" class="inline-flex items-center gap-2 bg-primary-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-primary-700 transition-all duration-300 shadow-md text-base group">
+                                            <span>Chcete hypotéku bez úspor?</span>
+                                            <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Příběh 4: Paní Horáková -->
+                        <div class="story-card bg-white rounded-2xl shadow-xl flex-none w-full border border-gray-100 hover:shadow-2xl transition-shadow duration-300 overflow-hidden">
+                            <div class="p-6 flex flex-col md:flex-row gap-6">
+                                <div class="md:w-1/3">
+                                    <img src="images/najemhypo.png" alt="Paní Horáková" class="rounded-lg shadow-sm w-full h-auto object-cover aspect-square">
+                                    <div class="mt-4 bg-gray-50 p-4 rounded-lg">
+                                        <h4 class="font-semibold text-gray-900 mb-2">Parametry hypotéky:</h4>
+                                        <ul class="space-y-1 text-sm">
+                                            <li><span class="font-medium">Typ úvěru:</span> Americká hypotéka</li>
+                                            <li><span class="font-medium">Výše hypotéky:</span> 1 500 000 Kč</li>
+                                            <li><span class="font-medium">Úroková sazba:</span> 4,85 %</li>
+                                            <li><span class="font-medium">Splatnost:</span> 15 let</li>
+                                            <li><span class="font-medium">Účel:</span> Rekonstrukce a podnikání</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="md:w-2/3 flex flex-col justify-between">
+                                    <div>
+                                        <h3 class="text-xl font-bold text-gray-900 mb-3">Paní Horáková: Americká hypotéka na rekonstrukci a podnikání</h3>
+                                        <p class="text-gray-600 mb-4">Paní Horáková zdědila starší rodinný dům, který potřeboval rekonstrukci. Zároveň chtěla otevřít malé květinářství. Banky jí nabízely buď spotřebitelský úvěr s vysokým úrokem, nebo hypotéku pouze na rekonstrukci.</p>
+                                        <p class="text-gray-600">Náš specialista jí doporučil americkou hypotéku jako ideální řešení. S naší pomocí připravila podnikatelský záměr a odhad nákladů na rekonstrukci, díky čemuž získala potřebný úvěr s výhodnou sazbou. Po rekonstrukci vzrostla hodnota nemovitosti o 30 % a paní Horáková mohla otevřít svůj vysněný obchod.</p>
+                                    </div>
+                                    <div class="mt-6 md:self-end">
+                                        <a href="#hypoteka" class="inline-block bg-primary-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-primary-700 transition-colors duration-200 shadow-md text-base">
+                                            Informace o americké hypotéce
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Příběh 5: Pan Černý -->
+                        <div class="story-card bg-white rounded-2xl shadow-xl flex-none w-full border border-gray-100 hover:shadow-2xl transition-shadow duration-300 overflow-hidden">
+                            <div class="p-6 flex flex-col md:flex-row gap-6">
+                                <div class="md:w-1/3">
+                                    <img src="images/najemhypo.png" alt="Pan Černý" class="rounded-lg shadow-sm w-full h-auto object-cover aspect-square">
+                                    <div class="mt-4 bg-gray-50 p-4 rounded-lg">
+                                        <h4 class="font-semibold text-gray-900 mb-2">Parametry hypotéky:</h4>
+                                        <ul class="space-y-1 text-sm">
+                                            <li><span class="font-medium">Typ úvěru:</span> Nový hypoteční úvěr</li>
+                                            <li><span class="font-medium">Výše hypotéky:</span> 2 700 000 Kč</li>
+                                            <li><span class="font-medium">Úroková sazba:</span> 4,09 %</li>
+                                            <li><span class="font-medium">Splatnost:</span> 25 let</li>
+                                            <li><span class="font-medium">Specifika:</span> Vyživovací povinnost na 2 děti</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="md:w-2/3 flex flex-col justify-between">
+                                    <div>
+                                        <h3 class="text-xl font-bold text-gray-900 mb-3">Pan Černý: Hypotéka pro rozvedeného otce se střídavou péčí</h3>
+                                        <p class="text-gray-600 mb-4">Pan Černý potřeboval po rozvodu zajistit bydlení pro sebe a své děti ve střídavé péči. Tři banky mu zamítly hypotéku kvůli výživnému a změnám v jeho finanční situaci.</p>
+                                        <p class="text-gray-600">Náš hypoteční specialista mu pomohl strukturovat případ jinak – správně zdokumentoval platby výživného, seřadil příjmy a optimalizoval stávající finanční produkty. Klíčové bylo prokázat výbornou platební morálku i přes složitou životní situaci. Díky našim kontaktům jsme našli banku, která zohlednila individuální okolnosti.</p>
+                                    </div>
+                                    <div class="mt-6 md:self-end">
+                                        <a href="#hypoteka" class="inline-block bg-primary-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-primary-700 transition-colors duration-200 shadow-md text-base">
+                                            Hypotéka pro specifické situace
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Příběh 6: Manželé Dvořákovi -->
+                        <div class="story-card bg-white rounded-2xl shadow-xl flex-none w-full border border-gray-100 hover:shadow-2xl transition-shadow duration-300 overflow-hidden">
+                            <div class="p-6 flex flex-col md:flex-row gap-6">
+                                <div class="md:w-1/3">
+                                    <img src="images/najemhypo.png" alt="Manželé Dvořákovi" class="rounded-lg shadow-sm w-full h-auto object-cover aspect-square">
+                                    <div class="mt-4 bg-gray-50 p-4 rounded-lg">
+                                        <h4 class="font-semibold text-gray-900 mb-2">Parametry hypotéky:</h4>
+                                        <ul class="space-y-1 text-sm">
+                                            <li><span class="font-medium">Typ úvěru:</span> Hypotéka na rekonstrukci</li>
+                                            <li><span class="font-medium">Výše hypotéky:</span> 1 800 000 Kč</li>
+                                            <li><span class="font-medium">Úroková sazba:</span> 3,59 %</li>
+                                            <li><span class="font-medium">Splatnost:</span> 20 let</li>
+                                            <li class="text-primary-600 font-medium">Získaná dotace: 150 000 Kč</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="md:w-2/3 flex flex-col justify-between">
+                                    <div>
+                                        <h3 class="text-xl font-bold text-gray-900 mb-3">Manželé Dvořákovi: Hypotéka na rekonstrukci s využitím státní podpory</h3>
+                                        <p class="text-gray-600 mb-4">Manželé Dvořákovi koupili starší dům, který potřeboval kompletní rekonstrukci včetně zateplení a výměny zdroje vytápění. Náš specialista jim poradil, jak zkombinovat hypotéku s využitím státního programu podpory.</p>
+                                        <p class="text-gray-600">Připravili jsme dokumentaci tak, aby splnila všechny podmínky pro získání dotace, a zároveň jsme dojednali výhodnou hypotéku. Díky tomu mohli Dvořákovi realizovat energeticky úspornou rekonstrukci, získat státní příspěvek a ještě snížit budoucí náklady na energie o 40 %.</p>
+                                    </div>
+                                    <div class="mt-6 md:self-end">
+                                        <a href="#hypoteka" class="inline-block bg-primary-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-primary-700 transition-colors duration-200 shadow-md text-base">
+                                            Hypotéka s dotací na rekonstrukci
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Indikátor stránek -->
+                <div class="flex justify-center space-x-2 mt-8">
+                    <span class="story-dot h-3 w-3 rounded-full bg-primary-600 cursor-pointer transition-colors duration-200"></span>
+                    <span class="story-dot h-3 w-3 rounded-full bg-gray-300 cursor-pointer transition-colors duration-200"></span>
+                    <span class="story-dot h-3 w-3 rounded-full bg-gray-300 cursor-pointer transition-colors duration-200"></span>
+                    <span class="story-dot h-3 w-3 rounded-full bg-gray-300 cursor-pointer transition-colors duration-200"></span>
+                    <span class="story-dot h-3 w-3 rounded-full bg-gray-300 cursor-pointer transition-colors duration-200"></span>
+                    <span class="story-dot h-3 w-3 rounded-full bg-gray-300 cursor-pointer transition-colors duration-200"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="bg-gray-50 py-24 sm:py-32">
+        <div class="mx-auto max-w-7xl px-6 lg:px-8">
+            <div class="mx-auto max-w-4xl text-center">
+                <h2 class="text-base font-semibold leading-7 text-primary-600">ČASTO KLADENÉ OTÁZKY</h2>
+                <p class="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">Co vás nejvíce zajímá</p>
+                <p class="mt-6 text-lg leading-8 text-gray-600">Odpovědi na nejčastější otázky našich klientů. Pokud zde nenajdete odpověď na svou otázku, neváhejte nás kontaktovat.</p>
+            </div>
+            <div class="mx-auto mt-16 max-w-3xl">
+                <!-- FAQ Accordion -->
+                <div class="faq-accordion space-y-4">
+                    <!-- Question 1 -->
+                    <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                        <button class="faq-question w-full text-left px-6 py-4 bg-white hover:bg-gray-50 flex justify-between items-center font-semibold text-gray-900 transition-all duration-150">
+                            <span>K čemu je dobré mít smlouvu o hypotečním úvěru v naší aplikaci?</span>
+                            <svg class="question-icon w-6 h-6 text-primary-600 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="faq-answer px-6 bg-white">
+                            <p class="text-gray-600 mb-4">Mít smlouvu v naší aplikaci vám přináší konkrétní výhody:</p>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-2">
+                                <li>Přístup ke smlouvě kdykoliv a kdekoliv bez nutnosti hledat v papírech</li>
+                                <li>Automatická upozornění 6 měsíců před koncem fixace</li>
+                                <li>Přehled všech parametrů hypotéky na jednom místě</li>
+                                <li>Snadné sdílení dokumentů s vaším hypotečním specialistou</li>
+                                <li>Historie všech změn a dodatků přehledně uspořádaná</li>
+                            </ul>
+                            
+                            <div class="mt-6 flex flex-col md:flex-row items-center justify-between bg-gray-50 rounded-xl p-6">
+                                <div class="mb-4 md:mb-0 md:mr-8">
+                                    <img src="images/myplann.png" alt="Aplikace MyPlann" class="rounded-lg shadow-md max-w-full md:max-w-xs">
+                                </div>
+                                <div class="text-center md:text-left">
+                                    <h4 class="text-lg font-semibold text-gray-900 mb-2">Registrujte se do aplikace MyPlann</h4>
+                                    <p class="text-gray-600 mb-4">Spravujte svou hypotéku a finanční plán v jedné přehledné aplikaci.</p>
+                                    <a href="https://app.myplann.cz/" class="inline-block bg-primary-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-primary-700 transition-colors duration-200 shadow-md">
+                                        Registrujte se do MyPlann
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Question 2 -->
+                    <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                        <button class="faq-question w-full text-left px-6 py-4 bg-white hover:bg-gray-50 flex justify-between items-center font-semibold text-gray-900 transition-all duration-150">
+                            <span>Mám hypotéku, kterou bych rád refinancoval, ale končí mi fixační období až za 3 roky, mohu to řešit už nyní?</span>
+                            <svg class="question-icon w-6 h-6 text-primary-600 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="faq-answer px-6 bg-white">
+                            <p class="text-gray-600 mb-4">Ano, je to možné. Výhodou včasného řešení refinancování je:</p>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-2">
+                                <li>Můžeme rezervovat současné výhodné sazby pro budoucí období</li>
+                                <li>Připravíme strategii refinancování a vy budete vědět, s jakými náklady počítat</li>
+                                <li>Některé banky umožňují předčasné splacení bez sankcí za určitých podmínek</li>
+                                <li>Včasná příprava vám dá silnější vyjednávací pozici s vaší stávající bankou</li>
+                            </ul>
+                            
+                            <div class="mt-6 text-center">
+                                <a href="#hypoteka" class="inline-block bg-primary-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-primary-700 transition-colors duration-200 shadow-md text-base">
+                                    Nezávazně zjistit podmínky refinancování
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Question 3 -->
+                    <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                        <button class="faq-question w-full text-left px-6 py-4 bg-white hover:bg-gray-50 flex justify-between items-center font-semibold text-gray-900 transition-all duration-150">
+                            <span>Jak dlouho trvá celý proces od odeslání formuláře k načerpání hypotečního úvěru?</span>
+                            <svg class="question-icon w-6 h-6 text-primary-600 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="faq-answer px-6 bg-white">
+                            <p class="text-gray-600 mb-4">Běžný časový rámec procesu:</p>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-2">
+                                <li>Do 24 hodin první kontakt s hypotečním specialistou</li>
+                                <li>3-5 dní kompletace podkladů a výběr nejvhodnější banky</li>
+                                <li>1-2 týdny schvalovací proces v bance</li>
+                                <li>1 týden příprava smlouvy k podpisu</li>
+                                <li>1-2 týdny od podpisu k čerpání hypotéky</li>
+                            </ul>
+                            <p class="text-gray-600 mt-4">Celý proces obvykle zvládneme v rozmezí 3-6 týdnů. U refinancování bez změny zástavní nemovitosti dokážeme proces zkrátit na 2-3 týdny.</p>
+                            
+                            <div class="mt-6 text-center">
+                                <a href="#formular" class="inline-block bg-primary-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-primary-700 transition-colors duration-200 shadow-md text-base">
+                                    Vyplnit formulář
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Question 4 -->
+                    <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                        <button class="faq-question w-full text-left px-6 py-4 bg-white hover:bg-gray-50 flex justify-between items-center font-semibold text-gray-900 transition-all duration-150">
+                            <span>Poskytujete i komplexní poradenství v oblasti osobních financí nebo řešíte pouze hypoteční úvěry?</span>
+                            <svg class="question-icon w-6 h-6 text-primary-600 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="faq-answer px-6 bg-white">
+                            <p class="text-gray-600 mb-4">Ano, náš přístup je komplexní:</p>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-2">
+                                <li>Vytvoříme vám osobní finanční plán zohledňující vaše cíle</li>
+                                <li>Nastavíme ideální strukturu rozpočtu s ohledem na hypoteční zatížení</li>
+                                <li>Poradíme s optimalizací stávajících úvěrů a pojištění</li>
+                                <li>Zajistíme daňové odpočty spojené s hypotékou</li>
+                                <li>Pomůžeme efektivně investovat i při splácení hypotéky</li>
+                            </ul>
+                            <p class="text-gray-600 mt-4">Naše služby zahrnují i pravidelný finanční servis, kdy s vámi 1x ročně probereme vaši finanční situaci a navrhneme případné úpravy.</p>
+                            
+                            <div class="mt-6 text-center">
+                                <a href="#konzultace" class="inline-block bg-primary-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-primary-700 transition-colors duration-200 shadow-md text-base">
+                                    Sjednat finanční konzultaci
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Question 5 -->
+                    <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                        <button class="faq-question w-full text-left px-6 py-4 bg-white hover:bg-gray-50 flex justify-between items-center font-semibold text-gray-900 transition-all duration-150">
+                            <span>Mohu s vámi řešit i další oblasti jako je pojištění či investice, nebo řešíte pouze hypotéky?</span>
+                            <svg class="question-icon w-6 h-6 text-primary-600 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="faq-answer px-6 bg-white">
+                            <p class="text-gray-600 mb-4">Ano, jsme komplexní finanční poradci:</p>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-2">
+                                <li>Sjednáme vám výhodné pojištění nemovitosti až o 25% levnější než přímo na pobočce banky</li>
+                                <li>Nastavíme životní pojištění tak, aby krylo rizika spojená s hypotékou</li>
+                                <li>Vytvoříme investiční strategii, která může pomoci zkrátit dobu splácení hypotéky</li>
+                                <li>Propojíme vaše stávající finanční produkty s novou hypotékou</li>
+                                <li>Zajistíme pravidelnou revizi všech finančních produktů</li>
+                            </ul>
+                            
+                            <div class="mt-6 text-center">
+                                <a href="#reseni" class="inline-block bg-primary-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-primary-700 transition-colors duration-200 shadow-md text-base">
+                                    Zjistit více o komplexních řešeních
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Question 6 -->
+                    <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                        <button class="faq-question w-full text-left px-6 py-4 bg-white hover:bg-gray-50 flex justify-between items-center font-semibold text-gray-900 transition-all duration-150">
+                            <span>Proč sjednat hypotéku u nás, v čem se lišíte od jiných poradců?</span>
+                            <svg class="question-icon w-6 h-6 text-primary-600 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="faq-answer px-6 bg-white">
+                            <p class="text-gray-600 mb-4">Konkrétní rozdíly oproti konkurenci:</p>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-2">
+                                <li>Máme přímé napojení na 16 bank a přístup k exkluzivním slevám (až 0,4 p.b.)</li>
+                                <li>Specializujeme se výhradně na hypotéky, nejsme univerzální poradci</li>
+                                <li>Naši specialisté vyřídí průměrně 8 hypoték měsíčně (4x více než průměrný poradce)</li>
+                                <li>95% našich klientů přichází na doporučení</li>
+                                <li>Provádíme analýzu 76 parametrů hypotéky, nejen úrokové sazby</li>
+                                <li>Průměrná úspora pro naše klienty je 327 000 Kč za dobu trvání hypotéky</li>
+                            </ul>
+                            
+                            <div class="mt-6 text-center">
+                                <a href="#hypoteka" class="inline-block bg-primary-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-primary-700 transition-colors duration-200 shadow-md text-base">
+                                    Začít sjednávat hypotéku
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Question 7 -->
+                    <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                        <button class="faq-question w-full text-left px-6 py-4 bg-white hover:bg-gray-50 flex justify-between items-center font-semibold text-gray-900 transition-all duration-150">
+                            <span>Jak dlouho trvá, než mi porovnáte hypotéky od jednotlivých bank a dáte doporučení?</span>
+                            <svg class="question-icon w-6 h-6 text-primary-600 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="faq-answer px-6 bg-white">
+                            <p class="text-gray-600 mb-4">Pracujeme efektivně:</p>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-2">
+                                <li>První nezávaznou konzultaci poskytneme do 24 hodin</li>
+                                <li>Orientační srovnání nabídek získáte během prvního hovoru</li>
+                                <li>Na detailní analýzu a finální doporučení potřebujeme 2-3 pracovní dny</li>
+                                <li>U složitějších případů (kombinace více úvěrů, specifické typy nemovitostí) max. 5 dní</li>
+                                <li>Průběžně vás informujeme o postupu</li>
+                            </ul>
+                            <p class="text-gray-600 mt-4">Díky našim kontaktům v bankách dokážeme často získat předběžné schválení úvěru ještě před oficiálním podáním žádosti.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Question 8 -->
+                    <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                        <button class="faq-question w-full text-left px-6 py-4 bg-white hover:bg-gray-50 flex justify-between items-center font-semibold text-gray-900 transition-all duration-150">
+                            <span>Jaký je rozdíl mezi tím, když vyplním zkrácený nebo rozšířený formulář?</span>
+                            <svg class="question-icon w-6 h-6 text-primary-600 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="faq-answer px-6 bg-white">
+                            <p class="text-gray-600 mb-4">Co získáte v každé variantě:</p>
+                            <p class="text-gray-600 mb-2"><strong>Zkrácený formulář:</strong> Rychlý přehled dostupných nabídek bez detailní analýzy vaší situace</p>
+                            <p class="text-gray-600 mb-2"><strong>Rozšířený formulář:</strong></p>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-2">
+                                <li>Přesnou kalkulaci zohledňující vaše skutečné příjmy</li>
+                                <li>Analýzu vhodnosti nemovitosti jako zástavy</li>
+                                <li>Odhalení potenciálních překážek schválení</li>
+                                <li>Individuální nastavení parametrů hypotéky</li>
+                                <li>Posouzení nestandardních situací (cizinci, OSVČ, příjmy ze zahraničí)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Question 9 -->
+                    <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                        <button class="faq-question w-full text-left px-6 py-4 bg-white hover:bg-gray-50 flex justify-between items-center font-semibold text-gray-900 transition-all duration-150">
+                            <span>Jak dlouho trvá, než mi porovnáte hypotéky od jednotlivých bank a dáte doporučení?</span>
+                            <svg class="question-icon w-6 h-6 text-primary-600 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="faq-answer px-6 bg-white">
+                            <p class="text-gray-600 mb-4">Kompletní srovnání získáte do 24 hodin:</p>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-2">
+                                <li>První orientační srovnání obdržíte během úvodního hovoru (do 24h od vyplnění formuláře)</li>
+                                <li>Detailní propočty včetně doporučení zpracujeme po poskytnutí všech podkladů, obvykle do dalších 24 hodin</li>
+                                <li>U složitějších případů (nestandardní příjmy, kombinace více úvěrů) může trvat příprava 2-3 dny</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Question 10 -->
+                    <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                        <button class="faq-question w-full text-left px-6 py-4 bg-white hover:bg-gray-50 flex justify-between items-center font-semibold text-gray-900 transition-all duration-150">
+                            <span>Proč mám čekat 24h na srovnání hypoték od vás, když si můžu během pár minut udělat porovnání na kterémkoli online srovnávači hypoték na internetu?</span>
+                            <svg class="question-icon w-6 h-6 text-primary-600 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="faq-answer px-6 bg-white">
+                            <p class="text-gray-600 mb-4">Proč naše srovnání přináší skutečnou hodnotu:</p>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-2">
+                                <li>Online srovnávače neukazují reálné sazby - rozdíl může být až 0,8 p.b. oproti nabídce, kterou skutečně dostanete</li>
+                                <li>Naše analýza zahrnuje 76 parametrů hypotéky včetně skrytých poplatků</li>
+                                <li>Zohledňujeme vaši skutečnou bonitu a vyjednáme individuální podmínky</li>
+                                <li>Odhalíme nevýhodné podmínky v drobném tisku smlouvy (např. sankce za předčasné splacení)</li>
+                                <li>Známe aktuální procesní omezení bank (např. které banky momentálně financují družstevní byty)</li>
+                                <li>Máme přístup k interním slevovým programům bank, které nejsou veřejně dostupné</li>
+                            </ul>
+                            
+                            <div class="mt-6 text-center">
+                                <a href="#kalkulacka" class="inline-block bg-primary-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-primary-700 transition-colors duration-200 shadow-md text-base">
+                                    Získat přesné srovnání
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Question 11 -->
+                    <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                        <button class="faq-question w-full text-left px-6 py-4 bg-white hover:bg-gray-50 flex justify-between items-center font-semibold text-gray-900 transition-all duration-150">
+                            <span>Mohu využít vaší komplexní hypoteční kalkulačky bez toho, abych vám musel poskytnout kontaktní údaje?</span>
+                            <svg class="question-icon w-6 h-6 text-primary-600 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="faq-answer px-6 bg-white">
+                            <p class="text-gray-600 mb-4">Respektujeme vaše soukromí:</p>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-2">
+                                <li>Základní verze kalkulačky je plně anonymní</li>
+                                <li>Získáte orientační výpočet bez nutnosti zadávání osobních údajů</li>
+                                <li>Pro přesnou kalkulaci s individuálními slevami potřebujeme váš kontakt</li>
+                                <li>Všechny údaje zpracováváme v souladu s GDPR</li>
+                                <li>Máte plnou kontrolu nad tím, jak s vámi budeme komunikovat</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Question 12 -->
+                    <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                        <button class="faq-question w-full text-left px-6 py-4 bg-white hover:bg-gray-50 flex justify-between items-center font-semibold text-gray-900 transition-all duration-150">
+                            <span>Co je to americká hypotéka a kdy ji využít?</span>
+                            <svg class="question-icon w-6 h-6 text-primary-600 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="faq-answer px-6 bg-white">
+                            <p class="text-gray-600 mb-4">Americká hypotéka je flexibilní nástroj s konkrétními výhodami:</p>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-2">
+                                <li>Úroková sazba typicky o 3-5% nižší než u spotřebitelských úvěrů</li>
+                                <li>Můžete financovat cokoli bez dokládání účelu (podnikání, konsolidace, investice)</li>
+                                <li>Splatnost až 20 let výrazně snižuje měsíční zatížení</li>
+                                <li>Daňový odpočet úroků stejně jako u klasické hypotéky</li>
+                                <li>Možnost čerpat postupně podle potřeby bez dalšího papírování</li>
+                            </ul>
+                            <p class="text-gray-600 mt-4">Ideální pro:</p>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-2">
+                                <li>Financování větších rekonstrukcí (nad 500 000 Kč)</li>
+                                <li>Konsolidaci nevýhodných úvěrů (úspora až 5 000 Kč měsíčně)</li>
+                                <li>Získání kapitálu pro podnikání se zajištěním nemovitostí</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CTA Button -->
+                <div class="mt-12 text-center">
+                    <a href="#hypoteka" class="inline-block bg-primary-600 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-primary-700 transition-colors duration-200 shadow-md">
+                        ZJISTIT VÍCE O NABÍDCE
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="bg-white">
         <!-- Newsletter subscription -->
-        <div class="mx-auto max-w-7xl px-6 py-12 lg:px-8 border-b border-gray-900/10">
-            <div class="mx-auto max-w-2xl text-center">
+        <div class="mx-auto max-w-7xl px-6 py-12 lg:px-8 border-b border-gray-900/10 bg-blue-50">
+            <div class="mx-auto max-w-2xl text-center bg-white rounded-2xl shadow-sm p-8">
                 <h2 class="text-2xl font-bold tracking-tight text-gray-900">Přihlaste se k odběru Čtvrteční hypoteeční kávárny</h2>
                 <form class="mt-6 flex max-w-md gap-x-4 mx-auto">
                     <label for="email-address" class="sr-only">Email</label>
                     <input id="email-address" name="email" type="email" autocomplete="email" required class="min-w-0 flex-auto rounded-xl border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 text-sm sm:leading-6" placeholder="Vložte váš e-mail">
-                    <button type="submit" class="flex-none rounded-xl bg-primary-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600">Přihlásit se</button>
+                    <button type="submit" class="flex-none rounded-xl bg-primary-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600">Odeslat</button>
                 </form>
                 <p class="mt-4 text-sm text-gray-600">
                     Odesláním formuláře souhlasíte se <a href="#" class="font-semibold text-primary-600 hover:text-primary-500">Zásady zpracování osobních údajů</a>
@@ -668,7 +1484,7 @@
                 <div>
                     <h3 class="text-sm font-semibold leading-6 text-gray-900">Půjčit si peníze</h3>
                     <ul role="list" class="mt-6 space-y-4">
-                        <li><a href="#" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Hypotéky</a></li>
+                        <li><a href="#" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Hypoteeka Hypotéky</a></li>
                         <li><a href="#" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Hypotéka na koupi bytu</a></li>
                         <li><a href="#" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Hypotéka na koupi domu</a></li>
                         <li><a href="#" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Hypotéka na stavbu domu</a></li>
@@ -704,7 +1520,9 @@
 
                 <!-- About Hypoteeka.cz -->
                 <div>
-                    <img src="images/logo.png" alt="Hypoteeka.cz" class="h-8 w-auto mb-6">
+                    <div class="flex justify-center">
+                        <img src="images/logo.png" alt="Hypoteeka.cz" class="h-16 w-auto mb-6">
+                    </div>
                     <h3 class="text-sm font-semibold leading-6 text-gray-900">Hypoteeka.cz</h3>
                     <p class="mt-6 text-sm leading-6 text-gray-600">Hypoteeka.cz je moderní platforma pro sjednání hypotéky online. Díky našim zkušenostem a technologiím vám pomůžeme získat nejvýhodnější hypotéku na trhu.</p>
                     <div class="mt-6 flex space-x-4">
@@ -721,6 +1539,15 @@
             </div>
             <div class="mt-8 border-t border-gray-900/10 pt-8">
                 <p class="text-sm leading-6 text-gray-600">&copy; 2025 Hypoteeka.cz. Všechna práva vyhrazena.</p>
+            </div>
+            
+            <!-- Legal information -->
+            <div class="mt-8 border-t border-gray-900/10 pt-8">
+                <div class="text-xs leading-5 text-gray-500">
+                    <p class="mb-4">Jsme partnerem servisní společnosti SAB servis. Platformu Hypoteeka.cz provozuje společnost Quadrum s.r.o.</p>
+                    <p class="mb-4">„Finanční služby zde propagované a nabízené poskytují na tomto webu uvedení poradci jako fyzické osoby, a to v roli vázaných zástupců pro investičního/ samostatného zprostředkovatele SAB servis s.r.o., IČO: 24704008, se sídlem Jungmannova 748/30, 110 00 Praha 1, v následujících finančních oblastech: investice podle zákona č. 256/2004 Sb., spotřebitelské úvěry dle zákona č. 257/2016 Sb., pojištění dle zákona č. 170/2018 Sb., doplňkové penzijní spoření dle zákona č. 427/2011 Sb. Jejich oprávnění je možné ověřit v Seznamu regulovaných a registrovaných subjektů finančního trhu České národní banky na <a href="http://www.cnb.cz/cnb/jerrs" class="text-primary-600 hover:underline">http://www.cnb.cz/cnb/jerrs</a>, kde také najdete aktuální informace a podrobnosti o jejich registraci a rozsahu jejich oprávnění. QUADRUM s.r.o. ve zmíněných oblastech finanční služby neposkytuje.“</p>
+                    <p>Detailní právní informace k nabízeným službám a produktům (včetně reklamačního řádu, možnosti podání stížnosti, řešení sporů, orgánu dohledu, udržitelnosti atd.) najdete na <a href="https://sabservis.cz/informace" class="text-primary-600 hover:underline">https://sabservis.cz/informace</a>.</p>
+                </div>
             </div>
         </div>
     </footer>
@@ -876,8 +1703,10 @@
             const min = parseFloat(slider.min);
             const max = parseFloat(slider.max);
             const val = parseFloat(value);
-            const percentage = ((val - min) * 100) / (max - min);
-            bubble.style.left = `${percentage}%`;
+            const percentage = Math.max(0, Math.min(100, ((val - min) * 100) / (max - min)));
+            requestAnimationFrame(() => {
+                bubble.style.left = `${percentage}%`;
+            });
             
             // Lokální výpočet splátek
             const monthlyInterestRate = 4.69 / 100 / 12;
@@ -1107,6 +1936,31 @@
             return true;
         }
     </script>
+    
+    <script>
+        // Skript pro rozbalovací sekci JAK TO FUNGUJE?
+        document.addEventListener('DOMContentLoaded', function() {
+            const processToggle = document.getElementById('process-toggle');
+            const processDetails = document.getElementById('process-details');
+            const arrowIcon = document.getElementById('arrow-icon');
+            
+            if (processToggle && processDetails && arrowIcon) {
+                processToggle.addEventListener('click', function() {
+                    // Přepínání zobrazení detailů
+                    processDetails.classList.toggle('hidden');
+                    
+                    // Otáčení šipky a změna textu
+                    if (processDetails.classList.contains('hidden')) {
+                        arrowIcon.style.transform = 'rotate(0deg)';
+                        processToggle.querySelector('span').textContent = 'Zobrazit podrobný online proces';
+                    } else {
+                        arrowIcon.style.transform = 'rotate(180deg)';
+                        processToggle.querySelector('span').textContent = 'Skrýt podrobný online proces';
+                    }
+                });
+            }
+        });
+    </script>
 
     <!-- Notifikace -->
     <div id="notifications" class="fixed bottom-8 left-8 z-50 flex flex-col gap-4">
@@ -1156,5 +2010,164 @@
             </svg>
         </a>
     </div>
+    
+    <script>
+        // Extrémně jednoduchý skript pro FAQ sekci
+        document.addEventListener('DOMContentLoaded', function() {
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            
+            // Funkce pro zavření všech odpovědí
+            function closeAllAnswers() {
+                document.querySelectorAll('.faq-answer').forEach(answer => {
+                    answer.style.display = 'none';
+                });
+                
+                document.querySelectorAll('.question-icon').forEach(icon => {
+                    icon.classList.remove('rotate-180');
+                });
+            }
+            
+            // Přidat posluchače událostí
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', function() {
+                    const answer = this.nextElementSibling;
+                    const icon = this.querySelector('.question-icon');
+                    
+                    // Zjisti, zda je odpověď otevřená
+                    const isOpen = answer.style.display === 'block';
+                    
+                    // Zavři všechny odpovědi
+                    closeAllAnswers();
+                    
+                    // Pokud odpověď nebyla otevřená, otevři ji
+                    if (!isOpen) {
+                        answer.style.display = 'block';
+                        icon.classList.add('rotate-180');
+                    }
+                });
+            });
+            
+            // Výchozí stav - všechny odpovědi jsou zavřené
+            closeAllAnswers();
+        });
+    </script>
+    <!-- JavaScript pro karusel s příběhy klientů -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Nastavení proměnných
+            const slider = document.querySelector('.stories-slider');
+            const cards = document.querySelectorAll('.story-card');
+            const prevBtn = document.getElementById('prev-story');
+            const nextBtn = document.getElementById('next-story');
+            const dots = document.querySelectorAll('.story-dot');
+            const container = document.querySelector('.stories-container');
+            
+            // Nastavení počátečního stavu
+            let currentIndex = 0;
+            const totalSlides = Math.min(cards.length, dots.length);
+            
+            // Přidání stylu pro skrytí scrollbaru a fix karuselu
+            const style = document.createElement('style');
+            style.textContent = `
+                .hide-scrollbar {
+                    -ms-overflow-style: none; /* IE a Edge */
+                    scrollbar-width: none; /* Firefox */
+                }
+                .hide-scrollbar::-webkit-scrollbar {
+                    display: none; /* Chrome, Safari a Opera */
+                }
+                
+                /* Nastavení pro karusel */
+                .stories-container {
+                    max-width: 100%;
+                }
+                
+                .stories-slider {
+                    display: flex;
+                    width: max-content;
+                }
+                
+                .story-card {
+                    transition: opacity 0.3s ease;
+                    width: 100%;
+                    max-width: 900px;
+                    flex: 0 0 auto;
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Inicializace karuselu
+            function setupCards() {
+                const containerWidth = container.clientWidth;
+                const cardWidth = Math.min(containerWidth - 40, 900);
+                
+                // Nastavujeme fixní šířku pro karty
+                cards.forEach(card => {
+                    card.style.width = `${cardWidth}px`;
+                });
+                
+                updateSliderPosition();
+            }
+            
+            // Funkce pro posun na specifický slide
+            function goToSlide(index) {
+                if (index < 0) index = 0;
+                if (index >= totalSlides) index = totalSlides - 1;
+                
+                currentIndex = index;
+                updateSliderPosition();
+                updateDots();
+            }
+            
+            // Aktualizace pozice slideru
+            function updateSliderPosition() {
+                // Získáme šířku aktuální karty
+                if (cards.length === 0) return;
+                
+                const card = cards[currentIndex];
+                const cardWidth = card.offsetWidth;
+                const cardMargin = 24; // Odpovídá space-x-6 v TailwindCSS
+                
+                // Výpočet offsetu pro vycentrování aktuální karty
+                let offset = 0;
+                for (let i = 0; i < currentIndex; i++) {
+                    offset += cards[i].offsetWidth + cardMargin;
+                }
+                
+                // Aplikace transformace
+                slider.style.transform = `translateX(-${offset}px)`;
+            }
+            
+            // Aktualizace indikátorů
+            function updateDots() {
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('bg-primary-600', i === currentIndex);
+                    dot.classList.toggle('bg-gray-300', i !== currentIndex);
+                });
+            }
+            
+            // Přidání event listenerů
+            prevBtn.addEventListener('click', () => goToSlide(currentIndex - 1));
+            nextBtn.addEventListener('click', () => goToSlide(currentIndex + 1));
+            
+            // Event listenery pro tečky
+            dots.forEach((dot, i) => {
+                dot.addEventListener('click', () => goToSlide(i));
+            });
+            
+            // Inicializace - nastavení velikosti karet a pozice
+            setupCards();
+            goToSlide(0);
+            
+            // Přizpůsobení při změně velikosti okna
+            window.addEventListener('resize', function() {
+                // Časovač aby se funkce nevolala příliš často
+                clearTimeout(window.resizeTimer);
+                window.resizeTimer = setTimeout(function() {
+                    setupCards();
+                }, 100);
+            });
+        });
+    </script>
 </body>
 </html>

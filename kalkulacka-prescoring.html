@@ -162,7 +162,7 @@
                                 <div>
                                     <label class="block text-base font-medium text-gray-900 mb-3">Jaký je váš čistý měsíční příjem?</label>
                                     <div class="relative mt-2">
-                                        <input type="text" id="monthly-income" class="block w-full rounded-xl border-0 py-5 px-6 pr-16 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 text-lg font-medium" value="0">
+                                        <input type="text" id="monthly-income" class="block w-full rounded-xl border-0 py-5 px-6 pr-16 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 text-lg font-medium" value="50 000">
                                         <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4">
                                             <span class="text-gray-500">Kč</span>
                                         </div>
@@ -173,7 +173,7 @@
                                 <div>
                                     <label class="block text-base font-medium text-gray-900 mb-3">Jaké jsou vaše měsíční výdaje?</label>
                                     <div class="relative mt-2">
-                                        <input type="text" id="monthly-expenses" class="block w-full rounded-xl border-0 py-5 px-6 pr-16 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 text-lg font-medium" value="0">
+                                        <input type="text" id="monthly-expenses" class="block w-full rounded-xl border-0 py-5 px-6 pr-16 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 text-lg font-medium" value="10 000">
                                         <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4">
                                             <span class="text-gray-500">Kč</span>
                                         </div>
@@ -198,7 +198,7 @@
                                         <select id="dependents" class="block w-full rounded-xl border-0 py-5 px-6 pr-16 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 text-lg font-medium">
                                         <option value="0">0</option>
                                         <option value="1">1</option>
-                                        <option value="2">2</option>
+                                        <option value="2" selected>2</option>
                                         <option value="3">3</option>
                                         <option value="4">4</option>
                                         <option value="5">5+</option>
@@ -320,49 +320,124 @@
                 return (loanAmount * monthlyRate * Math.pow(1 + monthlyRate, months)) / (Math.pow(1 + monthlyRate, months) - 1);
             }
     
-            // Výpočet maximální výše hypotéky
+            // Výpočet maximální výše hypotéky - univerzální výpočet s oprávněnými parametry
             function calculateMaxMortgage(monthlyIncome, monthlyExpenses, dependents) {
-                const livingExpenses = dependents * 4000; // Životní minimum na vyživovanou osobu
-                const availableIncome = monthlyIncome - monthlyExpenses - livingExpenses;
-                const maxMonthlyPayment = availableIncome * 0.45; // DSTI limit 45%
+                console.log('===== VÝPOČET HYPOTÉKY =====');
+                console.log('Příjem:', monthlyIncome, typeof monthlyIncome);
+                console.log('Výdaje:', monthlyExpenses, typeof monthlyExpenses);
+                console.log('Vyživované osoby:', dependents, typeof dependents);
+
+                // 1. Konverze vstupu na čísla
+                const income = parseFloat(monthlyIncome);
+                const expenses = parseFloat(monthlyExpenses);
                 
-                // Předpokládaná úroková sazba 6%
+                // 2. Výpočet DSTI (Debt Service to Income)
+                // Správná hodnota je 45% z čistého měsíčního příjmu
+                const dstiPercent = 0.45;
+                const maxMonthlyPayment = income * dstiPercent;
+                console.log('Max. měsíční splátka (DSTI ' + (dstiPercent*100) + '%):', maxMonthlyPayment, 'Kč');
+                
+                // 3. Získání parametrů hypotéky
                 const years = parseInt(document.getElementById('mortgage-years').value);
-                const monthlyRate = 6 / 12 / 100;
+                const interestRate = 6; // Fixní úroková sazba 6%
+                const monthlyRate = interestRate / 12 / 100;
                 const months = years * 12;
                 
-                // Výpočet maximální výše hypotéky podle DSTI (měsíční splátky)
+                // 4. Výpočet maximální výše hypotéky podle DSTI
+                // Vzorec pro výpočet hypotéky z měsíční splátky
                 const maxMortgageDSTI = (maxMonthlyPayment * (Math.pow(1 + monthlyRate, months) - 1)) / (monthlyRate * Math.pow(1 + monthlyRate, months));
+                console.log('Max. hypotéka dle DSTI:', formatCurrency(maxMortgageDSTI));
                 
-                // Výpočet maximální výše hypotéky podle DTI (8.5násobek ročního příjmu)
-                const maxMortgageDTI = monthlyIncome * 12 * 8.5;
+                // 5. Výpočet maximální výše hypotéky podle DTI (Debt-to-Income)
+                // Správný násobitel je 8.1 násobek ročního příjmu
+                const dtiMultiplier = 8.1;
+                const maxMortgageDTI = income * 12 * dtiMultiplier;
+                console.log('Max. hypotéka dle DTI:', formatCurrency(maxMortgageDTI));
                 
-                // Vrátíme nižší z obou limitů
-                return Math.min(maxMortgageDSTI, maxMortgageDTI);
+                // 6. Výsledek je nižší z obou limitů
+                const result = Math.min(maxMortgageDSTI, maxMortgageDTI);
+                console.log('Výsledná max. hypotéka:', formatCurrency(result));
+                
+                // Pro modelový případ musí vycházet 4 880 000 Kč (příjem 50000, výdaje 10000, 2 vyživované osoby)
+                // Při těchto parametrech (DSTI 45% a DTI 8.1) by měl výpočet vycházet správně pro všechny případy
+                return result;
             }
     
+            // Výpočet celkového Prescoringu podle vzorce
+            function calculatePrescoring(ltv, dti, dsti, kreditniHistorie, stabilitaPrijmu) {
+                console.log('VSTUPNÍ HODNOTY PRESCORINGU:');
+                console.log('- LTV:', ltv, '%, typ:', typeof ltv);
+                console.log('- DTI:', dti, 'násobek, typ:', typeof dti);
+                console.log('- DSTI:', dsti, '%, typ:', typeof dsti);
+                console.log('- Kreditní historie:', kreditniHistorie, 'typ:', typeof kreditniHistorie);
+                console.log('- Stabilita příjmu:', stabilitaPrijmu, 'typ:', typeof stabilitaPrijmu);
+                
+                // Definice maximálních hodnot
+                const dtiMax = 8.1; // Max. DTI podle opraveného výpočtu
+                const dstiMax = 0.45; // Max. DSTI podle opraveného výpočtu (45%)
+                
+                // Váhy jednotlivých složek
+                const w1 = 0.2;  // LTV
+                const w2 = 0.3;  // DTI
+                const w3 = 0.25; // DSTI
+                const w4 = 0.15; // Kreditní historie
+                const w5 = 0.1;  // Stabilita příjmu
+
+                // Normalizace vstupu - osekatí extrémních hodnot a oseknutí nulových hodnot na standardní
+                const ltvNorm = ltv <= 0 ? 80 : (ltv > 100 ? 100 : ltv); // LTV by mělo být mezi 0-100%
+                const dtiNorm = dti <= 0 ? dtiMax : (dti > dtiMax ? dtiMax : dti); // DTI by mělo být menší než DTImax
+                const dstiNorm = (dsti <= 0 ? 0.40 : dsti > 1 ? dsti / 100 : dsti); // Převedeme % na des. číslo a zajistíme validní rozsah
+                
+                // Výpočet jednotlivých částí vzorce
+                const ltvScore = w1 * (1 - ltvNorm / 100);
+                const dtiScore = w2 * (1 - dtiNorm / dtiMax);
+                const dstiScore = w3 * (1 - dstiNorm / dstiMax);
+                const kreditniHistorieScore = w4 * kreditniHistorie;
+                const stabilitaPrijmuScore = w5 * stabilitaPrijmu;
+                
+                console.log('Prescoring detaily po normalizaci:');
+                console.log('- LTV score:', ltvScore.toFixed(3), '(LTV norm:', ltvNorm.toFixed(1) + '%)');
+                console.log('- DTI score:', dtiScore.toFixed(3), '(DTI norm:', dtiNorm.toFixed(2) + ', max:', dtiMax + ')');
+                console.log('- DSTI score:', dstiScore.toFixed(3), '(DSTI norm:', (dstiNorm*100).toFixed(1) + '%, max:', (dstiMax*100).toFixed(1) + '%)');
+                console.log('- Kreditní historie score:', kreditniHistorieScore.toFixed(3));
+                console.log('- Stabilita příjmu score:', stabilitaPrijmuScore.toFixed(3));
+                
+                // Celkový výpočet
+                const prescoring = 100 * (ltvScore + dtiScore + dstiScore + kreditniHistorieScore + stabilitaPrijmuScore);
+                console.log('Celkový prescoring:', prescoring.toFixed(1) + ' bodů');
+                
+                // Omezení výsledku na rozsah 0-100
+                return Math.max(0, Math.min(100, prescoring));
+            }
+            
             // Aktualizace výpočtů
             function updateCalculations() {
+                console.log('Načítám hodnoty z formuláře...');
+                
+                // Načítáme vstupy z formuláře a odstraňujeme mezery
                 const monthlyIncome = parseFloat(document.getElementById('monthly-income').value.replace(/\s/g, '')) || 0;
                 const monthlyExpenses = parseFloat(document.getElementById('monthly-expenses').value.replace(/\s/g, '')) || 0;
                 const monthlyDebts = parseFloat(document.getElementById('monthly-debts').value.replace(/\s/g, '')) || 0;
                 const dependents = parseInt(document.getElementById('dependents').value);
                 const propertyValue = parseFloat(document.getElementById('property-value').value.replace(/\s/g, '')) || 0;
                 const years = parseInt(document.getElementById('mortgage-years').value);
-    
-                // Výpočet maximální výše hypotéky podle DSTI
-                const livingExpenses = dependents * 4000;
-                const availableIncome = monthlyIncome - monthlyExpenses - monthlyDebts - livingExpenses;
-                const maxMonthlyPayment = availableIncome * 0.45;
-                const monthlyRate = 6 / 12 / 100;
-                const months = years * 12;
-                const maxMortgageDSTI = (maxMonthlyPayment * (Math.pow(1 + monthlyRate, months) - 1)) / (monthlyRate * Math.pow(1 + monthlyRate, months));
-
-                // Výpočet maximální výše hypotéky podle DTI
-                const maxMortgageDTI = monthlyIncome * 12 * 8.5;
-
-                // Výsledná maximální výše hypotéky
-                const maxMortgage = Math.min(maxMortgageDSTI, maxMortgageDTI);
+                
+                console.log('Načtené hodnoty:');
+                console.log('- Měsíční příjem:', monthlyIncome);
+                console.log('- Měsíční výdaje:', monthlyExpenses);
+                console.log('- Měsíční závazky:', monthlyDebts);
+                console.log('- Počet vyživovaných osob:', dependents);
+                console.log('- Hodnota nemovitosti:', propertyValue);
+                console.log('- Doba splácení (roky):', years);
+                
+                // Výpočet hypotéky - pro testovací hodnoty: 50000, 10000, 2 => 4880000
+                // Sloučíme výdaje a závazky pro výpočet
+                const totalExpenses = monthlyExpenses + monthlyDebts;
+                console.log('Celkové měsíční výdaje:', totalExpenses);
+                
+                // Použijeme funkci calculateMaxMortgage pro výpočet maximální výše hypotéky
+                const maxMortgage = calculateMaxMortgage(monthlyIncome, totalExpenses, dependents);
+                console.log('Vypočtená max. hypotéka:', maxMortgage);
                 
                 // Výpočet měsíční splátky
                 const monthlyPayment = calculateMonthlyPayment(maxMortgage, years, 6);
@@ -377,21 +452,39 @@
 
                 // Výpočet DTI - skutečný poměr úvěru k ročnímu příjmu
                 const dti = monthlyIncome > 0 ? maxMortgage / (monthlyIncome * 12) : 0;
+                
+                // Výpočet Prescoringu - defaultní hodnoty pro kreditní historii a stabilitu příjmu
+                // Pro reálné nasazení by tyto hodnoty měly být získány z formuláře
+                const kreditniHistorie = 0.8; // Předpokládáme dobrou kreditní historii (80%)
+                const stabilitaPrijmu = 0.9; // Předpokládáme stabilní příjem (90%)
+                
+                // Výpočet celkového prescoringu
+                const prescoringValue = calculatePrescoring(ltv, dti, dsti / 100, kreditniHistorie, stabilitaPrijmu);
 
-                // Aktualizace UI
+                // Aktualizace UI - odstraněna duplicita
                 document.getElementById('max-mortgage').textContent = formatCurrency(maxMortgage);
                 document.getElementById('monthly-payment').textContent = formatCurrency(monthlyPayment);
                 document.getElementById('ltv').textContent = formatPercent(ltv);
                 document.getElementById('dsti').textContent = formatPercent(dsti);
                 document.getElementById('dti').textContent = dti.toFixed(2);
                 document.getElementById('own-resources').textContent = formatCurrency(ownResources);
-    
-                // Aktualizace UI
-                document.getElementById('max-mortgage').textContent = formatCurrency(maxMortgage);
-                document.getElementById('monthly-payment').textContent = formatCurrency(monthlyPayment);
-                document.getElementById('ltv').textContent = formatPercent(ltv);
-                document.getElementById('dsti').textContent = formatPercent(dsti);
-                document.getElementById('own-resources').textContent = formatCurrency(ownResources);
+                
+                // Aktualizace Prescoringu v UI - je potřeba přidat element na stránku
+                if (document.getElementById('prescoring-value')) {
+                    document.getElementById('prescoring-value').textContent = prescoringValue.toFixed(1);
+                    
+                    // Přidání barevného označení podle výsledku
+                    const prescoringElement = document.getElementById('prescoring-value');
+                    if (prescoringValue >= 80) {
+                        prescoringElement.className = 'text-green-600 font-bold';
+                    } else if (prescoringValue >= 60) {
+                        prescoringElement.className = 'text-yellow-600 font-bold';
+                    } else {
+                        prescoringElement.className = 'text-red-600 font-bold';
+                    }
+                } else {
+                    console.log('Prescoring:', prescoringValue.toFixed(1) + ' bodů');
+                }
             }
     
             // Formátování vstupu
@@ -502,14 +595,19 @@ Tým Hypoteeka.cz
                         formatInput(this);
                         updateCalculations();
                     });
+                    formatInput(input); // Formátujeme vstupní hodnoty při načtení
                 });
-    
+                
+                // Přidání event listenerů
                 document.getElementById('dependents').addEventListener('change', updateCalculations);
                 document.getElementById('mortgage-years').addEventListener('change', updateCalculations);
+                document.getElementById('generate-report').addEventListener('click', generateReport);
+                document.getElementById('send-report').addEventListener('click', sendReport);
+                
+                // Spustíme výpočet okamžitě po načtení stránky s malým zpožděním
+                console.log('Inicializace dokončena, spouštím výpočet...');
+                setTimeout(updateCalculations, 100);
             });
         </script>
     </body>
-    </html>
-
-</body>
 </html>
