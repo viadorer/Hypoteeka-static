@@ -1,0 +1,84 @@
+# Základní nastavení a přesměrování pro SEO
+# Zajišťuje správné přesměrování a HTTP hlavičky
+
+# Zapnutí modulu rewrite
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  
+  # Přesměrování z HTTP na HTTPS
+  RewriteCond %{HTTPS} off
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+  
+  # Přesměrování z www.hypoteeka.cz na hypoteeka.cz (nebo naopak, dle preference)
+  # Odkomentujte preferovanou variantu:
+  
+  # Varianta 1: Z non-www na www (doporučeno)
+  RewriteCond %{HTTP_HOST} ^hypoteeka\.cz [NC]
+  RewriteRule ^(.*)$ https://www.hypoteeka.cz/$1 [L,R=301]
+  
+  # Varianta 2: Z www na non-www
+  # RewriteCond %{HTTP_HOST} ^www\.hypoteeka\.cz [NC]
+  # RewriteRule ^(.*)$ https://hypoteeka.cz/$1 [L,R=301]
+  
+  # Odstranění lomítka na konci URL (kromě skutečných adresářů)
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_URI} (.+)/$
+  RewriteRule ^ %1 [L,R=301]
+  
+  # Přidání přípony .html k URL bez přípony
+  # RewriteCond %{REQUEST_FILENAME} !-f
+  # RewriteCond %{REQUEST_FILENAME} !-d
+  # RewriteCond %{REQUEST_FILENAME}.html -f
+  # RewriteRule ^(.*)$ $1.html [L]
+</IfModule>
+
+# Nastavení vypršení platnosti pro zlepšení výkonu
+<IfModule mod_expires.c>
+  ExpiresActive On
+  
+  # Výchozí nastavení
+  ExpiresDefault "access plus 1 month"
+  
+  # Favicon
+  ExpiresByType image/x-icon "access plus 1 year"
+  
+  # Obrázky
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  
+  # CSS a JavaScript
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType text/javascript "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+  
+  # Fonty
+  ExpiresByType font/ttf "access plus 1 year"
+  ExpiresByType font/otf "access plus 1 year"
+  ExpiresByType font/woff "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+</IfModule>
+
+# Komprese obsahu pro rychlejší načítání
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json application/xml
+</IfModule>
+
+# Nastavení bezpečnostních hlaviček
+<IfModule mod_headers.c>
+  # Zabezpečení webových stránek před XSS útoky
+  Header set X-XSS-Protection "1; mode=block"
+  
+  # Zabránění prohlížečům MIME-sniffingu
+  Header set X-Content-Type-Options "nosniff"
+  
+  # Referrer policy
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Blokování přístupu k citlivým souborům
+<FilesMatch "(^\.htaccess|\.git|\.gitignore|\.env|\.sh)">
+  Order Allow,Deny
+  Deny from all
+</FilesMatch>

@@ -3,7 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="images/favicon.png">
+    <meta name="description" content="Kalkulačka ztracených příležitostí vám ukáže, kolik peněz ztrácíte odkládáním vlastního bydlení. Spočítejte si svůj potenciál.">
+    <meta name="keywords" content="hypotéka, hypoteční poradenství, úvěr na bydlení, refinancování, hypoteční kalkulačka, úroková sazba">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Hypoteeka.cz">
+    
+    <!-- Canonical link -->
+    <link rel="canonical" href="https://www.hypoteeka.cz/kalkulacka-ztracenych-prilezitosti.html">
+    
+    <!-- Open Graph meta tags -->
+    <meta property="og:title" content="Investiční kalkulačka | Hypoteeka.cz">
+    <meta property="og:description" content="Kalkulačka ztracených příležitostí vám ukáže, kolik peněz ztrácíte odkládáním vlastního bydlení. Spočítejte si svůj potenciál.">
+    <meta property="og:image" content="https://www.hypoteeka.cz/images/og-image.jpg">
+    <meta property="og:url" content="https://www.hypoteeka.cz/kalkulacka-ztracenych-prilezitosti.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Hypoteeka.cz">
+    
+    <!-- Twitter Card meta tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Investiční kalkulačka | Hypoteeka.cz">
+    <meta name="twitter:description" content="Kalkulačka ztracených příležitostí vám ukáže, kolik peněz ztrácíte odkládáním vlastního bydlení. Spočítejte si svůj potenciál.">
+    <meta name="twitter:image" content="https://www.hypoteeka.cz/images/og-image.jpg">
     <title>Investiční kalkulačka | Hypoteeka.cz</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -65,56 +85,22 @@
 </head>
 <body class="bg-white">
     <div x-data="{ mobileMenuOpen: false }">
-        <!-- Plovoucí navigace -->
-        <header class="fixed top-0 left-0 right-0 z-50">
-            <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8" aria-label="Top">
-                <div class="bg-white rounded-full shadow-lg">
-                    <div class="relative flex h-16 items-center justify-between px-8">
-                        <!-- Logo -->
-                        <div class="flex flex-shrink-0 items-center">
-                            <a href="index.html">
-                                <img class="h-8 w-auto" src="images/logo.png" alt="Hypoteeka">
-                            </a>
-                        </div>
+        <!-- Nav include -->
+        <div id="nav-container"></div>
 
-                        <!-- Desktop menu -->
-                        <div class="hidden md:flex md:gap-x-8">
-                            <a href="index.html" class="nav-link text-gray-700 hover:text-primary-600">Domů</a>
-                            <a href="najem-vs-hypoteka.html" class="nav-link text-gray-700 hover:text-primary-600">Nájem vs. hypotéka</a>
-                            <a href="investicni-kalkulacka.html" class="nav-link text-gray-700 hover:text-primary-600">Investiční kalkulačka</a>
-                            <a href="kalkulacka-ztracenych-prilezitosti.html" class="nav-link text-primary-600">Kalkulačka ztracených příležitostí</a>
-                        </div>
-
-                        <!-- CTA button -->
-                        <div class="hidden md:flex md:flex-1 md:justify-end">
-                            <a href="index.html#hypoteka" class="btn btn-primary">
-                                Spočítat hypotéku
-                            </a>
-                        </div>
-
-                        <!-- Mobile menu button -->
-                        <div class="flex md:hidden">
-                            <button type="button" @click="mobileMenuOpen = !mobileMenuOpen" class="btn-icon">
-                                <span class="sr-only">Otevřít menu</span>
-                                <i class="fas fa-bars text-gray-600 text-xl" x-show="!mobileMenuOpen"></i>
-                                <i class="fas fa-times text-gray-600 text-xl" x-show="mobileMenuOpen" style="display: none;"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Mobile menu -->
-                <div class="md:hidden" x-show="mobileMenuOpen" @click.away="mobileMenuOpen = false" style="display: none;">
-                    <div class="bg-white rounded-3xl shadow-lg mt-4 px-2 py-3 space-y-1">
-                        <a href="index.html" class="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Domů</a>
-                        <a href="najem-vs-hypoteka.html" class="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Nájem vs. hypotéka</a>
-                        <a href="investicni-kalkulacka.html" class="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Investiční kalkulačka</a>
-                        <a href="kalkulacka-ztracenych-prilezitosti.html" class="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-primary-600 bg-gray-50">Kalkulačka ztracených příležitostí</a>
-                        <a href="index.html#hypoteka" class="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white bg-primary-600 hover:bg-primary-700">Spočítat hypotéku</a>
-                    </div>
-                </div>
-            </nav>
-        </header>
+        <script>
+            // Načtení navigační lišty ze samostatného souboru pomocí XMLHttpRequest
+            var navXhr = new XMLHttpRequest();
+            navXhr.open('GET', 'nav.html', true);
+            navXhr.onreadystatechange = function() {
+                if (this.readyState === 4 && this.status === 200) {
+                    document.getElementById('nav-container').innerHTML = this.responseText;
+                } else if (this.readyState === 4 && this.status !== 200) {
+                    console.error('Chyba při načítání navigace. Status: ' + this.status);
+                }
+            };
+            navXhr.send();
+        </script>
 
         <!-- Hero sekce -->
         <div class="relative min-h-[600px] flex items-center pb-48">
@@ -648,7 +634,99 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
+    <!-- Notifikace -->
+    <div id="notifications" class="fixed bottom-8 left-8 z-50 flex flex-col gap-4">
+        <!-- Notifikace budou přidávány zde dynamicky -->
+    </div>
 
-</script>
+    <!-- Cookie lišta -->
+    <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="flex-1">
+                    <p class="text-gray-600">
+                        Používáme cookies, abychom vám poskytli co nejlepší zážitek z našich stránek. Více informací o používání cookies najdete v našich 
+                        <a href="#" class="text-primary-600 hover:text-primary-700 underline">Zásadách ochrany osobních údajů</a>.
+                    </p>
+                </div>
+                <div class="flex gap-4">
+                    <button id="reject-cookies" class="btn btn-secondary">
+                        Odmítnout
+                    </button>
+                    <button id="accept-cookies" class="btn btn-primary">
+                        Přijmout vše
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer include -->
+    <div id="footer-container"></div>
+    
+    <script>
+        // Načtení footeru ze samostatného souboru pomocí XMLHttpRequest
+        var footerXhr = new XMLHttpRequest();
+        footerXhr.open('GET', 'footer.html', true);
+        footerXhr.onreadystatechange = function() {
+            if (this.readyState === 4 && this.status === 200) {
+                document.getElementById('footer-container').innerHTML = this.responseText;
+            } else if (this.readyState === 4 && this.status !== 200) {
+                console.error('Chyba při načítání footeru. Status: ' + this.status);
+            }
+        };
+        footerXhr.send();
+        
+        // Cookie funkce
+        function setCookie(name, value, days) {
+            var expires = '';
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = '; expires=' + date.toUTCString();
+            }
+            document.cookie = name + '=' + (value || '') + expires + '; path=/';
+        }
+        
+        function getCookie(name) {
+            var nameEQ = name + '=';
+            const ca = document.cookie.split(';');
+            for(let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+        
+        // Zobrazít cookie lištu po načtení dokumentu
+        document.addEventListener('DOMContentLoaded', function() {
+            const cookieBanner = document.getElementById('cookie-banner');
+            const acceptButton = document.getElementById('accept-cookies');
+            const rejectButton = document.getElementById('reject-cookies');
+            
+            if (!getCookie('cookies-accepted')) {
+                setTimeout(function() {
+                    if (cookieBanner) {
+                        cookieBanner.classList.remove('translate-y-full');
+                    }
+                }, 1000);
+            }
+            
+            acceptButton.addEventListener('click', function() {
+                setCookie('cookies-accepted', 'true', 365);
+                if (cookieBanner) {
+                    cookieBanner.classList.add('translate-y-full');
+                }
+            });
+            
+            rejectButton.addEventListener('click', function() {
+                setCookie('cookies-accepted', 'false', 365);
+                if (cookieBanner) {
+                    cookieBanner.classList.add('translate-y-full');
+                }
+            });
+        });
+    </script>
 </body>
 </html>

@@ -3,11 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="images/favicon.png">
+    <meta name="description" content="Analýza hypotéky vám pomůže zjistit, na jakou hypotéku dosáhnete a kolik budete měsíčně splácet. Profesionální hypoteční kalkulačka pro váš komfort.">
+    <meta name="keywords" content="hypotéka, hypoteční poradenství, úvěr na bydlení, refinancování, hypoteční kalkulačka, úroková sazba">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Hypoteeka.cz">
+    
+    <!-- Canonical link -->
+    <link rel="canonical" href="https://www.hypoteeka.cz/analyzahypoteky.html">
+    
+    <!-- Open Graph meta tags -->
+    <meta property="og:title" content="Hypoteeka.cz - Vaše cesta k vlastnímu bydlení">
+    <meta property="og:description" content="Analýza hypotéky vám pomůže zjistit, na jakou hypotéku dosáhnete a kolik budete měsíčně splácet. Profesionální hypoteční kalkulačka pro váš komfort.">
+    <meta property="og:image" content="https://www.hypoteeka.cz/images/og-image.jpg">
+    <meta property="og:url" content="https://www.hypoteeka.cz/analyzahypoteky.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Hypoteeka.cz">
+    
+    <!-- Twitter Card meta tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Hypoteeka.cz - Vaše cesta k vlastnímu bydlení">
+    <meta name="twitter:description" content="Analýza hypotéky vám pomůže zjistit, na jakou hypotéku dosáhnete a kolik budete měsíčně splácet. Profesionální hypoteční kalkulačka pro váš komfort.">
+    <meta name="twitter:image" content="https://www.hypoteeka.cz/images/og-image.jpg">
     <title>Hypoteeka.cz - Vaše cesta k vlastnímu bydlení</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Strukturovaná data Schema.org -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FinancialCalculator",
+      "name": "Hypoteční kalkulačka Hypoteeka.cz",
+      "url": "https://www.hypoteeka.cz/analyzahypoteky.html",
+      "description": "Profesionální hypoteční kalkulačka, která vám pomůže zjistit, na jakou hypotéku dosáhnete a kolik budete měsíčně splácet.",
+      "provider": {
+        "@type": "FinancialService",
+        "name": "Hypoteeka.cz",
+        "url": "https://www.hypoteeka.cz"
+      },
+      "potentialAction": {
+        "@type": "CalculateAction",
+        "name": "Výpočet hypotéky",
+        "description": "Spočítá výši měsíční splátky na základě ceny nemovitosti, doby splácení a úrokové sazby",
+        "object": {
+          "@type": "Mortgage"
+        }
+      }
+    }
+    </script>
     <style>
         .nav-link {
             @apply text-base font-medium transition-colors duration-200;
@@ -112,68 +156,22 @@
 </head>
 <body class="bg-white">
     <div x-data="{ mobileMenuOpen: false }">
-        <!-- Plovoucí navigace -->
-        <header class="fixed top-0 left-0 right-0 z-50">
-            <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8" aria-label="Top">
-                <div class="bg-white rounded-full shadow-lg">
-                    <div class="mx-auto max-w-7xl px-6 sm:px-8 lg:px-10">
-                        <div class="flex h-16 justify-between items-center">
-                            <!-- Logo -->
-                            <div class="flex-shrink-0 flex items-center space-x-3">
-                                <img src="images/logo.png" alt="Hypoteeka.cz" class="h-10 w-10 rounded-full">
-                                <a href="index.html" class="text-2xl font-bold text-primary-600">Hypoteeka.cz</a>
-                            </div>
+        <!-- Nav include -->
+        <div id="nav-container"></div>
 
-                            <!-- Hlavní navigace -->
-                            <div class="hidden md:flex md:space-x-8">
-                                <a href="index.html" class="nav-link text-gray-900 hover:text-primary-600">Domů</a>
-                                <a href="#hypoteka" class="nav-link text-gray-900 hover:text-primary-600">Hypoteční kalkulačka</a>
-                                <a href="najem-vs-hypoteka.html" class="nav-link text-gray-900 hover:text-primary-600">Nájem vs. hypotéka</a>
-                                <a href="investicni-kalkulacka.html" class="nav-link text-gray-900 hover:text-primary-600">Investiční kalkulačka</a>
-                                <a href="kalkulacka-prescoring.html" class="nav-link text-gray-900 hover:text-primary-600">Prescoring</a>
-                                <a href="kalkulacka-ztracenych-prilezitosti.html" class="nav-link text-gray-900 hover:text-primary-600">Ztracené příležitosti</a>
-                            </div>
-
-
-
-                            <!-- Mobilní menu tlačítko -->
-                            <div class="md:hidden">
-                                <button 
-                                    type="button"
-                                    class="btn-icon bg-primary-50 text-primary-600 hover:bg-primary-100"
-                                    @click="mobileMenuOpen = !mobileMenuOpen"
-                                >
-                                    <i class="fas fa-bars" x-show="!mobileMenuOpen"></i>
-                                    <i class="fas fa-times" x-show="mobileMenuOpen" x-cloak></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Mobilní menu -->
-                <div 
-                    class="md:hidden"
-                    x-show="mobileMenuOpen"
-                    x-transition:enter="transition ease-out duration-100"
-                    x-transition:enter-start="transform opacity-0 scale-95"
-                    x-transition:enter-end="transform opacity-100 scale-100"
-                    x-transition:leave="transition ease-in duration-75"
-                    x-transition:leave-start="transform opacity-100 scale-100"
-                    x-transition:leave-end="transform opacity-0 scale-95"
-                    x-cloak
-                >
-                    <div class="px-2 pt-2 pb-3 space-y-1 bg-white rounded-lg shadow-lg mt-2">
-                        <a href="index.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-primary-600 hover:bg-gray-50">Domů</a>
-                        <a href="#hypoteka" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-primary-600 hover:bg-gray-50">Hypoteční kalkulačka</a>
-                        <a href="najem-vs-hypoteka.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-primary-600 hover:bg-gray-50">Nájem vs. hypotéka</a>
-                        <a href="investicni-kalkulacka.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-primary-600 hover:bg-gray-50">Investiční kalkulačka</a>
-                        <a href="kalkulacka-prescoring.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-primary-600 hover:bg-gray-50">Prescoring</a>
-                        <a href="kalkulacka-ztracenych-prilezitosti.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-primary-600 hover:bg-gray-50">Ztracené příležitosti</a>
-                    </div>
-                </div>
-            </nav>
-        </header>
+        <script>
+            // Načtení navigační lišty ze samostatného souboru pomocí XMLHttpRequest
+            var navXhr = new XMLHttpRequest();
+            navXhr.open('GET', 'nav.html', true);
+            navXhr.onreadystatechange = function() {
+                if (this.readyState === 4 && this.status === 200) {
+                    document.getElementById('nav-container').innerHTML = this.responseText;
+                } else if (this.readyState === 4 && this.status !== 200) {
+                    console.error('Chyba při načítání navigace. Status: ' + this.status);
+                }
+            };
+            navXhr.send();
+        </script>
 
         <!-- Hero sekce -->
         <div class="relative min-h-[600px] flex items-center pb-48">
@@ -573,8 +571,7 @@
     });
     </script>
 
-    <!-- Footer -->
-    <footer class="bg-white">
+
         <!-- Newsletter subscription -->
         <div class="mx-auto max-w-7xl px-6 py-12 lg:px-8 border-b border-gray-900/10">
             <div class="mx-auto max-w-2xl text-center">
@@ -651,7 +648,7 @@
                 <p class="text-sm leading-6 text-gray-600">&copy; 2025 Hypoteeka.cz. Všechna práva vyhrazena.</p>
             </div>
         </div>
-    </footer>
+
 
     <script>
         // Formátování čísla s mezerami a měnou
@@ -1017,5 +1014,100 @@
             </svg>
         </a>
     </div>
+
+    <!-- Notifikace -->
+    <div id="notifications" class="fixed bottom-8 left-8 z-50 flex flex-col gap-4">
+        <!-- Notifikace budou přidávány zde dynamicky -->
+    </div>
+
+    <!-- Cookie lišta -->
+    <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="flex-1">
+                    <p class="text-gray-600">
+                        Používáme cookies, abychom vám poskytli co nejlepší zážitek z našich stránek. Více informací o používání cookies najdete v našich 
+                        <a href="#" class="text-primary-600 hover:text-primary-700 underline">Zásadách ochrany osobních údajů</a>.
+                    </p>
+                </div>
+                <div class="flex gap-4">
+                    <button id="reject-cookies" class="btn btn-secondary">
+                        Odmítnout
+                    </button>
+                    <button id="accept-cookies" class="btn btn-primary">
+                        Přijmout vše
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer include -->
+    <div id="footer-container"></div>
+    
+    <script>
+        // Načtení footeru ze samostatného souboru pomocí XMLHttpRequest
+        var footerXhr = new XMLHttpRequest();
+        footerXhr.open('GET', 'footer.html', true);
+        footerXhr.onreadystatechange = function() {
+            if (this.readyState === 4 && this.status === 200) {
+                document.getElementById('footer-container').innerHTML = this.responseText;
+            } else if (this.readyState === 4 && this.status !== 200) {
+                console.error('Chyba při načítání footeru. Status: ' + this.status);
+            }
+        };
+        footerXhr.send();
+        
+        // Cookie funkce
+        function setCookie(name, value, days) {
+            var expires = '';
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = '; expires=' + date.toUTCString();
+            }
+            document.cookie = name + '=' + (value || '') + expires + '; path=/';
+        }
+        
+        function getCookie(name) {
+            var nameEQ = name + '=';
+            const ca = document.cookie.split(';');
+            for(let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+        
+        // Zobrazít cookie lištu po načtení dokumentu
+        document.addEventListener('DOMContentLoaded', function() {
+            const cookieBanner = document.getElementById('cookie-banner');
+            const acceptButton = document.getElementById('accept-cookies');
+            const rejectButton = document.getElementById('reject-cookies');
+            
+            if (!getCookie('cookies-accepted')) {
+                setTimeout(function() {
+                    if (cookieBanner) {
+                        cookieBanner.classList.remove('translate-y-full');
+                    }
+                }, 1000);
+            }
+            
+            acceptButton.addEventListener('click', function() {
+                setCookie('cookies-accepted', 'true', 365);
+                if (cookieBanner) {
+                    cookieBanner.classList.add('translate-y-full');
+                }
+            });
+            
+            rejectButton.addEventListener('click', function() {
+                setCookie('cookies-accepted', 'false', 365);
+                if (cookieBanner) {
+                    cookieBanner.classList.add('translate-y-full');
+                }
+            });
+        });
+    </script>
 </body>
 </html>

@@ -3,7 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="images/favicon.png">
+    <meta name="description" content="Hypoteeka.cz vám pomůže najít nejvýhodnější hypotéku na míru. Profesionální poradenství a služby pro všechny, kteří hledají cestu k vlastnímu bydlení.">
+    <meta name="keywords" content="hypotéka, hypoteční poradenství, úvěr na bydlení, refinancování, hypoteční kalkulačka, úroková sazba">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Hypoteeka.cz">
+    
+    <!-- Canonical link -->
+    <link rel="canonical" href="https://www.hypoteeka.cz/template.html">
+    
+    <!-- Open Graph meta tags -->
+    <meta property="og:title" content="TITLE | Hypoteeka.cz">
+    <meta property="og:description" content="Hypoteeka.cz vám pomůže najít nejvýhodnější hypotéku na míru. Profesionální poradenství a služby pro všechny, kteří hledají cestu k vlastnímu bydlení.">
+    <meta property="og:image" content="https://www.hypoteeka.cz/images/og-image.jpg">
+    <meta property="og:url" content="https://www.hypoteeka.cz/template.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Hypoteeka.cz">
+    
+    <!-- Twitter Card meta tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="TITLE | Hypoteeka.cz">
+    <meta name="twitter:description" content="Hypoteeka.cz vám pomůže najít nejvýhodnější hypotéku na míru. Profesionální poradenství a služby pro všechny, kteří hledají cestu k vlastnímu bydlení.">
+    <meta name="twitter:image" content="https://www.hypoteeka.cz/images/og-image.jpg">
     <title>TITLE | Hypoteeka.cz</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -37,25 +57,37 @@
 </head>
 <body class="bg-white">
     <div x-data="{ mobileMenuOpen: false }">
-        <!-- Navigace -->
-        <div id="nav-placeholder"></div>
+        <!-- Nav include -->
+        <div id="nav-container"></div>
 
-        <main>
-            <!-- Obsah stránky -->
-            CONTENT
+        <script>
+            // Načtení navigační lišty ze samostatného souboru
+            fetch('nav.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('nav-container').innerHTML = data;
+                })
+                .catch(error => console.error('Chyba při načítání navigace:', error));
+        </script>
+
+        <!-- Obsah stránky přijde sem -->
+        <main class="mt-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <h1 class="text-3xl font-bold text-gray-900">Název stránky</h1>
+            <p class="mt-4 text-lg text-gray-500">Obsah stránky...</p>
         </main>
 
-        <!-- Footer -->
-        <div id="footer-placeholder"></div>
-    </div>
+        <!-- Footer include -->
+        <div id="footer-container"></div>
 
-    <script>
-        // Načtení navigace
-        fetch('nav.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('nav-placeholder').innerHTML = data;
-            });
-    </script>
+        <script>
+            // Načtení footeru ze samostatného souboru
+            fetch('footer.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('footer-container').innerHTML = data;
+                })
+                .catch(error => console.error('Chyba při načítání footeru:', error));
+        </script>
+    </div>
 </body>
 </html>

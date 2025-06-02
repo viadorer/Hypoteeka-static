@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Sitemap: https://www.hypoteeka.cz/sitemap.xml
+
+# Disallow některé administrativní složky
+Disallow: /admin/
+Disallow: /.git/
+Disallow: /*.sh$
