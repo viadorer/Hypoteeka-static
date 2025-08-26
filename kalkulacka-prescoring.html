@@ -84,23 +84,11 @@
     </style>
 </head>
 <body class="bg-white">
+<div id="nav-container"></div>
     <div x-data="{ mobileMenuOpen: false }">
         <!-- Nav include -->
-        <div id="nav-container"></div>
+        
 
-        <script>
-            // Načtení navigační lišty ze samostatného souboru pomocí XMLHttpRequest
-            var navXhr = new XMLHttpRequest();
-            navXhr.open('GET', 'nav.html', true);
-            navXhr.onreadystatechange = function() {
-                if (this.readyState === 4 && this.status === 200) {
-                    document.getElementById('nav-container').innerHTML = this.responseText;
-                } else if (this.readyState === 4 && this.status !== 200) {
-                    console.error('Chyba při načítání navigace. Status: ' + this.status);
-                }
-            };
-            navXhr.send();
-        </script>
         <main>
             <!-- Hero sekce -->
             <div class="relative min-h-[800px] flex items-center pb-96">
@@ -268,6 +256,8 @@
         </main>
     
         <script>
+            // Globální parametry
+            const DEFAULT_INTEREST_RATE = 6; // % p.a., lze později parametrizovat / načítat z UI
             // Formátování čísla s mezerami a měnou
             function formatCurrency(number) {
                 return new Intl.NumberFormat('cs-CZ').format(Math.round(number)) + ' Kč';
@@ -285,37 +275,46 @@
                 return (loanAmount * monthlyRate * Math.pow(1 + monthlyRate, months)) / (Math.pow(1 + monthlyRate, months) - 1);
             }
     
-            // Výpočet maximální výše hypotéky - univerzální výpočet s oprávněnými parametry
-            function calculateMaxMortgage(monthlyIncome, monthlyExpenses, dependents) {
+            // Výpočet maximální výše hypotéky (kombinace DSTI a DTI limitu)
+            // NOVĚ: Zohledňujeme i měsíční běžné výdaje a používáme měkčí limit DSTI nad disponibilním příjmem
+            function calculateMaxMortgage(monthlyIncome, monthlyExpenses, monthlyDebtService, dependents) {
                 console.log('===== VÝPOČET HYPOTÉKY =====');
                 console.log('Příjem:', monthlyIncome, typeof monthlyIncome);
-                console.log('Výdaje:', monthlyExpenses, typeof monthlyExpenses);
+                console.log('Běžné výdaje:', monthlyExpenses, typeof monthlyExpenses);
+                console.log('Dluhové splátky:', monthlyDebtService, typeof monthlyDebtService);
                 console.log('Vyživované osoby:', dependents, typeof dependents);
 
                 // 1. Konverze vstupu na čísla
                 const income = parseFloat(monthlyIncome);
                 const expenses = parseFloat(monthlyExpenses);
+                const debts = parseFloat(monthlyDebtService);
                 
-                // 2. Výpočet DSTI (Debt Service to Income)
-                // Správná hodnota je 45% z čistého měsíčního příjmu
-                const dstiPercent = 0.45;
-                const maxMonthlyPayment = income * dstiPercent;
-                console.log('Max. měsíční splátka (DSTI ' + (dstiPercent*100) + '%):', maxMonthlyPayment, 'Kč');
+                // 2. Měkčí DSTI na disponibilní příjem (příjem po odečtení běžných výdajů)
+                // Bankovní metodiky typicky pracují s ~45 % příjmu. Zde zvolíme měkčí posouzení 80 % z disponibilního příjmu.
+                const dstiLimit = 0.80; // 80 %
+                const disposableIncome = Math.max(0, (isNaN(income) ? 0 : income) - (isNaN(expenses) ? 0 : expenses));
+                const allowedDebtService = disposableIncome * dstiLimit;
+                // Dostupná splátka pro novou hypotéku po odečtení existujících dluhů
+                const availableMonthlyPayment = Math.max(0, allowedDebtService - (isNaN(debts) ? 0 : debts));
+                console.log('Povolená obsluha dluhu (DSTI ' + (dstiLimit*100) + '% z disponibilního příjmu):', allowedDebtService, 'Kč');
+                console.log('Dostupná splátka pro novou hypotéku po odečtení dluhů:', availableMonthlyPayment, 'Kč');
                 
                 // 3. Získání parametrů hypotéky
                 const years = parseInt(document.getElementById('mortgage-years').value);
-                const interestRate = 6; // Fixní úroková sazba 6%
+                const interestRate = DEFAULT_INTEREST_RATE; // % p.a.
                 const monthlyRate = interestRate / 12 / 100;
                 const months = years * 12;
                 
                 // 4. Výpočet maximální výše hypotéky podle DSTI
                 // Vzorec pro výpočet hypotéky z měsíční splátky
-                const maxMortgageDSTI = (maxMonthlyPayment * (Math.pow(1 + monthlyRate, months) - 1)) / (monthlyRate * Math.pow(1 + monthlyRate, months));
+                const maxMortgageDSTI = availableMonthlyPayment > 0
+                    ? (availableMonthlyPayment * (Math.pow(1 + monthlyRate, months) - 1)) / (monthlyRate * Math.pow(1 + monthlyRate, months))
+                    : 0;
                 console.log('Max. hypotéka dle DSTI:', formatCurrency(maxMortgageDSTI));
                 
                 // 5. Výpočet maximální výše hypotéky podle DTI (Debt-to-Income)
-                // Správný násobitel je 8.1 násobek ročního příjmu
-                const dtiMultiplier = 8.1;
+                // Zachováváme konzervativní strop 8.5× roční příjem.
+                const dtiMultiplier = 8.5;
                 const maxMortgageDTI = income * 12 * dtiMultiplier;
                 console.log('Max. hypotéka dle DTI:', formatCurrency(maxMortgageDTI));
                 
@@ -323,8 +322,6 @@
                 const result = Math.min(maxMortgageDSTI, maxMortgageDTI);
                 console.log('Výsledná max. hypotéka:', formatCurrency(result));
                 
-                // Pro modelový případ musí vycházet 4 880 000 Kč (příjem 50000, výdaje 10000, 2 vyživované osoby)
-                // Při těchto parametrech (DSTI 45% a DTI 8.1) by měl výpočet vycházet správně pro všechny případy
                 return result;
             }
     
@@ -338,8 +335,8 @@
                 console.log('- Stabilita příjmu:', stabilitaPrijmu, 'typ:', typeof stabilitaPrijmu);
                 
                 // Definice maximálních hodnot
-                const dtiMax = 8.1; // Max. DTI podle opraveného výpočtu
-                const dstiMax = 0.45; // Max. DSTI podle opraveného výpočtu (45%)
+                const dtiMax = 8.5; // sjednoceno s limitem v calculateMaxMortgage
+                const dstiMax = 0.45; // 45 % (pro <36 let lze později zvýšit na 0.50)
                 
                 // Váhy jednotlivých složek
                 const w1 = 0.2;  // LTV
@@ -348,10 +345,12 @@
                 const w4 = 0.15; // Kreditní historie
                 const w5 = 0.1;  // Stabilita příjmu
 
-                // Normalizace vstupu - osekatí extrémních hodnot a oseknutí nulových hodnot na standardní
-                const ltvNorm = ltv <= 0 ? 80 : (ltv > 100 ? 100 : ltv); // LTV by mělo být mezi 0-100%
-                const dtiNorm = dti <= 0 ? dtiMax : (dti > dtiMax ? dtiMax : dti); // DTI by mělo být menší než DTImax
-                const dstiNorm = (dsti <= 0 ? 0.40 : dsti > 1 ? dsti / 100 : dsti); // Převedeme % na des. číslo a zajistíme validní rozsah
+                // Normalizace vstupu – clamp na očekávané rozsahy
+                const ltvNorm = Math.max(0, Math.min(100, isNaN(ltv) ? 0 : ltv));
+                const dtiNorm = Math.max(0, Math.min(dtiMax, isNaN(dti) ? 0 : dti));
+                // dsti očekáváme v rozsahu 0–1 (v updateCalculations se předává dsti/100)
+                const dstiInput = isNaN(dsti) ? 0 : (dsti > 1 ? dsti / 100 : dsti);
+                const dstiNorm = Math.max(0, Math.min(dstiMax, dstiInput));
                 
                 // Výpočet jednotlivých částí vzorce
                 const ltvScore = w1 * (1 - ltvNorm / 100);
@@ -395,27 +394,25 @@
                 console.log('- Hodnota nemovitosti:', propertyValue);
                 console.log('- Doba splácení (roky):', years);
                 
-                // Výpočet hypotéky - pro testovací hodnoty: 50000, 10000, 2 => 4880000
-                // Sloučíme výdaje a závazky pro výpočet
-                const totalExpenses = monthlyExpenses + monthlyDebts;
-                console.log('Celkové měsíční výdaje:', totalExpenses);
-                
-                // Použijeme funkci calculateMaxMortgage pro výpočet maximální výše hypotéky
-                const maxMortgage = calculateMaxMortgage(monthlyIncome, totalExpenses, dependents);
-                console.log('Vypočtená max. hypotéka:', maxMortgage);
-                
-                // Výpočet měsíční splátky
-                const monthlyPayment = calculateMonthlyPayment(maxMortgage, years, 6);
-                
-                // Výpočet LTV a vlastních zdrojů
+                // Výpočet maximální hypotéky – zohledníme běžné výdaje a použijeme měkčí limit na disponibilní příjem
+                const maxMortgageRaw = calculateMaxMortgage(monthlyIncome, monthlyExpenses, monthlyDebts, dependents);
+                console.log('Vypočtená max. hypotéka (bez LTV stropu):', maxMortgageRaw);
+
+                // Uplatnění LTV stropu při známé hodnotě nemovitosti
                 const maxLTV = 80; // Maximální povolené LTV je 80%
+                const ltvCapAmount = propertyValue > 0 ? propertyValue * (maxLTV/100) : Infinity;
+                const maxMortgage = propertyValue > 0 ? Math.min(maxMortgageRaw, ltvCapAmount) : maxMortgageRaw;
+                // Výpočet LTV a vlastních zdrojů dle efektivní (zastropované) hypotéky
                 const ltv = propertyValue > 0 ? (maxMortgage / propertyValue) * 100 : 0;
                 const ownResources = propertyValue > 0 ? Math.max(propertyValue * (1 - maxLTV/100), propertyValue - maxMortgage) : 0;
+
+                // Výpočet měsíční splátky z efektivní (zastropované) hypotéky
+                const monthlyPayment = calculateMonthlyPayment(maxMortgage, years, DEFAULT_INTEREST_RATE);
                 
                 // Výpočet DSTI
                 const dsti = monthlyIncome > 0 ? (monthlyPayment / monthlyIncome) * 100 : 0;
 
-                // Výpočet DTI - skutečný poměr úvěru k ročnímu příjmu
+                // Výpočet DTI - skutečný poměr úvěru k ročnímu příjmu (z efektivní hypotéky)
                 const dti = monthlyIncome > 0 ? maxMortgage / (monthlyIncome * 12) : 0;
                 
                 // Výpočet Prescoringu - defaultní hodnoty pro kreditní historii a stabilitu příjmu
@@ -469,8 +466,12 @@
                 const propertyValue = parseFloat(document.getElementById('property-value').value.replace(/\s/g, '')) || 0;
                 const years = parseInt(document.getElementById('mortgage-years').value);
 
-                const maxMortgage = calculateMaxMortgage(monthlyIncome, monthlyExpenses + monthlyDebts, dependents);
-                const monthlyPayment = calculateMonthlyPayment(maxMortgage, years, 6);
+                // Max hypotéka – zohledníme běžné výdaje a použijeme měkčí limit na disponibilní příjem
+                const maxMortgageRaw = calculateMaxMortgage(monthlyIncome, monthlyExpenses, monthlyDebts, dependents);
+                const maxLTV = 80; // maximální LTV používané v reportu
+                const ltvCapAmount = propertyValue > 0 ? propertyValue * (maxLTV/100) : Infinity;
+                const maxMortgage = propertyValue > 0 ? Math.min(maxMortgageRaw, ltvCapAmount) : maxMortgageRaw;
+                const monthlyPayment = calculateMonthlyPayment(maxMortgage, years, DEFAULT_INTEREST_RATE);
                 const ltv = propertyValue > 0 ? (maxMortgage / propertyValue) * 100 : 0;
                 const dsti = monthlyIncome > 0 ? (monthlyPayment / monthlyIncome) * 100 : 0;
                 const ownResources = propertyValue > 0 ? Math.max(propertyValue * (1 - maxLTV/100), propertyValue - maxMortgage) : 0;
@@ -556,18 +557,28 @@ Tým Hypoteeka.cz
                 const inputs = ['monthly-income', 'monthly-expenses', 'monthly-debts', 'property-value'];
                 inputs.forEach(id => {
                     const input = document.getElementById(id);
-                    input.addEventListener('input', function() { 
+                    input.addEventListener('input', function() {
                         formatInput(this);
                         updateCalculations();
                     });
                     formatInput(input); // Formátujeme vstupní hodnoty při načtení
                 });
+
+                // Reakce i na změny selectů (aby se přepočetl LTV/DSTI při změně doby či vyživovaných osob)
+                const selects = ['dependents', 'mortgage-years'];
+                selects.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.addEventListener('change', updateCalculations);
+                });
                 
                 // Přidání event listenerů
                 document.getElementById('dependents').addEventListener('change', updateCalculations);
                 document.getElementById('mortgage-years').addEventListener('change', updateCalculations);
-                document.getElementById('generate-report').addEventListener('click', generateReport);
-                document.getElementById('send-report').addEventListener('click', sendReport);
+                // Ochrana před chybami: tlačítka s ID zde nejsou, odeslání řeší inline onclick
+                const genBtn = document.getElementById('generate-report');
+                if (genBtn) genBtn.addEventListener('click', generateReport);
+                const sendBtn = document.getElementById('send-report');
+                if (sendBtn) sendBtn.addEventListener('click', sendReport);
                 
                 // Spustíme výpočet okamžitě po načtení stránky s malým zpožděním
                 console.log('Inicializace dokončena, spoustím výpočet...');
@@ -605,71 +616,9 @@ Tým Hypoteeka.cz
     </div>
 
     <!-- Footer include -->
-    <div id="footer-container"></div>
     
-    <script>
-        // Načtení footeru ze samostatného souboru pomocí XMLHttpRequest
-        var footerXhr = new XMLHttpRequest();
-        footerXhr.open('GET', 'footer.html', true);
-        footerXhr.onreadystatechange = function() {
-            if (this.readyState === 4 && this.status === 200) {
-                document.getElementById('footer-container').innerHTML = this.responseText;
-            } else if (this.readyState === 4 && this.status !== 200) {
-                console.error('Chyba při načítání footeru. Status: ' + this.status);
-            }
-        };
-        footerXhr.send();
-        
-        // Cookie funkce
-        function setCookie(name, value, days) {
-            var expires = '';
-            if (days) {
-                var date = new Date();
-                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-                expires = '; expires=' + date.toUTCString();
-            }
-            document.cookie = name + '=' + (value || '') + expires + '; path=/';
-        }
-        
-        function getCookie(name) {
-            var nameEQ = name + '=';
-            const ca = document.cookie.split(';');
-            for(let i = 0; i < ca.length; i++) {
-                let c = ca[i];
-                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-            }
-            return null;
-        }
-        
-        // Zobrazít cookie lištu po načtení dokumentu
-        document.addEventListener('DOMContentLoaded', function() {
-            const cookieBanner = document.getElementById('cookie-banner');
-            const acceptButton = document.getElementById('accept-cookies');
-            const rejectButton = document.getElementById('reject-cookies');
-            
-            if (!getCookie('cookies-accepted')) {
-                setTimeout(function() {
-                    if (cookieBanner) {
-                        cookieBanner.classList.remove('translate-y-full');
-                    }
-                }, 1000);
-            }
-            
-            acceptButton.addEventListener('click', function() {
-                setCookie('cookies-accepted', 'true', 365);
-                if (cookieBanner) {
-                    cookieBanner.classList.add('translate-y-full');
-                }
-            });
-            
-            rejectButton.addEventListener('click', function() {
-                setCookie('cookies-accepted', 'false', 365);
-                if (cookieBanner) {
-                    cookieBanner.classList.add('translate-y-full');
-                }
-            });
-        });
-    </script>
+    
+<div id="footer-container"></div>
+<script src="/includes.js"></script>
 </body>
 </html>

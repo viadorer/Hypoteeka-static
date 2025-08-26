@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Blog Hypoteeka.cz – odborné články o hypotékách, financování bydlení, trhu s nemovitostmi a praktické průvodce pro zájemce o vlastní bydlení.">
+    <meta name="keywords" content="hypotéka, hypoteční poradna, financování bydlení, realitní trh, Hypoteeka.cz, blog o hypotékách">
+    <meta name="author" content="Hypoteeka.cz">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Blog | Hypoteeka.cz">
+    <meta property="og:description" content="Odborné články a tipy o hypotékách a financování bydlení.">
+    <meta property="og:image" content="https://hypoteeka.cz/logo.png">
+    <meta property="og:url" content="https://hypoteeka.cz/blog/index.html">
+    <meta property="og:type" content="website">
+    <title>Blog | Hypoteeka.cz</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="icon" type="image/png" href="/images/favicon.png">
+    <link rel="canonical" href="https://hypoteeka.cz/blog/index.html">
+    
+    <!-- Schéma.org pro lepší SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Blog",
+      "headline": "Blog Hypoteeka.cz",
+      "description": "Odborné články o hypotékách, financování bydlení a trhu s nemovitostmi.",
+      "image": "https://hypoteeka.cz/logo.png",
+      "url": "https://hypoteeka.cz/blog/index.html",
+      "author": {
+        "@type": "Organization",
+        "name": "Hypoteeka.cz"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Hypoteeka.cz",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://hypoteeka.cz/logo.png"
+        }
+      }
+    }
+    </script>
+
+    <style>
+        /* Blog section aligned with site light gradient */
+        .blog-section {
+            background: linear-gradient(180deg, #EFF6FF 0%, #F9FAFB 100%);
+            min-height: 100vh;
+            padding: 80px 0;
+        }
+
+        /* Center page content and cap width */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .blog-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .blog-header h1 {
+            font-size: 3rem;
+            color: #0D3D66;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .blog-intro {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .blog-intro p {
+            font-size: 1.2rem;
+            color: #374151;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .blog-grid {
+            display: grid;
+            /* fixed-width tracks that wrap; leftover space centers via justify-content */
+            grid-template-columns: repeat(auto-fit, minmax(320px, 360px));
+            gap: 30px;
+            justify-content: center; /* center the grid tracks horizontally */
+            margin-top: 40px;
+        }
+
+        .blog-card {
+            background: #FFFFFF;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid #E5E7EB;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            width: 100%;
+            max-width: 100%; /* stretch to grid column width for clean alignment */
+        }
+
+        .blog-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 32px rgba(219,39,119,0.15);
+            border-color: var(--brand-pink-600);
+        }
+
+        .blog-image {
+            position: relative;
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .blog-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .blog-card:hover .blog-image img {
+            transform: scale(1.1);
+        }
+
+        .blog-category {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--brand-pink-600);
+            color: #fff;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+
+        .blog-date {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .blog-content {
+            padding: 25px;
+        }
+
+        .blog-content h3 {
+            color: #111827;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            text-align: center;
+            line-height: 1.3;
+        }
+
+        .blog-content p {
+            color: #4B5563;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .blog-read-more {
+            display: inline-flex;
+            align-items: center;
+            color: var(--brand-pink-600);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .blog-read-more:hover {
+            color: var(--brand-pink-700);
+            transform: translateX(5px);
+        }
+
+        .blog-read-more::after {
+            content: '→';
+            margin-left: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .blog-read-more:hover::after {
+            transform: translateX(3px);
+        }
+
+        .read-time {
+            color: #6B7280;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .loading-spinner {
+            text-align: center;
+            padding: 40px;
+            color: var(--brand-pink-600);
+        }
+
+        .loading-spinner i {
+            font-size: 2rem;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            text-align: center;
+            padding: 40px;
+            color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.1);
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .blog-header h1 {
+                font-size: 2.2rem;
+            }
+
+            .blog-intro p {
+                font-size: 1rem;
+            }
+
+            .blog-grid { gap: 20px; }
+
+            .blog-content {
+                padding: 20px;
+            }
+        }
+
+        /* No explicit wide-screen overrides needed; auto-fit wraps tracks and stays centered. */
+    </style>
+</head>
+<body>
+    <!-- Navigace -->
+    <div id="nav-container"></div>
+
+    <!-- Sekce Blog -->
+    <section class="blog-section">
+        <div class="container">
+            <div class="blog-header">
+                <h1>Blog Hypoteeka.cz</h1>
+                <div class="blog-intro">
+                    <p>Vítejte na blogu Hypoteeka.cz. Najdete zde srozumitelné a profesionální články o hypotékách, financování bydlení a dění na realitním trhu. Cílem je pomoci vám činit informovaná rozhodnutí.</p>
+                </div>
+            </div>
+
+            <!-- Category Filters -->
+            <div id="category-filters" style="display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-bottom: 20px;">
+                <button data-cat="all" class="cat-btn" onclick="setCategory('all')">Vše</button>
+                <button data-cat="zakladni" class="cat-btn" onclick="setCategory('zakladni')">Základní témata</button>
+                <button data-cat="refinancovani" class="cat-btn" onclick="setCategory('refinancovani')">Refinancování & správa</button>
+                <button data-cat="trh" class="cat-btn" onclick="setCategory('trh')">Hypotéky a trh</button>
+                <button data-cat="situace" class="cat-btn" onclick="setCategory('situace')">Životní situace</button>
+                <button data-cat="navody" class="cat-btn" onclick="setCategory('navody')">Praktické návody</button>
+            </div>
+
+            <!-- Loading spinner -->
+            <div id="loading" class="loading-spinner">
+                <i class="fas fa-spinner"></i>
+                <p>Načítání článků...</p>
+            </div>
+
+            <!-- Error message -->
+            <div id="error" class="error-message" style="display: none;">
+                <i class="fas fa-exclamation-triangle"></i>
+                <p>Omlouváme se, nepodařilo se načíst blog články. Zkuste to prosím později.</p>
+            </div>
+
+            <!-- Blog posts grid with animation container -->
+            <div id="posts-container" style="position: relative; overflow: hidden; min-height: 600px;">
+                <div id="blog-grid" class="blog-grid" style="display: none; transition: transform 0.5s ease-in-out;"></div>
+            </div>
+            
+            <!-- Pagination -->
+            <div id="pagination-container" style="display: none; justify-content: center; align-items: center; margin-top: 60px; gap: 15px; flex-wrap: wrap;">
+                <button id="prev-page" onclick="changePage(-1)" style="padding: 12px 20px; border: 2px solid var(--brand-pink-600); background: transparent; color: var(--brand-pink-600); font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 8px;" disabled>
+                    <i class="fas fa-chevron-left"></i> Předchozí
+                </button>
+                
+                <div id="page-numbers" style="display: flex; gap: 10px; align-items: center;"></div>
+                
+                <button id="next-page" onclick="changePage(1)" style="padding: 12px 20px; border: 2px solid var(--brand-pink-600); background: transparent; color: var(--brand-pink-600); font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 8px;">
+                    Další <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <div id="footer-container"></div>
+
+    <script src="/includes.js"></script>
+    <script>
+        // Blog posts loading functionality with pagination + category filter
+        let allPosts = [];
+        let currentPage = 1;
+        const postsPerPage = 1000; // single-post setup; render all and hide pagination
+        let isAnimating = false;
+        let selectedCategory = 'all';
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            loadBlogPosts();
+        });
+
+        async function loadBlogPosts() {
+            const loading = document.getElementById('loading');
+            const error = document.getElementById('error');
+            const blogGrid = document.getElementById('blog-grid');
+
+            try {
+                const response = await fetch('./posts.json');
+                if (!response.ok) {
+                    throw new Error('Nepodařilo se načíst data');
+                }
+                
+                const data = await response.json();
+                displayBlogPosts(data.posts);
+                
+                loading.style.display = 'none';
+                blogGrid.style.display = 'grid';
+            } catch (err) {
+                console.error('Chyba při načítání blog postů:', err);
+                loading.style.display = 'none';
+                error.style.display = 'block';
+            }
+        }
+
+        function displayBlogPosts(posts) {
+            allPosts = posts;
+            currentPage = 1;
+            updatePostsView();
+            updatePagination();
+        }
+        
+        function updatePostsView() {
+            if (isAnimating) return;
+            
+            const blogGrid = document.getElementById('blog-grid');
+            const paginationContainer = document.getElementById('pagination-container');
+            
+            // Apply category filter
+            const filtered = selectedCategory === 'all' 
+                ? allPosts 
+                : allPosts.filter(p => p.category === selectedCategory);
+
+            // Calculate posts for current page
+            const startIndex = (currentPage - 1) * postsPerPage;
+            const endIndex = startIndex + postsPerPage;
+            const currentPosts = filtered.slice(startIndex, endIndex);
+            
+            // Animate transition
+            isAnimating = true;
+            blogGrid.style.transform = 'translateX(-100%)';
+            blogGrid.style.opacity = '0';
+            
+            setTimeout(() => {
+                blogGrid.innerHTML = '';
+                currentPosts.forEach(post => {
+                    const blogCard = createBlogCard(post);
+                    blogGrid.appendChild(blogCard);
+                });
+                
+                blogGrid.style.transform = 'translateX(100%)';
+                
+                setTimeout(() => {
+                    blogGrid.style.transform = 'translateX(0)';
+                    blogGrid.style.opacity = '1';
+                    isAnimating = false;
+                }, 50);
+            }, 250);
+            
+            blogGrid.style.display = 'grid';
+            // Always hide pagination in single-post setup
+            paginationContainer.style.display = 'none';
+
+            // Update active state on filter buttons
+            updateActiveCategoryButton();
+        }
+
+        function setCategory(cat) {
+            if (isAnimating) return;
+            selectedCategory = cat;
+            currentPage = 1;
+            updatePostsView();
+        }
+
+        function updateActiveCategoryButton() {
+            const buttons = document.querySelectorAll('#category-filters .cat-btn');
+            buttons.forEach(btn => {
+                const isActive = btn.getAttribute('data-cat') === selectedCategory;
+                btn.style.cssText = `
+                    padding: 8px 14px;
+                    border-radius: 9999px;
+                    border: 2px solid var(--brand-pink-600);
+                    background: ${isActive ? 'var(--brand-pink-600)' : 'transparent'};
+                    color: ${isActive ? '#ffffff' : 'var(--brand-pink-600)'};
+                    font-weight: 600;
+                    cursor: pointer;
+                    transition: all 0.2s ease;
+                `;
+                if (!isActive) {
+                    btn.onmouseover = () => { btn.style.background = 'var(--brand-pink-600)'; btn.style.color = '#ffffff'; };
+                    btn.onmouseout = () => { btn.style.background = 'transparent'; btn.style.color = 'var(--brand-pink-600)'; };
+                } else {
+                    btn.onmouseover = null;
+                    btn.onmouseout = null;
+                }
+            });
+        }
+
+        function createBlogCard(post) {
+            const card = document.createElement('div');
+            card.className = 'blog-card';
+            card.onclick = () => window.location.href = `./detail.html?id=${post.id}`;
+            
+            card.innerHTML = `
+                <div class="blog-image">
+                    <img src="${post.image}" alt="${post.imageAlt}" onerror="this.src='../images/placeholder.jpg'">
+                    <span class="blog-category">${post.categoryName}</span>
+                    <span class="blog-date">${post.dateFormatted}</span>
+                </div>
+                <div class="blog-content">
+                    <h3>${post.title}</h3>
+                    <p>${post.excerpt}</p>
+                    <div class="read-time">
+                        <i class="fas fa-clock"></i> ${post.readTime} min čtení
+                    </div>
+                    <a href="./detail.html?id=${post.id}" class="blog-read-more">Číst více</a>
+                </div>
+            `;
+            
+            return card;
+        }
+
+        // Pagination functions
+        function changePage(direction) {
+            if (isAnimating) return;
+            
+            const totalPages = Math.ceil(allPosts.length / postsPerPage);
+            const newPage = currentPage + direction;
+            
+            if (newPage >= 1 && newPage <= totalPages) {
+                currentPage = newPage;
+                updatePostsView();
+                updatePagination();
+                
+                // Smooth scroll to top of posts section
+                document.querySelector('.blog-section').scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start' 
+                });
+            }
+        }
+        
+        function goToPage(page) {
+            if (isAnimating) return;
+            
+            const totalPages = Math.ceil(allPosts.length / postsPerPage);
+            if (page >= 1 && page <= totalPages && page !== currentPage) {
+                currentPage = page;
+                updatePostsView();
+                updatePagination();
+                
+                // Smooth scroll to top of posts section
+                document.querySelector('.blog-section').scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start' 
+                });
+            }
+        }
+        
+        function updatePagination() {
+            const totalPages = Math.ceil(allPosts.length / postsPerPage);
+            const prevBtn = document.getElementById('prev-page');
+            const nextBtn = document.getElementById('next-page');
+            const pageNumbers = document.getElementById('page-numbers');
+            
+            // Update prev/next buttons
+            prevBtn.disabled = currentPage <= 1;
+            nextBtn.disabled = currentPage >= totalPages;
+            
+            if (prevBtn.disabled) {
+                prevBtn.style.opacity = '0.5';
+                prevBtn.style.cursor = 'not-allowed';
+            } else {
+                prevBtn.style.opacity = '1';
+                prevBtn.style.cursor = 'pointer';
+            }
+            
+            if (nextBtn.disabled) {
+                nextBtn.style.opacity = '0.5';
+                nextBtn.style.cursor = 'not-allowed';
+            } else {
+                nextBtn.style.opacity = '1';
+                nextBtn.style.cursor = 'pointer';
+            }
+            
+            // Generate page numbers
+            pageNumbers.innerHTML = '';
+            
+            if (totalPages <= 1) return;
+            
+            const maxVisiblePages = 5;
+            let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+            let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+            
+            // Adjust start if we're near the end
+            if (endPage - startPage + 1 < maxVisiblePages) {
+                startPage = Math.max(1, endPage - maxVisiblePages + 1);
+            }
+            
+            // Add first page and ellipsis if needed
+            if (startPage > 1) {
+                addPageButton(1);
+                if (startPage > 2) {
+                    const ellipsis = document.createElement('span');
+                    ellipsis.textContent = '...';
+                    ellipsis.style.color = 'var(--brand-pink-600)';
+                    ellipsis.style.padding = '0 10px';
+                    pageNumbers.appendChild(ellipsis);
+                }
+            }
+            
+            // Add visible page numbers
+            for (let i = startPage; i <= endPage; i++) {
+                addPageButton(i);
+            }
+            
+            // Add ellipsis and last page if needed
+            if (endPage < totalPages) {
+                if (endPage < totalPages - 1) {
+                    const ellipsis = document.createElement('span');
+                    ellipsis.textContent = '...';
+                    ellipsis.style.color = 'var(--brand-pink-600)';
+                    ellipsis.style.padding = '0 10px';
+                    pageNumbers.appendChild(ellipsis);
+                }
+                addPageButton(totalPages);
+            }
+        }
+        
+        function addPageButton(page) {
+            const button = document.createElement('button');
+            button.textContent = page;
+            button.onclick = () => goToPage(page);
+            
+            const isActive = page === currentPage;
+            button.style.cssText = `
+                padding: 10px 15px;
+                border: 2px solid var(--brand-pink-600);
+                background: ${isActive ? 'var(--brand-pink-600)' : 'transparent'};
+                color: ${isActive ? '#ffffff' : 'var(--brand-pink-600)'};
+                font-weight: 600;
+                border-radius: 8px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                min-width: 45px;
+            `;
+            
+            if (!isActive) {
+                button.onmouseover = () => {
+                    button.style.background = 'var(--brand-pink-600)';
+                    button.style.color = '#ffffff';
+                };
+                button.onmouseout = () => {
+                    button.style.background = 'transparent';
+                    button.style.color = 'var(--brand-pink-600)';
+                };
+            }
+            
+            document.getElementById('page-numbers').appendChild(button);
+        }
+        
+        // New category mapping
+        const categoryNames = {
+            'zakladni': 'Základní témata',
+            'refinancovani': 'Refinancování & správa hypotéky',
+            'trh': 'Hypotéky a trh s nemovitostmi',
+            'situace': 'Speciální životní situace',
+            'navody': 'Praktické návody a tipy'
+        };
+    </script>
+</body>
+</html>

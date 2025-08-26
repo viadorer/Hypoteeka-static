@@ -56,19 +56,11 @@
     </style>
 </head>
 <body class="bg-white">
+<div id="nav-container"></div>
     <div x-data="{ mobileMenuOpen: false }">
         <!-- Nav include -->
-        <div id="nav-container"></div>
-
-        <script>
-            // Načtení navigační lišty ze samostatného souboru
-            fetch('nav.html')
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('nav-container').innerHTML = data;
-                })
-                .catch(error => console.error('Chyba při načítání navigace:', error));
-        </script>
+        
+        <!-- Navigaci a patičku načítá includes.js -->
 
         <!-- Obsah stránky přijde sem -->
         <main class="mt-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -77,17 +69,11 @@
         </main>
 
         <!-- Footer include -->
-        <div id="footer-container"></div>
-
-        <script>
-            // Načtení footeru ze samostatného souboru
-            fetch('footer.html')
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('footer-container').innerHTML = data;
-                })
-                .catch(error => console.error('Chyba při načítání footeru:', error));
-        </script>
+        
+        
+        <!-- Jednotné načítání nav/footer -->
+        <script src="includes.js"></script>
     </div>
+<div id="footer-container"></div>
 </body>
 </html>

@@ -7,40 +7,12 @@ HTML_FILES=(
   "kalkulacka-prescoring.html"
   "kalkulacka-ztracenych-prilezitosti.html"
   "najem-vs-hypoteka.html"
-  "refinancování.html"
+  "refinancování.html"
   "spoluprace.html"
   "template.html"
   "analyzahypoteky.html"
   "jaknato.html"
 )
-
-# Kód pro načítání navigace
-NAV_CODE='<!-- Nav include -->
-<div id="nav-container"></div>
-
-<script>
-    // Načtení navigační lišty ze samostatného souboru
-    fetch("nav.html")
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById("nav-container").innerHTML = data;
-        })
-        .catch(error => console.error("Chyba při načítání navigace:", error));
-</script>'
-
-# Kód pro načítání footeru
-FOOTER_CODE='<!-- Footer include -->
-<div id="footer-container"></div>
-
-<script>
-    // Načtení footeru ze samostatného souboru
-    fetch("footer.html")
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById("footer-container").innerHTML = data;
-        })
-        .catch(error => console.error("Chyba při načítání footeru:", error));
-</script>'
 
 for file in "${HTML_FILES[@]}"; do
   if [ -f "$file" ]; then
@@ -69,9 +41,35 @@ for file in "${HTML_FILES[@]}"; do
     
     echo "  Body tag nalezen na řádku $BODY_LINE, uzavírací tag na řádku $END_BODY_LINE"
     
-    # Odstraníme všechny existující include kódy pro navigaci a footer
-    sed -i.bak -E '/<!-- Nav include -->|<div id="nav-container">|<div id="nav-placeholder">/,/<\/script>/d' "$file.tmp"
-    sed -i.bak -E '/<!-- Footer include -->|<div id="footer-container">|<div id="footer-placeholder">/,/<\/script>/d' "$file.tmp"
+    # Odstraníme legacy include skripty (fetch/XMLHttpRequest) uvnitř <script> bloků kompatibilně s macOS pomocí awk
+    awk '
+      BEGIN{inblock=0;buf=""}
+      function flush(){
+        if (buf ~ /nav\.html|footer\.html|XMLHttpRequest/) {
+          # drop this script block
+        } else {
+          printf "%s", buf
+        }
+        buf=""; inblock=0
+      }
+      {
+        if (inblock) {
+          buf = buf $0 ORS
+          if ($0 ~ /<\/script>/) { flush() }
+          next
+        }
+        if ($0 ~ /<script[^"]*>/) {
+          inblock=1; buf = $0 ORS
+          if ($0 ~ /<\/script>/) { flush() }
+          next
+        }
+        print
+      }
+    ' "$file.tmp" > "$file.tmp.awk" && mv "$file.tmp.awk" "$file.tmp"
+    
+    # Smaže případné placeholdery kontejnerů, budeme je přidávat znovu jednotně (jednořádkové)
+    sed -i.bak -E 's/<div id="nav-container"><\/div>//g' "$file.tmp"
+    sed -i.bak -E 's/<div id="footer-container"><\/div>//g' "$file.tmp"
     
     # Odstraníme původní navigaci pokud existuje
     sed -i.bak -E '/<!-- Plovoucí navigace -->|<header class="fixed top-0 left-0 right-0 z-50">/,/<\/header>/d' "$file.tmp"
@@ -79,15 +77,32 @@ for file in "${HTML_FILES[@]}"; do
     # Odstraníme původní footer pokud existuje
     sed -i.bak -E '/<footer class="bg-white">/,/<\/footer>/d' "$file.tmp"
     
-    # Přidáme navigaci po otevíracím body tagu
-    BODY_TAG=$(sed -n "${BODY_LINE}p" "$file.tmp")
-    NEXT_LINE=$((BODY_LINE + 1))
-    
-    sed -i.bak -e "${BODY_LINE}a\\${NAV_CODE}" "$file.tmp"
-    
-    # Přidáme footer před uzavírací body tag
-    BEFORE_END_BODY=$((END_BODY_LINE - 1))
-    sed -i.bak -e "${BEFORE_END_BODY}a\\${FOOTER_CODE}" "$file.tmp"
+    # Zjistíme, zda už jsou přítomné kontejnery a includes.js
+    HAS_NAV=0; HAS_FOOTER=0; HAS_INC=0
+    grep -q 'id="nav-container"' "$file.tmp" && HAS_NAV=1
+    grep -q 'id="footer-container"' "$file.tmp" && HAS_FOOTER=1
+    grep -q 'includes\.js' "$file.tmp" && HAS_INC=1
+
+    # Vložíme chybějící prvky pomocí awk: po <body> nav-container; před </body> footer-container a includes.js
+    awk -v has_nav="$HAS_NAV" -v has_footer="$HAS_FOOTER" -v has_inc="$HAS_INC" '
+      {
+        printed=0
+        if ($0 ~ /<body[^>]*>/ && has_nav==0) {
+          print $0
+          print "<div id=\"nav-container\"></div>"
+          printed=1
+        }
+        if ($0 ~ /<\/body>/) {
+          if (has_footer==0) {
+            print "<div id=\"footer-container\"></div>"
+          }
+          if (has_inc==0) {
+            print "<script src=\"includes.js\"></script>"
+          }
+        }
+        if (printed==0) print $0
+      }
+    ' "$file.tmp" > "$file.tmp.inject" && mv "$file.tmp.inject" "$file.tmp"
     
     # Přesuneme upravený soubor zpět
     mv "$file.tmp" "$file"

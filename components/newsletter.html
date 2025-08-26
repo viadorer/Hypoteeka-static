@@ -1,0 +1,151 @@
+<!-- Newsletter komponenta (Ecomail) -->
+<div class="mx-auto max-w-2xl text-center bg-white rounded-2xl shadow-sm p-8">
+  <h2 class="text-2xl font-bold tracking-tight text-gray-900">Informace o hypotečním trhu</h2>
+  <p class="mt-2 text-gray-600">Krátké a užitečné e‑maily jednou za čas. Žádný spam.</p>
+  <!-- Ecomail embed -->
+  <script>
+    (function (w,d,s,o,f,js,fjs) {
+      w['ecm-widget']=o;w[o] = w[o] || function () { (w[o].q = w[o].q || []).push(arguments) };
+      js = d.createElement(s), fjs = d.getElementsByTagName(s)[0];
+      js.id = '31-d06aafc5a31e5227c3d52534fd9d0c96'; js.dataset.a = 'ptf'; js.src = f; js.async = 1; fjs.parentNode.insertBefore(js, fjs);
+    }(window, document, 'script', 'ecmwidget', 'https://d70shl7vidtft.cloudfront.net/widget.js'));
+  </script>
+  <div class="mt-6">
+    <div id="f-31-d06aafc5a31e5227c3d52534fd9d0c96"></div>
+  </div>
+  <!-- Scoped styling for Ecomail widget -->
+  <style>
+    /* Scope to the Ecomail form container */
+    #f-31-d06aafc5a31e5227c3d52534fd9d0c96 form {
+      display: flex !important;
+      flex-wrap: wrap !important; /* stack on small screens */
+      align-items: stretch !important;
+      gap: 0.75rem !important;
+      justify-content: center !important;
+      max-width: 32rem !important;
+      margin: 0 auto !important;
+    }
+    /* Hide labels and any extra text fields to keep only email + submit */
+    #f-31-d06aafc5a31e5227c3d52534fd9d0c96 label { display: none !important; }
+    #f-31-d06aafc5a31e5227c3d52534fd9d0c96 input[type="text"] { display: none !important; }
+
+    #f-31-d06aafc5a31e5227c3d52534fd9d0c96 input[type="email"] {
+      min-width: 0 !important;
+      flex: 1 1 16rem !important;
+      border-radius: 0.75rem !important; /* rounded-xl */
+      border: 1px solid #d1d5db !important; /* ring-gray-300 */
+      padding: 0.75rem 1rem !important; /* larger tap target */
+      color: #111827 !important; /* text-gray-900 */
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04) !important;
+    }
+    #f-31-d06aafc5a31e5227c3d52534fd9d0c96 input[type="email"]::placeholder { color: #9CA3AF !important; }
+    #f-31-d06aafc5a31e5227c3d52534fd9d0c96 input[type="submit"],
+    #f-31-d06aafc5a31e5227c3d52534fd9d0c96 button[type="submit"] {
+      border-radius: 9999px !important;
+      background-color: var(--brand-pink-600) !important; /* brand pink */
+      color: #ffffff !important;
+      padding: 0.75rem 1.25rem !important; /* larger button */
+      font-weight: 600 !important;
+      border: none !important;
+      cursor: pointer !important;
+      white-space: nowrap !important;
+      box-shadow: 0 6px 16px rgba(225, 29, 72, 0.18) !important; /* pink shadow */
+    }
+    #f-31-d06aafc5a31e5227c3d52534fd9d0c96 input[type="submit"]:hover,
+    #f-31-d06aafc5a31e5227c3d52534fd9d0c96 button[type="submit"]:hover {
+      background-color: var(--brand-pink-700) !important; /* brand pink hover */
+    }
+    /* Make submit take full width on very small screens */
+    @media (max-width: 420px) {
+      #f-31-d06aafc5a31e5227c3d52534fd9d0c96 input[type="submit"],
+      #f-31-d06aafc5a31e5227c3d52534fd9d0c96 button[type="submit"] {
+        flex: 1 1 100% !important;
+      }
+    }
+  </style>
+  <script>
+    (function ensureSimpleNewsletter() {
+      var SUCCESS_HTML = '<div class="text-center"><div class="text-green-700 font-semibold">Byl(a) jste úspěšně přihlášen(a) k odběru.</div><div class="text-sm text-gray-600 mt-2">Děkujeme.</div></div>';
+      function preventExternalLinks(container) {
+        container.querySelectorAll('a').forEach(function(a){
+          if (/ecomail\.cz/i.test(a.href)) {
+            a.addEventListener('click', function(ev){ ev.preventDefault(); ev.stopPropagation(); }, { capture: true });
+            a.removeAttribute('target');
+            a.style.display = 'none';
+          }
+        });
+      }
+      function replaceSuccessIfNeeded(container) {
+        var txt = (container.textContent || '').trim();
+        if (/Byl\(a\) jste úspěšně zapsán\(a\)|Byl\(a\) jste úspěšně přihlášen\(a\)/i.test(txt)) {
+          container.innerHTML = SUCCESS_HTML;
+          return true;
+        }
+        var successNode = container.querySelector('.ecm-success, .widget-success, [data-ecm-success]');
+        if (successNode) {
+          container.innerHTML = SUCCESS_HTML;
+          return true;
+        }
+        preventExternalLinks(container);
+        return false;
+      }
+      function simplify(container) {
+        try {
+          var form = container.querySelector('form');
+          if (!form) return false;
+          form.querySelectorAll('label').forEach(function(l){ l.style.display = 'none'; });
+          form.querySelectorAll('input').forEach(function(inp){
+            if (inp.type !== 'email' && inp.type !== 'submit' && inp.type !== 'button') {
+              inp.required = false;
+            }
+          });
+          // Improve placeholders and button label
+          var email = form.querySelector('input[type="email"]');
+          if (email) {
+            email.placeholder = email.placeholder || 'Vložte váš e‑mail';
+            email.setAttribute('aria-label', 'E-mail pro odběr novinek');
+            email.setAttribute('inputmode', 'email');
+          }
+          var submit = form.querySelector('input[type="submit"], button[type="submit"]');
+          if (submit) {
+            if (!submit.innerText && submit.value) submit.value = 'Odebírat novinky';
+            if (submit.innerText) submit.innerText = 'Odebírat novinky';
+            submit.setAttribute('aria-label', 'Odebírat novinky');
+          }
+          if (!form.__ecmHandled) {
+            form.__ecmHandled = true;
+            form.addEventListener('submit', function(){
+              var attempts = 0;
+              var iv = setInterval(function(){
+                attempts++;
+                if (replaceSuccessIfNeeded(container) || attempts > 60) {
+                  clearInterval(iv);
+                }
+              }, 100);
+            }, true);
+          }
+          preventExternalLinks(container);
+          return true;
+        } catch(e) { return false; }
+      }
+      function init() {
+        var container = document.getElementById('f-31-d06aafc5a31e5227c3d52534fd9d0c96');
+        if (!container) return;
+        if (simplify(container)) return;
+        var obs = new MutationObserver(function(){
+          if (simplify(container) || replaceSuccessIfNeeded(container)) obs.disconnect();
+        });
+        obs.observe(container, { childList: true, subtree: true });
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+    })();
+  </script>
+  <p class="mt-4 text-sm text-gray-500">
+    Odesláním formuláře souhlasíte se
+    <a href="#" class="font-semibold text-brand-pink hover:opacity-90">zásadami zpracování osobních údajů</a>.
+  </p>
+</div>

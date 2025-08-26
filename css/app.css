@@ -523,11 +523,11 @@ video {
   --tw-ring-inset: var(--tw-empty,/*!*/ /*!*/);
   --tw-ring-offset-width: 0px;
   --tw-ring-offset-color: #fff;
-  --tw-ring-color: #2563eb;
+  --tw-ring-color: var(--brand-pink-600);
   --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
   --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
   box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-  border-color: #2563eb;
+  border-color: var(--brand-pink-600);
 }
 
 input::-moz-placeholder, textarea::-moz-placeholder {
@@ -594,7 +594,7 @@ select {
   flex-shrink: 0;
   height: 1rem;
   width: 1rem;
-  color: #2563eb;
+  color: var(--brand-pink-600);
   background-color: #fff;
   border-color: #6b7280;
   border-width: 1px;
@@ -615,7 +615,7 @@ select {
   --tw-ring-inset: var(--tw-empty,/*!*/ /*!*/);
   --tw-ring-offset-width: 2px;
   --tw-ring-offset-color: #fff;
-  --tw-ring-color: #2563eb;
+  --tw-ring-color: var(--brand-pink-600);
   --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
   --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
   box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
@@ -710,24 +710,24 @@ select {
 }
 .btn-primary {
   --tw-bg-opacity: 1;
-  background-color: rgb(0 102 255 / var(--tw-bg-opacity, 1));
+  background-color: var(--brand-pink-600);
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
 }
 .btn-primary:hover {
   --tw-bg-opacity: 1;
-  background-color: rgb(0 82 204 / var(--tw-bg-opacity, 1));
+  background-color: var(--brand-pink-700);
 }
 .btn-outline {
   border-width: 2px;
   --tw-border-opacity: 1;
-  border-color: rgb(0 102 255 / var(--tw-border-opacity, 1));
+  border-color: var(--brand-pink-600);
   --tw-text-opacity: 1;
-  color: rgb(0 102 255 / var(--tw-text-opacity, 1));
+  color: var(--brand-pink-600);
 }
 .btn-outline:hover {
   --tw-bg-opacity: 1;
-  background-color: rgb(240 247 255 / var(--tw-bg-opacity, 1));
+  background-color: var(--brand-pink-50);
 }
 .input {
   width: 100%;
@@ -740,7 +740,7 @@ select {
 }
 .input:focus {
   --tw-border-opacity: 1;
-  border-color: rgb(46 143 255 / var(--tw-border-opacity, 1));
+  border-color: var(--brand-pink-600);
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(46 143 255 / var(--tw-ring-opacity, 1));
 }
@@ -755,9 +755,9 @@ select {
 }
 .select:focus {
   --tw-border-opacity: 1;
-  border-color: rgb(46 143 255 / var(--tw-border-opacity, 1));
+  border-color: var(--brand-pink-600);
   --tw-ring-opacity: 1;
-  --tw-ring-color: rgb(46 143 255 / var(--tw-ring-opacity, 1));
+  --tw-ring-color: var(--brand-pink-600);
 }
 .label {
   margin-bottom: 0.25rem;
@@ -1150,19 +1150,19 @@ select {
 }
 .bg-primary-100 {
   --tw-bg-opacity: 1;
-  background-color: rgb(224 239 255 / var(--tw-bg-opacity, 1));
+  background-color: var(--brand-pink-100);
 }
 .bg-primary-500 {
   --tw-bg-opacity: 1;
-  background-color: rgb(46 143 255 / var(--tw-bg-opacity, 1));
+  background-color: var(--brand-pink-600);
 }
 .bg-primary-600 {
   --tw-bg-opacity: 1;
-  background-color: rgb(0 102 255 / var(--tw-bg-opacity, 1));
+  background-color: var(--brand-pink-600);
 }
 .bg-primary-700 {
   --tw-bg-opacity: 1;
-  background-color: rgb(0 82 204 / var(--tw-bg-opacity, 1));
+  background-color: var(--brand-pink-700);
 }
 .bg-white {
   --tw-bg-opacity: 1;
@@ -1180,13 +1180,13 @@ select {
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 .from-primary-200 {
-  --tw-gradient-from: #B8DBFF var(--tw-gradient-from-position);
-  --tw-gradient-to: rgb(184 219 255 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-from: var(--brand-pink-100) var(--tw-gradient-from-position);
+  --tw-gradient-to: var(--brand-pink-100) var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 .from-primary-50 {
-  --tw-gradient-from: #F0F7FF var(--tw-gradient-from-position);
-  --tw-gradient-to: rgb(240 247 255 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-from: var(--brand-pink-50) var(--tw-gradient-from-position);
+  --tw-gradient-to: var(--brand-pink-50) var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 .via-white {
@@ -1194,7 +1194,7 @@ select {
   --tw-gradient-stops: var(--tw-gradient-from), #fff var(--tw-gradient-via-position), var(--tw-gradient-to);
 }
 .to-primary-200 {
-  --tw-gradient-to: #B8DBFF var(--tw-gradient-to-position);
+  --tw-gradient-to: var(--brand-pink-200) var(--tw-gradient-to-position);
 }
 .to-secondary-200 {
   --tw-gradient-to: #FFE4B3 var(--tw-gradient-to-position);
@@ -1372,15 +1372,15 @@ select {
 }
 .text-primary-100 {
   --tw-text-opacity: 1;
-  color: rgb(224 239 255 / var(--tw-text-opacity, 1));
+  color: var(--brand-pink-100);
 }
 .text-primary-300 {
   --tw-text-opacity: 1;
-  color: rgb(138 194 255 / var(--tw-text-opacity, 1));
+  color: var(--brand-pink-200);
 }
 .text-primary-600 {
   --tw-text-opacity: 1;
-  color: rgb(0 102 255 / var(--tw-text-opacity, 1));
+  color: var(--brand-pink-600);
 }
 .text-secondary-700 {
   --tw-text-opacity: 1;
@@ -1481,15 +1481,15 @@ select {
 }
 .hover\:bg-primary-50:hover {
   --tw-bg-opacity: 1;
-  background-color: rgb(240 247 255 / var(--tw-bg-opacity, 1));
+  background-color: var(--brand-pink-50);
 }
 .hover\:bg-primary-600:hover {
   --tw-bg-opacity: 1;
-  background-color: rgb(0 102 255 / var(--tw-bg-opacity, 1));
+  background-color: var(--brand-pink-600);
 }
 .hover\:bg-primary-700:hover {
   --tw-bg-opacity: 1;
-  background-color: rgb(0 82 204 / var(--tw-bg-opacity, 1));
+  background-color: var(--brand-pink-700);
 }
 .hover\:bg-secondary-50:hover {
   --tw-bg-opacity: 1;
@@ -1501,7 +1501,7 @@ select {
 }
 .hover\:text-primary-600:hover {
   --tw-text-opacity: 1;
-  color: rgb(0 102 255 / var(--tw-text-opacity, 1));
+  color: var(--brand-pink-600);
 }
 .hover\:text-white:hover {
   --tw-text-opacity: 1;
@@ -1509,7 +1509,7 @@ select {
 }
 .focus\:ring-primary-500:focus {
   --tw-ring-opacity: 1;
-  --tw-ring-color: rgb(46 143 255 / var(--tw-ring-opacity, 1));
+  --tw-ring-color: var(--brand-pink-600);
 }
 @media (min-width: 640px) {
 
@@ -1821,3 +1821,146 @@ select {
   }
 }
 
+
+/* ==========================================
+   Brand Pink Accent (Custom additions)
+   ========================================== */
+:root {
+  /* Brand pink palette taken from CTA banner */
+  --brand-pink-50:  #FDF2F8; /* bg subtle */
+  --brand-pink-100: #FCE7F3; /* optional */
+  --brand-pink-200: #F9A8D4; /* border subtle */
+  --brand-pink-600: #DB2777; /* primary */
+  --brand-pink-700: #BE185D; /* hover/darker */
+}
+
+/* Text utilities */
+.text-brand-pink {
+  color: var(--brand-pink-600);
+}
+.hover\:text-brand-pink-700:hover {
+  color: var(--brand-pink-700);
+}
+
+/* Background utilities */
+.bg-brand-pink {
+  background-color: var(--brand-pink-600);
+}
+.bg-brand-pink-50 {
+  background-color: var(--brand-pink-50);
+}
+.hover\:bg-brand-pink-700:hover {
+  background-color: var(--brand-pink-700);
+}
+
+/* Border utilities */
+.border-brand-pink {
+  border-color: var(--brand-pink-600);
+}
+.border-brand-pink-200 {
+  border-color: var(--brand-pink-200);
+}
+
+/* Button utility (solid) */
+.btn-brand {
+  background-color: var(--brand-pink-600);
+  color: #fff;
+}
+.btn-brand:hover {
+  background-color: var(--brand-pink-700);
+}
+
+/* Button utility (outline) */
+.btn-brand-outline {
+  background-color: transparent;
+  color: var(--brand-pink-600);
+  border: 2px solid var(--brand-pink-600);
+}
+.btn-brand-outline:hover {
+  background-color: var(--brand-pink-50);
+}
+
+/* Badge utility */
+.badge-brand {
+  background-color: var(--brand-pink-600);
+  color: #fff;
+}
+
+/* ==========================================
+   Theme Enhancements (Footer & Links)
+   ========================================== */
+/* Footer: subtle brand gradient, colored headings and link hovers */
+footer {
+  background: linear-gradient(180deg, var(--brand-pink-50) 0%, #ffffff 60%);
+}
+footer h3 {
+  color: var(--brand-pink-700);
+}
+footer a {
+  color: #4b5563; /* gray-600 base */
+  transition: color .2s ease;
+}
+footer a:hover {
+  color: var(--brand-pink-600);
+}
+
+/* Accent dividers in footer */
+footer .border-t {
+  border-color: var(--brand-pink-200);
+}
+
+/* Make social icons adopt brand color on hover */
+footer .fa-facebook,
+footer .fa-instagram {
+  color: #9ca3af; /* gray-400 */
+  transition: color .2s ease;
+}
+footer a:hover .fa-facebook,
+footer a:hover .fa-instagram {
+  color: var(--brand-pink-600);
+}
+
+/* Global links (optional light accent on hover where not overridden) */
+a:hover {
+  color: var(--brand-pink-600);
+}
+
+/* ==========================================
+   Global Brand Accents (Headings, Buttons, HR, Selection)
+   ========================================== */
+/* Headings get subtle brand color for visual hierarchy */
+h1, h2 {
+  color: var(--brand-pink-700);
+}
+h3 {
+  color: var(--brand-pink-600);
+}
+
+/* Keep body text readable */
+body {
+  color: #111827; /* gray-900 */
+}
+
+/* Buttons: elevation and lively hover */
+.btn-primary {
+  box-shadow: 0 8px 20px rgba(219, 39, 119, 0.22);
+}
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px rgba(190, 24, 93, 0.32);
+}
+.btn-outline:hover {
+  color: var(--brand-pink-700);
+  border-color: var(--brand-pink-700);
+}
+
+/* Horizontal rules with brand tint */
+hr {
+  border-color: var(--brand-pink-200);
+}
+
+/* Selection color */
+::selection {
+  background: var(--brand-pink-200);
+  color: #111827;
+}

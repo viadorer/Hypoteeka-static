@@ -111,19 +111,11 @@
     </style>
 </head>
 <body class="bg-white">
+<div id="nav-container"></div>
     <div x-data="{ mobileMenuOpen: false }">
         <!-- Nav include -->
-        <div id="nav-container"></div>
+        
 
-        <script>
-            // Načtení navigační lišty ze samostatného souboru
-            fetch('nav.html')
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('nav-container').innerHTML = data;
-                })
-                .catch(error => console.error('Chyba při načítání navigace:', error));
-        </script>
 
         <!-- Hero sekce -->
         <div class="relative min-h-[600px] flex items-center pb-48">
@@ -170,6 +162,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     </head>
     <body class="bg-white">
+<div id="nav-container"></div>
         <!-- Hero sekce -->
         <div class="relative overflow-hidden bg-white">
             <div class="mx-auto max-w-7xl px-6 lg:px-8 pt-24 pb-24">
@@ -731,5 +724,7 @@
             </svg>
         </a>
     </div>
+<div id="footer-container"></div>
+<script src="includes.js"></script>
 </body>
 </html>

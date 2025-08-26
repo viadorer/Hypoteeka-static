@@ -1,0 +1,60 @@
+ {
+  "posts": [
+    
+    {
+      "id": "hypotecni-slovnicek-pro-laiky",
+      "title": "Hypoteční slovníček pro laiky: LTV, DSTI, RPSN a fixace srozumitelně",
+      "excerpt": "Srozumitelně vysvětlené klíčové pojmy s odbornými souvislostmi. Porozumíte nabídkám bank a vyhnete se zbytečným nákladům.",
+      "category": "zakladni",
+      "categoryName": "Základní témata",
+      "image": "/images/blog/clanek20.jpeg",
+      "imageAlt": "Hypoteční slovníček – hlavní pojmy: LTV, DSTI, RPSN, fixace",
+      "date": "2025-08-26",
+      "dateFormatted": "26. srpna 2025",
+      "readTime": 7,
+      "keywords": "LTV, DSTI, RPSN, fixace, slovníček, hypoteční pojmy, hypotéka, úvěr, efektivní úroková sazba"
+    }
+    ,
+    {
+      "id": "10-otazek-ktere-byste-meli-polozit-svemu-hypotecnimu-poradci",
+      "title": "10 otázek, které byste měli položit svému hypotečnímu poradci",
+      "excerpt": "Hypotéka je obvykle největší závazek v životě. Než kývnete na nabídku, ptejte se – těchto 10 otázek odhalí, zda poradce jedná ve vašem zájmu.",
+      "category": "navody",
+      "categoryName": "Praktické návody a tipy",
+      "image": "/images/blog/clanek19.jpeg",
+      "imageAlt": "10 nejdůležitějších otázek na hypotečního poradce",
+      "date": "2025-08-26",
+      "dateFormatted": "26. srpna 2025",
+      "readTime": 8,
+      "keywords": "hypoteční poradce, otázky, fixace, RPSN, mimořádné splátky, refinancování, odměna poradce"
+    }
+    ,
+    {
+      "id": "hypoteka-versus-najem-kdy-se-vyplati-koupit-a-kdy-zustat-v-pronajmu",
+      "title": "Hypotéka versus nájem – kdy se vyplatí koupit a kdy zůstat v pronájmu",
+      "excerpt": "Rozhodujete se mezi hypotékou a nájmem? Porovnáváme výhody, nevýhody i reálná čísla a ukazujeme, kdy dává smysl která varianta.",
+      "category": "zakladni",
+      "categoryName": "Základní témata",
+      "image": "/images/blog/clanek14.jpeg",
+      "imageAlt": "Porovnání hypotéky a nájmu – kdy se co vyplatí",
+      "date": "2025-08-26",
+      "dateFormatted": "26. srpna 2025",
+      "readTime": 9,
+      "keywords": "hypotéka vs nájem, porovnání, rozhodování, splátka, nájemné, stabilita, flexibilita"
+    }
+    ,
+    {
+      "id": "kdy-dava-smysl-hypoteka",
+      "title": "Kdy dává smysl hypotéka",
+      "excerpt": "V jakých situacích je hypotéka vhodná volba? Přehled klíčových faktorů a praktických doporučení před sjednáním.",
+      "category": "zakladni",
+      "categoryName": "Základní témata",
+      "image": "/images/blog/clanek15.jpeg",
+      "imageAlt": "Kdy dává smysl hypotéka – hlavní situace",
+      "date": "2025-08-26",
+      "dateFormatted": "26. srpna 2025",
+      "readTime": 7,
+      "keywords": "kdy hypotéka, stabilita bydlení, finanční rezerva, fixace, inflace"
+    }
+  ]
+}

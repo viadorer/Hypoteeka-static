@@ -155,23 +155,11 @@
     </style>
 </head>
 <body class="bg-white">
+<div id="nav-container"></div>
     <div x-data="{ mobileMenuOpen: false }">
         <!-- Nav include -->
-        <div id="nav-container"></div>
+        
 
-        <script>
-            // Načtení navigační lišty ze samostatného souboru pomocí XMLHttpRequest
-            var navXhr = new XMLHttpRequest();
-            navXhr.open('GET', 'nav.html', true);
-            navXhr.onreadystatechange = function() {
-                if (this.readyState === 4 && this.status === 200) {
-                    document.getElementById('nav-container').innerHTML = this.responseText;
-                } else if (this.readyState === 4 && this.status !== 200) {
-                    console.error('Chyba při načítání navigace. Status: ' + this.status);
-                }
-            };
-            navXhr.send();
-        </script>
 
         <!-- Hero sekce -->
         <div class="relative min-h-[600px] flex items-center pb-48">
@@ -1043,71 +1031,9 @@
     </div>
 
     <!-- Footer include -->
-    <div id="footer-container"></div>
     
-    <script>
-        // Načtení footeru ze samostatného souboru pomocí XMLHttpRequest
-        var footerXhr = new XMLHttpRequest();
-        footerXhr.open('GET', 'footer.html', true);
-        footerXhr.onreadystatechange = function() {
-            if (this.readyState === 4 && this.status === 200) {
-                document.getElementById('footer-container').innerHTML = this.responseText;
-            } else if (this.readyState === 4 && this.status !== 200) {
-                console.error('Chyba při načítání footeru. Status: ' + this.status);
-            }
-        };
-        footerXhr.send();
-        
-        // Cookie funkce
-        function setCookie(name, value, days) {
-            var expires = '';
-            if (days) {
-                var date = new Date();
-                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-                expires = '; expires=' + date.toUTCString();
-            }
-            document.cookie = name + '=' + (value || '') + expires + '; path=/';
-        }
-        
-        function getCookie(name) {
-            var nameEQ = name + '=';
-            const ca = document.cookie.split(';');
-            for(let i = 0; i < ca.length; i++) {
-                let c = ca[i];
-                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-            }
-            return null;
-        }
-        
-        // Zobrazít cookie lištu po načtení dokumentu
-        document.addEventListener('DOMContentLoaded', function() {
-            const cookieBanner = document.getElementById('cookie-banner');
-            const acceptButton = document.getElementById('accept-cookies');
-            const rejectButton = document.getElementById('reject-cookies');
-            
-            if (!getCookie('cookies-accepted')) {
-                setTimeout(function() {
-                    if (cookieBanner) {
-                        cookieBanner.classList.remove('translate-y-full');
-                    }
-                }, 1000);
-            }
-            
-            acceptButton.addEventListener('click', function() {
-                setCookie('cookies-accepted', 'true', 365);
-                if (cookieBanner) {
-                    cookieBanner.classList.add('translate-y-full');
-                }
-            });
-            
-            rejectButton.addEventListener('click', function() {
-                setCookie('cookies-accepted', 'false', 365);
-                if (cookieBanner) {
-                    cookieBanner.classList.add('translate-y-full');
-                }
-            });
-        });
-    </script>
+    
+<div id="footer-container"></div>
+<script src="includes.js"></script>
 </body>
 </html>

@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Meta tags will be dynamically updated by JavaScript -->
+    <title>Načítání článku... - Blog | Hypoteeka.cz</title>
+    <meta name="description" content="Načítání článku z blogu Hypoteeka.cz">
+    <meta name="author" content="Hypoteeka.cz">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Tailwind CSS (aligned with main site) -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="/images/favicon.png">
+    
+    <!-- Kompletní stylování pro blog články -->
+    <style>
+        /* Základní prose styling */
+        .prose {
+            color: #374151;
+            max-width: none;
+        }
+        
+        .prose p {
+            margin-top: 1.25em;
+            margin-bottom: 1.25em;
+            line-height: 1.75;
+        }
+        
+        .prose h1 {
+            color: #111827;
+            font-weight: 800;
+            font-size: 2.25em;
+            margin-top: 0;
+            margin-bottom: 0.8888889em;
+            line-height: 1.1111111;
+        }
+        
+        .prose h2 {
+            color: #111827;
+            font-weight: 700;
+            font-size: 1.5em;
+            margin-top: 2em;
+            margin-bottom: 1em;
+            line-height: 1.3333333;
+            border-left: 4px solid var(--brand-pink-600);
+            padding-left: 1rem;
+        }
+        
+        .prose h3 {
+            color: #111827;
+            font-weight: 600;
+            font-size: 1.25em;
+            margin-top: 1.6em;
+            margin-bottom: 0.6em;
+            line-height: 1.6;
+        }
+        
+        .prose h4 {
+            color: #111827;
+            font-weight: 600;
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+            line-height: 1.5;
+        }
+        
+        .prose strong {
+            color: #111827;
+            font-weight: 600;
+        }
+        
+        .prose a {
+            color: var(--brand-pink-600);
+            text-decoration: underline;
+            font-weight: 500;
+        }
+        
+        .prose a:hover {
+            color: var(--brand-pink-700);
+        }
+        
+        .prose blockquote {
+            font-weight: 500;
+            font-style: italic;
+            color: #111827;
+            border-left-width: 0.25rem;
+            border-left-color: var(--brand-pink-600);
+            quotes: '\u201C''\u201D''\u2018''\u2019';
+            margin-top: 1.6em;
+            margin-bottom: 1.6em;
+            padding-left: 1em;
+        }
+        
+        .prose ul {
+            margin-top: 1.25em;
+            margin-bottom: 1.25em;
+            padding-left: 1.625em;
+        }
+        
+        .prose ol {
+            margin-top: 1.25em;
+            margin-bottom: 1.25em;
+            padding-left: 1.625em;
+        }
+        
+        .prose li {
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+        
+        .prose ul > li::marker {
+            color: #0F4C81;
+        }
+        
+        .prose ol > li::marker {
+            color: #0F4C81;
+        }
+        
+        .prose img {
+            margin-top: 2em;
+            margin-bottom: 2em;
+            border-radius: 0.5rem;
+        }
+        
+        .prose code {
+            color: #111827;
+            font-weight: 600;
+            font-size: 0.875em;
+            background-color: #f3f4f6;
+            padding: 0.125rem 0.25rem;
+            border-radius: 0.25rem;
+        }
+        
+        .prose pre {
+            color: #e5e7eb;
+            background-color: #374151;
+            overflow-x: auto;
+            font-size: 0.875em;
+            line-height: 1.7142857;
+            margin-top: 1.7142857em;
+            margin-bottom: 1.7142857em;
+            border-radius: 0.375rem;
+            padding: 0.8571429em 1.1428571em;
+        }
+        
+        .prose pre code {
+            background-color: transparent;
+            border-width: 0;
+            border-radius: 0;
+            padding: 0;
+            font-weight: 400;
+            color: inherit;
+            font-size: inherit;
+            font-family: inherit;
+            line-height: inherit;
+        }
+        
+        .prose table {
+            width: 100%;
+            table-layout: auto;
+            text-align: left;
+            margin-top: 2em;
+            margin-bottom: 2em;
+            font-size: 0.875em;
+            line-height: 1.7142857;
+        }
+        
+        .prose thead {
+            border-bottom-width: 1px;
+            border-bottom-color: #d1d5db;
+        }
+        
+        .prose thead th {
+            color: #111827;
+            font-weight: 600;
+            vertical-align: bottom;
+            padding-right: 0.5714286em;
+            padding-bottom: 0.5714286em;
+            padding-left: 0.5714286em;
+        }
+        
+        .prose tbody td {
+            vertical-align: baseline;
+            padding-top: 0.5714286em;
+            padding-right: 0.5714286em;
+            padding-bottom: 0.5714286em;
+            padding-left: 0.5714286em;
+        }
+        
+        /* Map selected green utilities to site blue palette for consistency */
+        .prose .bg-green-50, .bg-green-50 {
+            background-color: #eff6ff !important; /* blue-50 */
+        }
+        
+        .prose .border-green-400, .border-green-400 {
+            border-color: #0F4C81 !important; /* primary blue */
+        }
+        
+        .prose .text-green-700, .text-green-700 {
+            color: #0D3D66 !important; /* dark blue */
+        }
+        
+        .prose .text-green-400, .text-green-400 {
+            color: #0F4C81 !important; /* primary blue */
+        }
+        
+        /* Tip boxy stylování */
+        .prose .bg-blue-50 {
+            background-color: #eff6ff;
+        }
+        
+        .prose .border-blue-400 {
+            border-color: #60a5fa;
+        }
+        
+        .prose .text-blue-700 {
+            color: #1d4ed8;
+        }
+        
+        .prose .text-blue-400 {
+            color: #60a5fa;
+        }
+        
+        /* Lead text styling */
+        .prose .lead {
+            color: #4b5563;
+            font-size: 1.25em;
+            line-height: 1.6;
+            margin-top: 1.2em;
+            margin-bottom: 1.2em;
+        }
+    </style>
+</head>
+<body x-data="blogDetail()" x-init="init()">
+    <!-- Navigation -->
+    <div id="nav-container"></div>
+
+    <!-- Loading State -->
+    <div x-show="loading" class="min-h-screen flex items-center justify-center bg-gray-50">
+        <div class="text-center">
+            <div class="w-12 h-12 border-4 border-gray-300 border-t-blue-600 rounded-full animate-spin mx-auto mb-4"></div>
+            <p class="text-gray-600 text-lg">Načítám článek...</p>
+        </div>
+    </div>
+
+    <!-- Error State -->
+    <div x-show="error && !loading" class="min-h-screen flex items-center justify-center bg-gray-50">
+        <div class="text-center max-w-md mx-auto px-4">
+            <div class="text-red-500 mb-6">
+                <i class="fas fa-exclamation-triangle text-6xl"></i>
+            </div>
+            <h1 class="text-3xl font-bold text-gray-900 mb-4">Článek nenalezen</h1>
+            <p class="text-gray-600 mb-8 text-lg" x-text="error"></p>
+            <a href="./index.html" 
+               class="inline-block px-8 py-3 font-semibold rounded-full transition-all duration-300"
+               style="background-color: #0F4C81; color: #ffffff;"
+               onmouseover="this.style.backgroundColor='#0D3D66'; this.style.color='#ffffff';"
+               onmouseout="this.style.backgroundColor='#0F4C81'; this.style.color='#ffffff';">
+                ← Zpět na blog
+            </a>
+        </div>
+    </div>
+
+    <!-- Blog Post Content -->
+    <div x-show="post && !loading && !error">
+        <!-- Article Container -->
+        <article class="bg-white pt-20 pb-12">
+            <div class="max-w-4xl mx-auto px-6 lg:px-8">
+                
+                <!-- Back to Blog Link -->
+                <div class="mb-8">
+                    <a href="./index.html" class="inline-flex items-center text-brand-pink hover:opacity-90 text-sm font-medium">
+                        ← Zpět na blog
+                    </a>
+                </div>
+                
+                <!-- Category Badge -->
+                <div class="mb-6" x-show="post?.category">
+                    <span x-text="getCategoryName(post?.category)" 
+                          class="inline-block px-4 py-2 text-sm font-medium rounded-lg"
+                          style="background-color: var(--brand-pink-50); color: var(--brand-pink-700);"></span>
+                </div>
+                
+                <!-- Article Title -->
+                <h1 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-6 leading-tight" 
+                    x-text="post?.title"></h1>
+                
+                <!-- Article Meta -->
+                <div class="flex items-center text-gray-500 text-sm mb-8">
+                    <span x-text="formatDate(post?.date)"></span>
+                    <span class="mx-2">•</span>
+                    <span>10 min čtení</span>
+                </div>
+                
+                <!-- Featured Image -->
+                <div class="mb-12 rounded-xl overflow-hidden" x-show="post?.image">
+                    <img :src="post?.image" :alt="post?.imageAlt || post?.title" 
+                         class="w-full h-auto">
+                </div>
+
+                <!-- Article Content -->
+                <div class="prose prose-xl max-w-none mb-16" 
+                     x-html="postContent">
+                </div>
+
+                
+
+                <!-- CTA Help Section (skryto) -->
+                <!--
+                <section class="mb-16 text-center">
+                    <div class="rounded-3xl p-12 shadow-2xl border border-gray-100 max-w-4xl mx-auto transform hover:scale-105 transition-all duration-300" style="background-color: #0F4C81;">
+                        <div class="max-w-4xl mx-auto">
+                            <div class="mb-6">
+                                <div class="inline-block px-4 py-2 rounded-full text-sm font-semibold mb-4" style="background-color: white; color: #0F4C81;">
+                                    Realitní poradenství
+                                </div>
+                            </div>
+                            <h3 class="text-3xl lg:text-4xl font-bold mb-6 leading-tight" style="color: white;">
+                                Potřebujete pomoc s prodejem vaší nemovitosti?
+                            </h3>
+                            <p class="text-lg mb-8 leading-relaxed" style="color: white; opacity: 0.95;">
+                                Nechte si zdarma zpracovat nezávaznou nabídku a získejte odhad tržní ceny vaší nemovitosti. Jako profesionální realitní agent vám pomůžu prodat nemovitost za nejlepší cenu a s minimálním stresem.
+                            </p>
+                            <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+                                <a href="/index.html#sluzby" class="inline-flex items-center justify-center px-10 py-5 font-bold text-lg rounded-2xl transform hover:-translate-y-1 hover:shadow-2xl transition-all duration-300 min-w-[250px]" style="background-color: white; color: #0F4C81; box-shadow: 0 4px 20px rgba(255, 255, 255, 0.3);" onmouseover="this.style.backgroundColor='#f0f0f0'; this.style.boxShadow='0 8px 30px rgba(255, 255, 255, 0.4)'" onmouseout="this.style.backgroundColor='white'; this.style.boxShadow='0 4px 20px rgba(255, 255, 255, 0.3)'">
+                                    Nezávazná konzultace
+                                </a>
+                                <a href="/kalkulator-trzniho-najemneho.html" class="inline-flex items-center justify-center px-10 py-5 border-2 font-bold text-lg rounded-2xl transition-all duration-300 min-w-[250px]" style="border-color: white; color: white; background-color: transparent;" onmouseover="this.style.backgroundColor='white'; this.style.color='#0F4C81'; this.style.boxShadow='0 8px 30px rgba(255, 255, 255, 0.4)'" onmouseout="this.style.backgroundColor='transparent'; this.style.color='white'; this.style.boxShadow='none'">
+                                    Odhad ceny nemovitosti
+                                </a>
+                            </div>
+                            <div class="mt-10 pt-8 border-t border-white">
+                                <p class="text-sm text-white flex items-center justify-center gap-2">
+                                    <span class="w-2 h-2 rounded-full bg-white"></span>
+                                    Spolehlivost založená na 30+ letech zkušeností
+                                    <span class="w-2 h-2 rounded-full bg-white"></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                -->
+
+                <!-- Article Footer / Social Share (skryto) -->
+                <!--
+                <footer class="mt-20 pt-12 bg-white rounded-2xl shadow-lg border-4" style="border-color: #0F4C81;">
+                    <div class="text-center p-8">
+                        <h3 class="text-3xl font-bold text-gray-900 mb-4">Líbil se vám tento článek?</h3>
+                        <p class="text-gray-700 mb-8 text-xl font-medium">Sdílejte ho s přáteli a pomůžete tak šířit užitečné informace!</p>
+                        <div class="flex justify-center gap-6">
+                            <a href="#" onclick="shareArticle('facebook')" 
+                               class="inline-flex items-center justify-center w-16 h-16 bg-blue-600 text-white rounded-full hover:bg-blue-700 transform hover:-translate-y-2 hover:shadow-xl transition-all duration-300">
+                                <i class="fab fa-facebook-f text-xl"></i>
+                            </a>
+                            <a href="#" onclick="shareArticle('twitter')" 
+                               class="inline-flex items-center justify-center w-16 h-16 bg-blue-400 text-white rounded-full hover:bg-blue-500 transform hover:-translate-y-2 hover:shadow-xl transition-all duration-300">
+                                <i class="fab fa-twitter text-xl"></i>
+                            </a>
+                            <a href="#" onclick="shareArticle('linkedin')" 
+                               class="inline-flex items-center justify-center w-16 h-16 bg-blue-700 text-white rounded-full hover:bg-blue-800 transform hover:-translate-y-2 hover:shadow-xl transition-all duration-300">
+                                <i class="fab fa-linkedin-in text-xl"></i>
+                            </a>
+                            <a href="#" onclick="copyUrl()" 
+                               class="inline-flex items-center justify-center w-16 h-16 text-white rounded-full transform hover:-translate-y-2 hover:shadow-xl transition-all duration-300"
+                               style="background-color: #0F4C81;"
+                               onmouseover="this.style.backgroundColor='#0D3D66'; this.style.color='#ffffff'" 
+                               onmouseout="this.style.backgroundColor='#0F4C81'; this.style.color='#ffffff'">
+                                <i class="fas fa-link text-xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                </footer>
+                -->
+            </div>
+        </article>
+
+        <!-- CTA Banner Section (skryto) -->
+        <!--
+        <section class="py-16 bg-gray-100">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <template x-if="post?.category === 'tips'">
+                    <div class="bg-gradient-to-r from-[#0D28F2] to-blue-600 rounded-xl p-8 text-white text-center">
+                        <h3 class="text-2xl font-bold mb-4">Potřebujete pomoc s pronájmem?</h3>
+                        <p class="text-lg mb-6 opacity-90">Naše tipy vám pomohou, ale profesionální správa vašeho majetku vám ušetří čas i starosti.</p>
+                        <a href="/index.html#kontakt" class="inline-block bg-white text-[#0D28F2] font-semibold px-8 py-3 rounded-full hover:bg-gray-100 transition-colors">
+                            Domluvit konzultaci
+                        </a>
+                    </div>
+                </template>
+                <template x-if="post?.category === 'legal'">
+                    <div class="bg-gradient-to-r from-gray-800 to-gray-900 rounded-xl p-8 text-white text-center">
+                        <h3 class="text-2xl font-bold mb-4">Zajistěte si právní ochranu</h3>
+                        <p class="text-lg mb-6 opacity-90">Neponechávejte nic náhodě. Právní záležitosti pronájmu zvládneme za vás.</p>
+                        <a href="/index.html#sluzby" class="inline-block text-white font-semibold px-8 py-3 rounded-full hover:opacity-90 transition-colors" style="background-color: #0F4C81;">
+                            Zajistit právní ochranu
+                        </a>
+                    </div>
+                </template>
+                <template x-if="post?.category === 'market'">
+                    <div class="bg-gradient-to-r from-purple-600 to-indigo-600 rounded-xl p-8 text-white text-center">
+                        <h3 class="text-2xl font-bold mb-4">Maximalizujte výnos z vaší nemovitosti</h3>
+                        <p class="text-lg mb-6 opacity-90">Stanovíme optimální cenu nájmu a zajistíme vám stabilní příjem bez prázdných období.</p>
+                        <a href="/kalkulator-trzniho-najemneho.html" class="inline-block bg-white text-purple-600 font-semibold px-8 py-3 rounded-full hover:bg-gray-100 transition-colors">
+                            Zjistit tržní cenu
+                        </a>
+                    </div>
+                </template>
+                <template x-if="!['tips', 'legal', 'market'].includes(post?.category)">
+                    <div class="bg-gradient-to-r from-gray-700 to-gray-800 rounded-xl p-8 text-white text-center">
+                        <h3 class="text-2xl font-bold mb-4">Chcete vědět více o pronájmu nemovitostí?</h3>
+                        <p class="text-lg mb-6 opacity-90">Přečtěte si další užitečné články na našem blogu nebo se obraťte na naše experty.</p>
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                            <a href="/blog/index.html" class="inline-block bg-white text-gray-800 font-semibold px-6 py-3 rounded-full hover:bg-gray-100 transition-colors">
+                                Více článků
+                            </a>
+                            <a href="/index.html#kontakt" class="inline-block border-2 border-white text-white font-semibold px-6 py-3 rounded-full hover:bg-white hover:text-gray-800 transition-colors">
+                                Kontaktovat nás
+                            </a>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </section>
+        -->
+
+        <!-- Related Posts Section -->
+        <section class="py-16 bg-white" x-show="relatedPosts.length > 0">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-gray-900 mb-12 text-center">Podobné články</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <template x-for="relatedPost in relatedPosts" :key="relatedPost.id">
+                        <article class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                            <div class="aspect-w-16 aspect-h-9">
+                                <img :src="relatedPost.image" :alt="relatedPost.imageAlt" class="w-full h-48 object-cover">
+                            </div>
+                            <div class="p-6">
+                                <span :class="getCategoryClass(relatedPost.category)" 
+                                      class="inline-block px-3 py-1 text-xs font-semibold rounded-full mb-3">
+                                    <span x-text="relatedPost.categoryName"></span>
+                                </span>
+                                <h3 class="text-xl font-semibold text-gray-900 mb-2">
+                                    <a :href="`/blog/detail.html?id=${relatedPost.id}`" 
+                                       class="hover:text-brand-pink transition-colors"
+                                       x-text="relatedPost.title"></a>
+                                </h3>
+                                <p class="text-gray-600 mb-4 line-clamp-3" x-text="relatedPost.excerpt"></p>
+                                <a :href="`/blog/detail.html?id=${relatedPost.id}`" 
+                                   class="text-brand-pink hover:underline font-medium">
+                                    Číst více →
+                                </a>
+                            </div>
+                        </article>
+                    </template>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <div id="footer-container"></div>
+
+    <script>
+        function blogDetail() {
+            return {
+                post: null,
+                postContent: '',
+                relatedPosts: [],
+                loading: true,
+                error: null,
+                
+                getCategoryClass(category) {
+                    const classes = {
+                        'tips': 'bg-blue-100 text-blue-800',
+                        'legal': 'bg-green-100 text-green-800',
+                        'market': 'bg-purple-100 text-purple-800',
+                        'default': 'bg-gray-100 text-gray-800'
+                    };
+                    return classes[category] || classes.default;
+                },
+                
+                async init() {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const postId = urlParams.get('id');
+                    
+                    if (!postId) {
+                        this.error = 'Nebyl zadán identifikátor článku.';
+                        this.loading = false;
+                        return;
+                    }
+                    
+                    try {
+                        // Load posts data
+                        const response = await fetch('/blog/posts.json');
+                        const data = await response.json();
+                        const posts = data.posts || [];
+                        
+                        // Find the specific post
+                        this.post = posts.find(p => p.id === postId);
+                        
+                        if (!this.post) {
+                            this.error = 'Článek s tímto identifikátorem nebyl nalezen.';
+                            this.loading = false;
+                            return;
+                        }
+                        
+                        // Load post content
+                        try {
+                            const contentResponse = await fetch(`/blog/posts/${postId}.html`);
+                            if (contentResponse.ok) {
+                                this.postContent = await contentResponse.text();
+                            } else {
+                                this.postContent = '<p>Obsah článku se nepodařilo načíst.</p>';
+                            }
+                        } catch (contentError) {
+                            console.error('Chyba při načítání obsahu:', contentError);
+                            this.postContent = '<p>Obsah článku se nepodařilo načíst.</p>';
+                        }
+                        
+                        // Find related posts (same category, exclude current)
+                        this.relatedPosts = posts
+                            .filter(p => p.id !== postId && p.category === this.post.category)
+                            .slice(0, 3);
+                        
+                        // Update page meta tags
+                        this.updateMetaTags();
+                        
+                        this.loading = false;
+                    } catch (error) {
+                        console.error('Chyba při načítání článku:', error);
+                        this.error = 'Došlo k chybě při načítání článku.';
+                        this.loading = false;
+                    }
+                },
+                
+                updateMetaTags() {
+                    if (!this.post) return;
+                    
+                    // Update title
+                    document.title = `${this.post.title} - Blog | Hypoteeka.cz`;
+                    
+                    // Update meta description
+                    const metaDesc = document.querySelector('meta[name="description"]');
+                    if (metaDesc) {
+                        metaDesc.content = this.post.excerpt;
+                    }
+                    
+                    // Ensure absolute image URL
+                    const absoluteImage = this.post.image?.startsWith('http') 
+                        ? this.post.image 
+                        : `${window.location.origin}${this.post.image}`;
+
+                    // Update Open Graph tags
+                    this.updateOrCreateMetaTag('property', 'og:title', `${this.post.title} - Blog | Hypoteeka.cz`);
+                    this.updateOrCreateMetaTag('property', 'og:description', this.post.excerpt);
+                    this.updateOrCreateMetaTag('property', 'og:image', absoluteImage);
+                    this.updateOrCreateMetaTag('property', 'og:url', window.location.href);
+                    this.updateOrCreateMetaTag('property', 'og:type', 'article');
+
+                    // Twitter Cards
+                    this.updateOrCreateMetaTag('name', 'twitter:card', 'summary_large_image');
+                    this.updateOrCreateMetaTag('name', 'twitter:title', `${this.post.title} - Blog | Hypoteeka.cz`);
+                    this.updateOrCreateMetaTag('name', 'twitter:description', this.post.excerpt);
+                    this.updateOrCreateMetaTag('name', 'twitter:image', absoluteImage);
+
+                    // Canonical tag
+                    let canonical = document.querySelector('link[rel="canonical"]');
+                    if (!canonical) {
+                        canonical = document.createElement('link');
+                        canonical.setAttribute('rel', 'canonical');
+                        document.head.appendChild(canonical);
+                    }
+                    canonical.setAttribute('href', window.location.href);
+                    
+                    // Update schema.org structured data
+                    this.addStructuredData();
+                },
+                
+                updateOrCreateMetaTag(attribute, name, content) {
+                    let meta = document.querySelector(`meta[${attribute}="${name}"]`);
+                    if (!meta) {
+                        meta = document.createElement('meta');
+                        meta.setAttribute(attribute, name);
+                        document.head.appendChild(meta);
+                    }
+                    meta.content = content;
+                },
+                
+                addStructuredData() {
+                    const existingScript = document.querySelector('script[type="application/ld+json"]');
+                    if (existingScript) {
+                        existingScript.remove();
+                    }
+                    
+                    const script = document.createElement('script');
+                    script.type = 'application/ld+json';
+                    const absoluteImage = this.post.image?.startsWith('http') 
+                        ? this.post.image 
+                        : `${window.location.origin}${this.post.image}`;
+                    script.textContent = JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "BlogPosting",
+                        "headline": this.post.title,
+                        "description": this.post.excerpt,
+                        "image": absoluteImage,
+                        "mainEntityOfPage": {
+                            "@type": "WebPage",
+                            "@id": window.location.href
+                        },
+                        "author": {
+                            "@type": "Organization",
+                            "name": "Hypoteeka.cz",
+                            "url": "https://hypoteeka.cz/"
+                        },
+                        "publisher": {
+                            "@type": "Organization",
+                            "name": "Hypoteeka.cz",
+                            "logo": {
+                                "@type": "ImageObject",
+                                "url": "https://hypoteeka.cz/logo.png"
+                            }
+                        },
+                        "datePublished": this.post.date,
+                        "dateModified": this.post.date
+                    });
+                    document.head.appendChild(script);
+                },
+                
+                // Format date for display
+                formatDate(dateString) {
+                    if (!dateString) return '';
+                    const date = new Date(dateString);
+                    return date.toLocaleDateString('cs-CZ', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    });
+                },
+                
+                // Get category display name
+                getCategoryName(category) {
+                    const categories = {
+                        'tips': 'Tipy',
+                        'legal': 'Právní',
+                        'market': 'Trh',
+                        'news': 'Novinky',
+                        'general': 'Obecné'
+                    };
+                    return categories[category] || category;
+                }
+            }
+        }
+        
+        // Share article functions
+        function shareArticle(platform) {
+            const url = encodeURIComponent(window.location.href);
+            const title = encodeURIComponent(document.title);
+            
+            let shareUrl = '';
+            switch(platform) {
+                case 'facebook':
+                    shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+                    break;
+                case 'twitter':
+                    shareUrl = `https://twitter.com/intent/tweet?url=${url}&text=${title}`;
+                    break;
+                case 'linkedin':
+                    shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
+                    break;
+            }
+            
+            if (shareUrl) {
+                window.open(shareUrl, '_blank', 'width=600,height=500');
+            }
+        }
+        
+        function copyUrl() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                // Show success message
+                const button = event.target.closest('a');
+                const originalIcon = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-check"></i>';
+                setTimeout(() => {
+                    button.innerHTML = originalIcon;
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy URL:', err);
+            });
+        }
+    </script>
+    
+    <!-- Alpine.js -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    <!-- Site-wide includes (loads nav.html and footer.html) -->
+    <script src="/includes.js"></script>
+</body>
+</html>
