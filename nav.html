@@ -1,5 +1,5 @@
 <!-- Plovoucí navigace -->
-<header class="fixed top-0 left-0 right-0 z-50">
+<header x-data="{ mobileMenuOpen: false }" class="fixed top-0 left-0 right-0 z-50">
     <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8" aria-label="Top">
         <div class="bg-white rounded-full shadow-lg">
             <div class="mx-auto max-w-7xl px-6 sm:px-8 lg:px-10">
@@ -24,9 +24,10 @@
                             type="button"
                             class="btn-icon bg-primary-50 text-primary-600 hover:bg-primary-100"
                             @click="mobileMenuOpen = !mobileMenuOpen"
+                            aria-label="Otevřít navigaci"
                         >
-                            <i class="fas fa-bars" x-show="!mobileMenuOpen"></i>
-                            <i class="fas fa-times" x-show="mobileMenuOpen" x-cloak></i>
+                            <i class="fa-solid fa-bars" x-show="!mobileMenuOpen"></i>
+                            <i class="fa-solid fa-times" x-show="mobileMenuOpen" x-cloak></i>
                         </button>
                     </div>
                 </div>
